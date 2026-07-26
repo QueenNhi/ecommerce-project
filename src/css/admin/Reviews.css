@@ -1,0 +1,116 @@
+/* Admin Reviews Stylesheet */
+.admin-reviews-page {
+    padding: 24px;
+    background-color: #f8fafc;
+    min-height: calc(100vh - 70px);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.reviews-header {
+    margin-bottom: 24px;
+}
+
+.reviews-header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+}
+
+.reviews-header p {
+    color: #64748b;
+    font-size: 14px;
+    margin: 4px 0 0;
+}
+
+/* RATING STAR TABS */
+.reviews-tabs {
+    display: flex;
+    gap: 8px;
+    background-color: #ffffff;
+    padding: 6px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    margin-bottom: 24px;
+    overflow-x: auto;
+}
+
+/* REVIEWS TABLE CARD & CONTAINER */
+.reviews-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    width: 100%;
+}
+
+.reviews-table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.reviews-table-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.reviews-table-container::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+.reviews-table-container::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+.reviews-table {
+    width: 100%;
+    min-width: 900px;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 14px;
+}
+
+.reviews-table th {
+    background-color: #f8fafc;
+    padding: 16px 20px;
+    font-weight: 600;
+    color: #475569;
+    border-bottom: 1px solid #e2e8f0;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.reviews-table td {
+    padding: 16px 20px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    vertical-align: middle;
+}
+
+.reviews-table tr:last-child td {
+    border-bottom: none;
+}
+
+.reviews-table tr:hover td {
+    background-color: #f8fafc;
+}
+
+.review-product-img {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 8px;
+    background-color: #f1f5f9;
+    border: 1px solid #e2e8f0;
+}
+
+.stars-rating {
+    color: #f59e0b;
+    font-size: 15px;
+    letter-spacing: 1px;
+}

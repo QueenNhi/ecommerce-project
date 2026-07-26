@@ -1,0 +1,282 @@
+/* =========================
+   SHOP PAGE
+========================= */
+
+.shop-page {
+    max-width: 1450px;
+    margin: 50px auto;
+    padding: 0 40px;
+}
+
+.shop-title{
+    margin-bottom:40px;
+}
+
+.shop-title h1{
+    font-size:48px;
+    font-weight:300;
+    letter-spacing:2px;
+    color:#222;
+    margin-bottom:10px;
+}
+
+.shop-title p{
+    color:#777;
+    font-size:15px;
+}
+
+/* =========================
+   LAYOUT
+========================= */
+
+.shop-container{
+    display:grid;
+    grid-template-columns:280px 1fr;
+    gap:50px;
+    align-items:start;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.shop-sidebar{
+
+    position:sticky;
+    top:90px;
+
+    height:calc(100vh - 100px);
+
+    overflow-y:auto;
+    overflow-x:hidden;
+
+    padding-right:15px;
+
+    border-right:1px solid #ececec;
+}
+
+/* Scroll đẹp */
+
+.shop-sidebar::-webkit-scrollbar{
+    width:6px;
+}
+
+.shop-sidebar::-webkit-scrollbar-track{
+    background:#f5f5f5;
+    border-radius:20px;
+}
+
+.shop-sidebar::-webkit-scrollbar-thumb{
+    background:#bfbfbf;
+    border-radius:20px;
+}
+
+.shop-sidebar::-webkit-scrollbar-thumb:hover{
+    background:#8b8b8b;
+}
+
+/* =========================
+   FILTER
+========================= */
+
+.shop-sidebar h3{
+    font-size:13px;
+    letter-spacing:2px;
+    font-weight:700;
+    color:#111;
+    margin-bottom:18px;
+    text-transform:uppercase;
+}
+
+.shop-sidebar label{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    margin-bottom:14px;
+
+    font-size:14px;
+    color:#555;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    user-select:none;
+}
+
+.shop-sidebar label:hover{
+    color:#000;
+}
+
+.shop-sidebar input[type="radio"],
+.shop-sidebar input[type="checkbox"]{
+    accent-color:#111;
+    cursor:pointer;
+    transform:scale(1.05);
+}
+
+.shop-sidebar hr{
+    margin:28px 0;
+    border:none;
+    border-top:1px solid #ececec;
+}
+
+/* =========================
+   COLOR
+========================= */
+
+.color-list {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.color-list span {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.color-list span:hover {
+    transform: scale(1.15);
+}
+
+.blue{
+    background:#3b82f6;
+}
+
+.brown{
+    background:#8b5e3c;
+}
+
+.red{
+    background:#ef4444;
+}
+
+.pink{
+    background:#ec4899;
+}
+
+.white{
+    background:#ffffff;
+    border:1px solid #ccc;
+}
+
+.black{
+    background:#111111;
+}
+
+.color-list span.active{
+    transform:scale(1.2);
+    border:2px solid #222;
+}
+
+/* =========================
+   PRODUCT
+========================= */
+
+.shop-content{
+    width:100%;
+    min-width:0;
+}
+
+.shop-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+
+    gap:32px;
+
+}
+
+.shop-grid>*{
+    width:100%;
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.no-product{
+
+    padding:80px;
+
+    text-align:center;
+
+    color:#777;
+
+    font-size:18px;
+
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1200px){
+
+    .shop-grid{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+@media(max-width:900px){
+
+    .shop-container{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .shop-sidebar{
+
+        position:static;
+
+        height:auto;
+
+        overflow:visible;
+
+        border:1px solid #eee;
+
+        border-radius:10px;
+
+        border-right:none;
+
+        padding:25px;
+
+        margin-bottom:35px;
+
+    }
+
+}
+
+@media(max-width:650px){
+
+    .shop-page{
+
+        padding:0 20px;
+
+    }
+
+    .shop-title h1{
+
+        font-size:34px;
+
+    }
+
+    .shop-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+

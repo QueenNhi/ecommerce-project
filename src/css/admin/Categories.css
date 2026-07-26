@@ -1,0 +1,684 @@
+/* ==========================================
+   CATEGORY ADMIN
+========================================== */
+
+.admin-page{
+    width:100%;
+}
+
+/* ==========================================
+   TOOLBAR
+========================================== */
+
+.category-toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    margin-bottom:35px;
+    flex-wrap:wrap;
+}
+
+/* ==========================================
+   SEARCH
+========================================== */
+
+.search-box{
+    flex:1;
+    max-width:500px;
+    height:48px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    background:#fff;
+    border:1px solid #e6e8ef;
+    border-radius:12px;
+    padding:0 18px;
+}
+
+.search-box svg{
+    color:#8d94a5;
+    font-size:18px;
+}
+
+.search-box input{
+    flex:1;
+    border:none;
+    outline:none;
+    background:transparent;
+    font-size:15px;
+}
+
+/* ==========================================
+   BUTTON
+========================================== */
+
+.toolbar-actions{
+    display:flex;
+    gap:14px;
+}
+
+.export-btn,
+.add-btn{
+
+    height:46px;
+
+    padding:0 22px;
+
+    border-radius:10px;
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    cursor:pointer;
+
+    font-size:14px;
+    font-weight:600;
+
+    transition:.3s;
+}
+
+.export-btn{
+
+    background:#fff;
+
+    border:1px solid #d8dce6;
+
+    color:#333;
+
+}
+
+.export-btn:hover{
+
+    background:#f7f8fb;
+
+}
+
+.add-btn{
+
+    border:none;
+
+    background:#0035c5;
+
+    color:#fff;
+
+}
+
+.add-btn:hover{
+
+    background:#0029a5;
+
+}
+
+/* ==========================================
+   TABLE
+========================================== */
+
+.category-table-wrapper{
+    background:#fff;
+    border-radius:18px;
+    overflow-x:auto;
+    -webkit-overflow-scrolling: touch;
+    box-shadow:0 8px 24px rgba(0,0,0,.05);
+    width: 100%;
+}
+
+.category-table{
+    width:100%;
+    min-width: 800px;
+    border-collapse:collapse;
+}
+
+.category-table thead{
+
+    background:#fafafa;
+
+}
+
+.category-table th{
+
+    padding:18px;
+
+    text-align:left;
+
+    font-size:13px;
+
+    color:#888;
+
+    letter-spacing:.5px;
+
+    border-bottom:1px solid #ececec;
+
+}
+
+.category-table td{
+
+    padding:18px;
+
+    border-bottom:1px solid #f2f2f2;
+
+    vertical-align:middle;
+
+    font-size:14px;
+
+}
+
+.category-table tbody tr{
+
+    transition:.25s;
+
+}
+
+.category-table tbody tr:hover{
+
+    background:#fafcff;
+
+}
+
+/* ==========================================
+   CATEGORY INFO
+========================================== */
+
+.category-info{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:4px;
+
+}
+
+.category-info h4{
+
+    font-size:15px;
+
+    color:#222;
+
+    margin:0;
+
+}
+
+.category-info span{
+
+    font-size:12px;
+
+    color:#888;
+
+}
+
+/* ==========================================
+   BADGE
+========================================== */
+
+.product-count{
+
+    display:inline-flex;
+
+    justify-content:center;
+    align-items:center;
+
+    min-width:55px;
+
+    padding:6px 14px;
+
+    border-radius:30px;
+
+    background:#eef5ff;
+
+    color:#0035c5;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+/* ==========================================
+   ACTION
+========================================== */
+
+.table-actions{
+
+    display:flex;
+
+    gap:8px;
+
+}
+
+.table-actions button{
+
+    width:36px;
+
+    height:36px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#f3f5fa;
+
+    cursor:pointer;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    transition:.3s;
+
+}
+
+.table-actions button svg{
+
+    font-size:16px;
+
+}
+
+.table-actions button:hover{
+
+    background:#0035c5;
+
+    color:#fff;
+
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+.table-footer{
+
+    margin-top:20px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+
+    flex-wrap:wrap;
+
+}
+
+.table-footer span{
+
+    color:#777;
+
+    font-size:14px;
+
+}
+
+.pagination{
+
+    display:flex;
+
+    gap:8px;
+
+}
+
+.pagination button{
+
+    width:38px;
+
+    height:38px;
+
+    border:none;
+
+    border:1px solid #ddd;
+
+    background:#fff;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.pagination button:hover{
+
+    background:#0035c5;
+
+    color:#fff;
+
+}
+
+.active-page{
+
+    background:#0035c5!important;
+
+    color:#fff;
+
+    border:none!important;
+
+}
+
+/* ==========================================
+   CHECKBOX
+========================================== */
+
+.category-table input[type="checkbox"]{
+
+    width:18px;
+
+    height:18px;
+
+    cursor:pointer;
+
+}
+
+/* ==========================================
+   MODAL
+========================================== */
+
+.modal-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.45);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:30px;
+
+    z-index:9999;
+
+}
+
+.category-modal{
+
+    width:700px;
+
+    max-width:95vw;
+
+    background:#fff;
+
+    border-radius:16px;
+
+    overflow:hidden;
+
+    animation:fadeIn .25s;
+
+}
+
+.modal-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:22px 28px;
+
+    border-bottom:1px solid #eee;
+
+}
+
+.modal-header h2{
+
+    font-size:24px;
+
+    margin:0;
+
+}
+
+.close-btn{
+
+    border:none;
+
+    background:none;
+
+    cursor:pointer;
+
+    font-size:28px;
+
+}
+
+.category-form{
+
+    padding:28px;
+
+}
+
+.form-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+    margin-bottom:20px;
+
+}
+
+.form-group label{
+
+    margin-bottom:8px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+.form-group input,
+
+.form-group textarea{
+
+    padding:14px;
+
+    border:1px solid #ddd;
+
+    border-radius:10px;
+
+    outline:none;
+
+    font-size:15px;
+
+    transition:.25s;
+
+}
+
+.form-group input:focus,
+
+.form-group textarea:focus{
+
+    border-color:#0035c5;
+
+    box-shadow:0 0 0 3px rgba(0,53,197,.1);
+
+}
+
+.form-group textarea{
+
+    resize:vertical;
+
+    min-height:130px;
+
+}
+
+.modal-footer{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:12px;
+
+    padding:22px 28px;
+
+    border-top:1px solid #eee;
+
+}
+
+.cancel-btn{
+
+    border:none;
+
+    background:#ececec;
+
+    color:#333;
+
+    padding:12px 24px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+}
+
+.cancel-btn:hover{
+
+    background:#ddd;
+
+}
+
+.save-btn{
+
+    border:none;
+
+    background:#0035c5;
+
+    color:#fff;
+
+    padding:12px 24px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+}
+
+.save-btn:hover{
+
+    background:#0029a5;
+
+}
+
+.delete-btn{
+
+    border:none;
+
+    background:#dc2626;
+
+    color:#fff;
+
+    padding:12px 24px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+}
+
+.delete-btn:hover{
+
+    background:#b91c1c;
+
+}
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+        transform:scale(.96);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:scale(1);
+
+    }
+
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:992px){
+
+    .category-toolbar{
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+    }
+
+    .search-box{
+
+        max-width:100%;
+
+    }
+
+    .toolbar-actions{
+
+        justify-content:flex-end;
+
+    }
+
+    .category-table-wrapper{
+
+        overflow-x:auto;
+
+    }
+
+    .category-table{
+
+        min-width:900px;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .toolbar-actions{
+
+        width:100%;
+
+    }
+
+    .export-btn,
+
+    .add-btn{
+
+        flex:1;
+
+        justify-content:center;
+
+    }
+
+    .table-footer{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+    .category-modal{
+
+        width:95%;
+
+    }
+
+}

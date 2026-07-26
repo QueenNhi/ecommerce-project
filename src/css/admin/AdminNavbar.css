@@ -1,0 +1,145 @@
+.admin-navbar{
+
+    height:80px;
+
+    background:white;
+
+    border-bottom:1px solid #ececec;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 30px;
+
+}
+
+.navbar-search{
+
+    width:420px;
+
+    height:44px;
+
+    border:1px solid #ddd;
+
+    display:flex;
+
+    align-items:center;
+
+    padding:0 15px;
+
+    gap:10px;
+
+    border-radius:4px;
+
+}
+
+.navbar-search input{
+
+    flex:1;
+
+    border:none;
+
+    outline:none;
+
+    font-size:14px;
+
+}
+
+.navbar-search svg{
+
+    color:#999;
+
+}
+
+.navbar-right{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+
+.navbar-icon{
+
+    width:42px;
+
+    height:42px;
+
+    border:none;
+
+    background:transparent;
+
+    position:relative;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+}
+
+.notification-dot{
+
+    position:absolute;
+
+    top:8px;
+
+    right:10px;
+
+    width:8px;
+
+    height:8px;
+
+    background:red;
+
+    border-radius:50%;
+
+}
+
+.admin-profile{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.admin-info{
+
+    text-align:right;
+
+}
+
+.admin-info h4{
+
+    font-size:14px;
+
+    margin:0;
+
+}
+
+.admin-info span{
+
+    font-size:12px;
+
+    color:#888;
+
+}
+
+.admin-profile img{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+}

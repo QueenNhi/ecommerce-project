@@ -1,0 +1,652 @@
+/* ==========================================
+   GOOGLE FONT
+========================================== */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+/* ==========================================
+   RESET
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+    width:100%;
+    min-height:100%;
+    font-family:"Inter",sans-serif;
+    background:linear-gradient(135deg,#f6f3ef,#ebe5dc);
+    color:#222;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+img{
+    display:block;
+    width:100%;
+}
+
+/* ==========================================
+   PAGE
+========================================== */
+
+.login-page{
+
+    width:100%;
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:60px;
+
+}
+
+/* ==========================================
+   CONTAINER
+========================================== */
+
+.login-container{
+
+    width:1120px;
+    min-height:700px;
+
+    background:#fff;
+
+    display:flex;
+
+    overflow:hidden;
+
+    border-radius:28px;
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,.08),
+        0 45px 120px rgba(0,0,0,.12);
+
+}
+
+/* ==========================================
+   LEFT
+========================================== */
+
+.login-left{
+
+    width:46%;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.login-left img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    transition:1.3s;
+
+}
+
+.login-left:hover img{
+
+    transform:scale(1.08);
+
+}
+
+.login-left::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+    linear-gradient(
+
+        rgba(0,0,0,.12),
+
+        rgba(0,0,0,.42)
+
+    );
+
+    z-index:1;
+
+}
+
+.login-overlay{
+
+    position:absolute;
+
+    left:50px;
+
+    bottom:55px;
+
+    color:#fff;
+
+    z-index:2;
+
+}
+
+.login-overlay h2{
+
+    font-family:"Playfair Display",serif;
+
+    font-size:46px;
+
+    font-weight:600;
+
+    letter-spacing:3px;
+
+    margin-bottom:10px;
+
+}
+
+.login-overlay p{
+
+    font-size:13px;
+
+    letter-spacing:4px;
+
+    opacity:.92;
+
+}
+
+/* ==========================================
+   RIGHT
+========================================== */
+
+.login-right{
+
+    width:54%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:70px 65px;
+
+    background:#fff;
+
+}
+
+.login-box{
+
+    width:100%;
+
+    max-width:420px;
+
+}
+
+/* ==========================================
+   TABS
+========================================== */
+
+.login-tabs{
+
+    display:flex;
+
+    gap:35px;
+
+    margin-bottom:45px;
+
+    border-bottom:1px solid #ededed;
+
+}
+
+.login-tabs a,
+.login-tabs span{
+
+    padding-bottom:16px;
+
+    font-size:13px;
+
+    letter-spacing:2px;
+
+    color:#9b9b9b;
+
+    transition:.3s;
+
+    cursor:pointer;
+
+}
+
+.login-tabs a:hover{
+
+    color:#111;
+
+}
+
+.login-tabs .active{
+
+    color:#111;
+
+    border-bottom:2px solid #111;
+
+}
+
+/* ==========================================
+   TITLE
+========================================== */
+
+.login-box h1{
+
+    font-family:"Playfair Display",serif;
+
+    font-size:54px;
+
+    font-weight:600;
+
+    color:#111;
+
+    margin-bottom:12px;
+
+}
+
+.login-subtitle{
+
+    color:#7d7d7d;
+
+    line-height:1.9;
+
+    font-size:15px;
+
+    margin-bottom:42px;
+
+}  
+/* ==========================================
+   FORM
+========================================== */
+
+.login-box form{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+/* ==========================================
+   INPUT GROUP
+========================================== */
+
+.login-group{
+
+    margin-bottom:24px;
+
+}
+
+.login-group label{
+
+    display:block;
+
+    margin-bottom:10px;
+
+    font-size:12px;
+
+    font-weight:600;
+
+    color:#8a8a8a;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+}
+
+.login-group input{
+
+    width:100%;
+
+    height:58px;
+
+    padding:0 22px;
+
+    border:1px solid #e5e5e5;
+
+    border-radius:14px;
+
+    background:#fafafa;
+
+    font-size:15px;
+
+    color:#222;
+
+    outline:none;
+
+    transition:all .35s ease;
+
+}
+
+.login-group input::placeholder{
+
+    color:#b8b8b8;
+
+}
+
+.login-group input:hover{
+
+    border-color:#d0d0d0;
+
+    background:#fff;
+
+}
+
+.login-group input:focus{
+
+    background:#fff;
+
+    border-color:#111;
+
+    box-shadow:
+        0 0 0 5px rgba(0,0,0,.05);
+
+}
+
+/* ==========================================
+   LOGIN OPTIONS
+========================================== */
+
+.login-options{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin:5px 0 35px;
+
+    font-size:14px;
+
+}
+
+.login-options label{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    cursor:pointer;
+
+    color:#666;
+
+    user-select:none;
+
+}
+
+.login-options input[type="checkbox"]{
+
+    width:17px;
+
+    height:17px;
+
+    accent-color:#111;
+
+    cursor:pointer;
+
+}
+
+.login-options a{
+
+    color:#777;
+
+    transition:.3s;
+
+}
+
+.login-options a:hover{
+
+    color:#000;
+
+}
+
+/* ==========================================
+   BUTTON
+========================================== */
+
+.login-btn{
+
+    width:100%;
+
+    height:60px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#111;
+
+    color:#fff;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    letter-spacing:3px;
+
+    cursor:pointer;
+
+    transition:all .35s ease;
+
+}
+
+.login-btn:hover{
+
+    background:#000;
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 18px 35px rgba(0,0,0,.18);
+
+}
+
+.login-btn:active{
+
+    transform:scale(.98);
+
+}
+/* ==========================================
+   DIVIDER
+========================================== */
+
+.divider{
+
+    position:relative;
+
+    margin:38px 0;
+
+    text-align:center;
+
+}
+
+.divider::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    top:50%;
+
+    width:100%;
+    height:1px;
+
+    background:#ececec;
+
+}
+
+.divider span{
+
+    position:relative;
+
+    background:#fff;
+
+    padding:0 18px;
+
+    color:#9b9b9b;
+
+    font-size:12px;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+}
+
+/* ==========================================
+   SOCIAL LOGIN
+========================================== */
+
+.social-login{
+
+    display:flex;
+
+    gap:16px;
+
+    margin-top:5px;
+
+}
+
+.social-login button{
+
+    flex:1;
+
+    height:56px;
+
+    border:1px solid #e5e5e5;
+
+    border-radius:14px;
+
+    background:#fff;
+
+    color:#333;
+
+    font-size:14px;
+
+    font-weight:500;
+
+    cursor:pointer;
+
+    transition:.35s;
+
+}
+
+.social-login button:hover{
+
+    background:#111;
+
+    color:#fff;
+
+    border-color:#111;
+
+    transform:translateY(-2px);
+
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+.login-footer{
+
+    margin-top:38px;
+
+    text-align:center;
+
+    font-size:14px;
+
+    color:#888;
+
+}
+
+.login-footer a{
+
+    margin-left:8px;
+
+    color:#111;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.login-footer a:hover{
+
+    color:#000;
+
+    text-decoration:underline;
+
+}
+
+/* ==========================================
+   ANIMATION
+========================================== */
+
+.login-box{
+
+    animation:fadeUp .8s ease;
+
+}
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(40px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#cfcfcf;
+
+    border-radius:10px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#999;
+
+}
+

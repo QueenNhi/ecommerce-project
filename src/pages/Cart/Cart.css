@@ -1,0 +1,515 @@
+/* ====================================
+   CART PAGE
+==================================== */
+
+.cart-page {
+
+    width: 100%;
+
+    background: #faf8f5;
+
+    min-height: 100vh;
+
+    padding: 70px 0;
+
+}
+
+.cart-container {
+
+    width: 92%;
+
+    max-width: 1400px;
+
+    margin: auto;
+
+}
+
+.cart-title {
+
+    margin-bottom: 45px;
+
+}
+
+.cart-title h1 {
+
+    font-size: 42px;
+
+    font-family: "Cormorant Garamond", serif;
+
+    font-weight: 600;
+
+    color: #1d1d1d;
+
+}
+
+.cart-title p {
+
+    margin-top: 10px;
+
+    color: #888;
+
+}
+
+/* ====================================
+   LAYOUT
+==================================== */
+
+.cart-wrapper {
+
+    display: grid;
+
+    grid-template-columns: 2fr 420px;
+
+    gap: 45px;
+
+    align-items: start;
+
+}
+
+/* ====================================
+   TABLE
+==================================== */
+
+.cart-table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    background: #fff;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-shadow: 0 10px 35px rgba(0,0,0,.05);
+
+}
+
+.cart-table thead {
+
+    background: #111;
+
+    color: #fff;
+
+}
+
+.cart-table th {
+
+    padding: 20px;
+
+    text-align: left;
+
+    font-weight: 500;
+
+}
+
+.cart-table td {
+
+    padding: 22px;
+
+    border-bottom: 1px solid #efefef;
+
+    vertical-align: middle;
+
+}
+
+/* ====================================
+   PRODUCT
+==================================== */
+
+.product-info {
+
+    display: flex;
+
+    gap: 20px;
+
+    align-items: center;
+
+}
+
+.product-info img {
+
+    width: 110px;
+
+    height: 135px;
+
+    object-fit: cover;
+
+    border-radius: 12px;
+
+}
+
+.product-info h4 {
+
+    font-size: 18px;
+
+    margin-bottom: 10px;
+
+}
+
+.product-info p {
+
+    color: #888;
+
+    margin: 5px 0;
+
+    font-size: 14px;
+
+}
+
+/* ====================================
+   QUANTITY
+==================================== */
+
+.quantity-box {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+.quantity-box button {
+
+    width: 36px;
+
+    height: 36px;
+
+    border: 1px solid #ddd;
+
+    background: white;
+
+    cursor: pointer;
+
+    transition: .3s;
+
+    font-size: 18px;
+
+}
+
+.quantity-box button:hover {
+
+    background: #111;
+
+    color: white;
+
+}
+
+.quantity-box span {
+
+    width: 30px;
+
+    text-align: center;
+
+    font-weight: 600;
+
+}
+
+/* ====================================
+   DELETE
+==================================== */
+
+.delete-btn {
+
+    border: none;
+
+    background: transparent;
+
+    color: #b40000;
+
+    cursor: pointer;
+
+    font-size: 22px;
+
+    transition: .3s;
+
+}
+
+.delete-btn:hover {
+
+    transform: rotate(90deg);
+
+}
+
+/* ====================================
+   SUMMARY
+==================================== */
+
+.summary-card {
+
+    background: #fff;
+
+    border-radius: 16px;
+
+    padding: 35px;
+
+    box-shadow: 0 10px 35px rgba(0,0,0,.05);
+
+    position: sticky;
+
+    top: 120px;
+
+}
+
+.summary-card h2 {
+
+    font-size: 28px;
+
+    font-family: "Cormorant Garamond", serif;
+
+    margin-bottom: 30px;
+
+}
+
+.summary-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 18px;
+
+    font-size: 16px;
+
+    color: #555;
+
+}
+
+.summary-row.total {
+
+    border-top: 1px solid #eee;
+
+    padding-top: 22px;
+
+    margin-top: 25px;
+
+    font-size: 22px;
+
+    font-weight: 700;
+
+    color: #111;
+
+}
+
+/* ====================================
+   BUTTONS
+==================================== */
+
+.checkout-btn {
+
+    width: 100%;
+
+    padding: 16px;
+
+    margin-top: 30px;
+
+    border: none;
+
+    background: #111;
+
+    color: #fff;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+    letter-spacing: 1px;
+
+    transition: .35s;
+
+    border-radius: 10px;
+
+}
+
+.checkout-btn:hover {
+
+    background: #222;
+
+    transform: translateY(-2px);
+
+}
+
+.clear-btn {
+
+    width: 100%;
+
+    margin-top: 15px;
+
+    padding: 15px;
+
+    border: 1px solid #111;
+
+    background: white;
+
+    color: #111;
+
+    cursor: pointer;
+
+    transition: .3s;
+
+    border-radius: 10px;
+
+}
+
+.clear-btn:hover {
+
+    background: #111;
+
+    color: white;
+
+}
+
+.continue-btn {
+
+    display: block;
+
+    text-align: center;
+
+    margin-top: 18px;
+
+    text-decoration: none;
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+    background: #ece8e3;
+
+    color: #111;
+
+    transition: .3s;
+
+}
+
+.continue-btn:hover {
+
+    background: #ddd5cb;
+
+}
+
+/* ====================================
+   EMPTY CART
+==================================== */
+
+.empty-cart {
+
+    background: white;
+
+    padding: 90px 40px;
+
+    border-radius: 18px;
+
+    text-align: center;
+
+    box-shadow: 0 10px 35px rgba(0,0,0,.05);
+
+}
+
+.empty-cart h2 {
+
+    font-size: 34px;
+
+    font-family: "Cormorant Garamond", serif;
+
+    margin-bottom: 15px;
+
+}
+
+.empty-cart p {
+
+    color: #777;
+
+    margin-bottom: 35px;
+
+}
+
+/* ====================================
+   LOADING
+==================================== */
+
+.cart-loading {
+
+    min-height: 500px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 22px;
+
+    font-weight: 500;
+
+}
+
+/* ====================================
+   RESPONSIVE
+==================================== */
+
+@media (max-width:1100px){
+
+    .cart-wrapper{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .summary-card{
+
+        position: static;
+
+    }
+
+}
+
+@media (max-width:768px){
+
+    .cart-page{
+
+        padding:40px 15px;
+
+    }
+
+    .cart-title h1{
+
+        font-size:32px;
+
+    }
+
+    .product-info{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+    .product-info img{
+
+        width:90px;
+
+        height:110px;
+
+    }
+
+    .cart-table{
+
+        display:block;
+
+        overflow-x:auto;
+
+    }
+
+    .summary-card{
+
+        padding:25px;
+
+    }
+
+}
