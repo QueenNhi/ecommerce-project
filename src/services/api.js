@@ -1,5 +1,7 @@
 // src/services/api.js
 
-const API_URL = "http://localhost:5000/api";
+axios.create({
+    baseURL: "https://ecommerce-project-n45y.onrender.com/api"
+})
 
 export default API_URL;
