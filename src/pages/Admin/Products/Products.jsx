@@ -328,14 +328,14 @@
 
                                             <div className="product-info">
 
-                                                <img
-                                                    src={`http://localhost:5000/uploads/${item.image_url}`}
-                                                    alt={item.name}
-                                                    onError={(e) => {
-                                                        e.target.src =
-                                                            "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='70' height='70'><rect width='70' height='70' rx='10' fill='%23f1f5f9'/><text x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-size='10' font-family='sans-serif' fill='%2394a3b8'>No Img</text></svg>";
-                                                    }}
-                                                />
+                                            <img
+                                                src={`${UPLOADS_URL}/${item.image_url}`}
+                                                alt={item.name}
+                                                onError={(e) => {
+                                                    e.target.src =
+                                                        "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='70' height='70'><rect width='70' height='70' rx='10' fill='%23f1f5f9'/><text x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-size='10' font-family='sans-serif' fill='%2394a3b8'>No Img</text></svg>";
+                                                }}
+                                            />
 
                                                 <div>
 
