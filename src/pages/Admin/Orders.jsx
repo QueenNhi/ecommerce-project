@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
+import { API_URL, UPLOADS_URL } from "../../config/api";
 import "../../css/admin/Orders.css";
 
 const AdminOrders = () => {
@@ -17,7 +18,7 @@ const AdminOrders = () => {
     // ======================================
     const fetchOrders = async () => {
         try {
-            const res = await fetch("http://localhost:5000/api/admin/orders/all");
+            const res = await fetch(`${API_URL}/api/admin/orders/all`);
             const data = await res.json();
             if (data.success && Array.isArray(data.orders)) {
                 setOrders(data.orders);
@@ -41,7 +42,7 @@ const AdminOrders = () => {
     // ======================================
     const handleStatusChange = async (orderId, newStatus) => {
         try {
-            const res = await fetch(`http://localhost:5000/api/admin/orders/${orderId}/status`, {
+            const res = await fetch(`${API_URL}/api/admin/orders/${orderId}/status`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json"
@@ -69,7 +70,7 @@ const AdminOrders = () => {
         setSelectedOrder(order);
         setModalLoading(true);
         try {
-            const res = await fetch(`http://localhost:5000/api/orders/${order.id}`);
+            const res = await fetch(`${API_URL}/api/orders/${order.id}`);
             const data = await res.json();
             if (data.success && Array.isArray(data.items)) {
                 setOrderItems(data.items);
@@ -221,7 +222,7 @@ const AdminOrders = () => {
                                                             onClick={async () => {
                                                                 if (window.confirm(`Xác nhận khách hàng đã chuyển khoản thành công cho đơn hàng #LX-${order.id}?`)) {
                                                                     try {
-                                                                        const res = await fetch(`http://localhost:5000/api/admin/orders/${order.id}/payment-status`, {
+                                                                        const res = await fetch(`${API_URL}/api/admin/orders/${order.id}/payment-status`, {
                                                                             method: "PUT",
                                                                             headers: { "Content-Type": "application/json" },
                                                                             body: JSON.stringify({ payment_status: "paid" })
@@ -302,7 +303,7 @@ const AdminOrders = () => {
                                     {orderItems.map(item => (
                                         <div className="modal-item" key={item.id}>
                                             <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                                                <img src={`http://localhost:5000/uploads/${item.image_url}`} alt={item.name} />
+                                                <img src={`${UPLOADS_URL}/${item.image_url}`} alt={item.name} />
                                                 <div className="modal-item-info">
                                                     <h5>{item.name}</h5>
                                                     <p>

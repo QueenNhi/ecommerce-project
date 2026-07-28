@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "../../../css/admin/Products.css";
 import { FiX } from "react-icons/fi";
+import { UPLOADS_URL } from "../../../config/api";
 
 const ProductModal = ({
     open,
@@ -242,7 +243,7 @@ const ProductModal = ({
 {form.image_url && !form.image && (
 
     <img
-        src={`http://localhost:5000/uploads/${form.image_url}`}
+        src={`${UPLOADS_URL}/${form.image_url}`}
         alt=""
         style={{
             width: 120,
@@ -272,7 +273,7 @@ const ProductModal = ({
                             {form.image_url && (
 
                                 <img
-                                    src={`http://localhost:5000/uploads/${form.image_url}`}
+                                    src={`${UPLOADS_URL}/${form.image_url}`}
                                     alt=""
                                     style={{
                                         width: 120,

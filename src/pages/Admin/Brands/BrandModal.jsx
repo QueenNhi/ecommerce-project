@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { API_URL, UPLOADS_URL } from "../../../config/api";
 import "../../../css/admin/Brands.css";
 
 const BrandModal = ({ brand, close, reload }) => {
@@ -14,7 +15,7 @@ const BrandModal = ({ brand, close, reload }) => {
         if (brand) {
             setName(brand.name || "");
             if (brand.logo) {
-                setLogoPreview(`http://localhost:5000/uploads/${brand.logo}`);
+                setLogoPreview(`${UPLOADS_URL}/${brand.logo}`);
             }
         }
     }, [brand]);
@@ -48,14 +49,14 @@ const BrandModal = ({ brand, close, reload }) => {
 
             if (brand) {
                 await axios.put(
-                    `http://localhost:5000/api/admin/brands/${brand.id}`,
+                    `${API_URL}/api/admin/brands/${brand.id}`,
                     formData,
                     { headers: { "Content-Type": "multipart/form-data" } }
                 );
                 setSuccessMsg("✅ Cập nhật thương hiệu thành công!");
             } else {
                 await axios.post(
-                    "http://localhost:5000/api/admin/brands",
+                    `${API_URL}/api/admin/brands`,
                     formData,
                     { headers: { "Content-Type": "multipart/form-data" } }
                 );

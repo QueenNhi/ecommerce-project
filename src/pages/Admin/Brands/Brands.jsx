@@ -3,6 +3,7 @@ import axios from "axios";
 import AdminLayout from "../../../layouts/AdminLayout";
 import BrandModal from "./BrandModal";
 import DeleteBrandModal from "./DeleteBrandModal";
+import { API_URL, UPLOADS_URL } from "../../../config/api";
 import "../../../css/admin/Brands.css";
 
 const Brands = () => {
@@ -17,7 +18,7 @@ const Brands = () => {
     const getBrands = async () => {
         try {
             setLoading(true);
-            const res = await axios.get("http://localhost:5000/api/admin/brands");
+            const res = await axios.get(`${API_URL}/api/admin/brands`);
             // Backend trả về { success: true, brands: [...] }
             if (res.data?.success && Array.isArray(res.data?.brands)) {
                 setBrands(res.data.brands);
@@ -121,7 +122,7 @@ const Brands = () => {
                                             <td>
                                                 {brand.logo ? (
                                                     <img
-                                                        src={`http://localhost:5000/uploads/${brand.logo}`}
+                                                        src={`${UPLOADS_URL}/${brand.logo}`}
                                                         alt={brand.name}
                                                         className="brand-logo-img"
                                                     />

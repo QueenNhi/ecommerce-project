@@ -6,6 +6,8 @@ import {
     FiX
 } from "react-icons/fi";
 
+import { UPLOADS_URL } from "../../../config/api";
+
 const DeleteProductModal = ({
     open,
     product,
@@ -80,7 +82,7 @@ const DeleteProductModal = ({
                     <div className="delete-product">
 
                         <img
-                            src={`http://localhost:5000/uploads/${product.image_url}`}
+                            src={`${UPLOADS_URL}/${product.image_url}`}
                             alt={product.name}
                             onError={(e) => {
                                 if (!e.target.dataset.err) {

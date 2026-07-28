@@ -4,6 +4,8 @@ import {
     FiTrash2
 } from "react-icons/fi";
 
+import { UPLOADS_URL } from "../../../config/api";
+
 const ProductTable = ({
     products,
     loading,
@@ -91,7 +93,7 @@ const ProductTable = ({
                                     <div className="product-info">
 
                                         <img
-                                            src={`http://localhost:5000/uploads/${item.image_url}`}
+                                            src={`${UPLOADS_URL}/${item.image_url}`}
                                             alt={item.name}
                                             onError={(e) => {
                                                 if (!e.target.dataset.err) {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
+import { API_URL } from "../../config/api";
 import "../../css/admin/Promotions.css";
 
 const Promotions = () => {
@@ -21,7 +22,7 @@ const Promotions = () => {
 
     const fetchPromotions = async () => {
         try {
-            const res = await fetch("http://localhost:5000/api/admin/promotions");
+            const res = await fetch(`${API_URL}/api/admin/promotions`);
             const data = await res.json();
             if (data.success && Array.isArray(data.promotions)) {
                 setPromotions(data.promotions);
@@ -71,13 +72,13 @@ const Promotions = () => {
         try {
             let res;
             if (selectedPromo) {
-                res = await fetch(`http://localhost:5000/api/admin/promotions/${selectedPromo.id}`, {
+                res = await fetch(`${API_URL}/api/admin/promotions/${selectedPromo.id}`, {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(formData)
                 });
             } else {
-                res = await fetch("http://localhost:5000/api/admin/promotions", {
+                res = await fetch(`${API_URL}/api/admin/promotions`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(formData)
@@ -100,7 +101,7 @@ const Promotions = () => {
 
     const handleDelete = async (id) => {
         try {
-            const res = await fetch(`http://localhost:5000/api/admin/promotions/${id}`, {
+            const res = await fetch(`${API_URL}/api/admin/promotions/${id}`, {
                 method: "DELETE"
             });
             const data = await res.json();

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
+import { API_URL } from "../../config/api";
 import "../../css/admin/Settings.css";
 
 const AdminSettings = () => {
@@ -15,7 +16,7 @@ const AdminSettings = () => {
 
     const fetchSettings = async () => {
         try {
-            const res = await fetch("http://localhost:5000/api/admin/settings");
+            const res = await fetch(`${API_URL}/api/admin/settings`);
             const data = await res.json();
             if (data.success && data.settings) {
                 setFormData({
@@ -41,7 +42,7 @@ const AdminSettings = () => {
         e.preventDefault();
         setSaving(true);
         try {
-            const res = await fetch("http://localhost:5000/api/admin/settings", {
+            const res = await fetch(`${API_URL}/api/admin/settings`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData)

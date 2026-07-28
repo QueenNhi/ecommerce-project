@@ -10,6 +10,8 @@ import {
     FiCheckCircle
 } from "react-icons/fi";
 
+import { UPLOADS_URL } from "../../../config/api";
+
 const ViewProductModal = ({ open, product, onClose }) => {
 
     if (!open || !product) return null;
@@ -26,7 +28,7 @@ const ViewProductModal = ({ open, product, onClose }) => {
 
                     <h2>
 
-                        Product Details
+                        Chi tiết sản phẩm #{product.id}
 
                     </h2>
 
@@ -50,7 +52,7 @@ const ViewProductModal = ({ open, product, onClose }) => {
                     <div className="view-image">
 
                         <img
-                            src={`http://localhost:5000/uploads/${product.image_url}`}
+                            src={`${UPLOADS_URL}/${product.image_url}`}
                             alt={product.name}
                             onError={(e) => {
                                 if (!e.target.dataset.err) {

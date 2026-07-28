@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { useAuth } from "../../context/AuthContext";
+import { API_URL, UPLOADS_URL } from "../../config/api";
 
 import "./Cart.css";
 
@@ -35,7 +36,7 @@ function Cart() {
 
             const response = await fetch(
 
-                `http://localhost:5000/api/cart/${userId}`
+                `${API_URL}/api/cart/${userId}`
 
             );
 
@@ -125,7 +126,7 @@ function Cart() {
 
             await fetch(
 
-                "http://localhost:5000/api/cart/update",
+                `${API_URL}/api/cart/update`,
 
                 {
 
@@ -190,7 +191,7 @@ function Cart() {
 
             await fetch(
 
-                `http://localhost:5000/api/cart/remove/${id}`,
+                `${API_URL}/api/cart/remove/${id}`,
 
                 {
 
@@ -236,7 +237,7 @@ function Cart() {
 
             await fetch(
 
-                `http://localhost:5000/api/cart/clear/${userId}`,
+                `${API_URL}/api/cart/clear/${userId}`,
 
                 {
 
@@ -519,7 +520,7 @@ function Cart() {
 
                                                     src={
 
-                                                    `http://localhost:5000/uploads/${item.image_url}`
+                                                    `${UPLOADS_URL}/${item.image_url}`
 
                                                     }
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
+import { API_URL, UPLOADS_URL } from "../../config/api";
 import "../../css/admin/Reviews.css";
 
 const Reviews = () => {
@@ -12,7 +13,7 @@ const Reviews = () => {
 
     const fetchReviews = async () => {
         try {
-            const res = await fetch("http://localhost:5000/api/admin/reviews");
+            const res = await fetch(`${API_URL}/api/admin/reviews`);
             const data = await res.json();
             if (data.success && Array.isArray(data.reviews)) {
                 setReviews(data.reviews);
@@ -30,7 +31,7 @@ const Reviews = () => {
 
     const handleDelete = async (id) => {
         try {
-            const res = await fetch(`http://localhost:5000/api/admin/reviews/${id}`, {
+            const res = await fetch(`${API_URL}/api/admin/reviews/${id}`, {
                 method: "DELETE"
             });
             const data = await res.json();
@@ -117,7 +118,7 @@ const Reviews = () => {
                                             <td>
                                                 <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                                                     <img
-                                                        src={`http://localhost:5000/uploads/${rev.product_image}`}
+                                                        src={`${UPLOADS_URL}/${rev.product_image}`}
                                                         alt={rev.product_name}
                                                         className="review-product-img"
                                                         onError={e => { if(!e.target.dataset.err){e.target.dataset.err=1;e.target.src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48'><rect width='48' height='48' rx='8' fill='%23f1f5f9'/><text x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-size='9' font-family='sans-serif' fill='%2394a3b8'>IMG</text></svg>";} }}
