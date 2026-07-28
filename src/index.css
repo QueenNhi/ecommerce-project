@@ -209,108 +209,87 @@ HERO
 ==========================*/
 
 .hero{
-
     position:relative;
-
-    height:78vh;
-
+    height:90vh;
+    min-height:600px;
     display:flex;
-
     align-items:center;
-
-    background:url("https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1800&auto=format&fit=crop") center/cover;
-
+    background:#0f172a url("https://images.unsplash.com/photo-1548036328-c9fa89d128fa?q=80&w=2400&auto=format&fit=crop") center/cover no-repeat;
+    color:#ffffff;
 }
 
 .hero-overlay{
-
     position:absolute;
-
     inset:0;
-
     background:linear-gradient(
-        90deg,
-        rgba(255,255,255,.93),
-        rgba(255,255,255,.65),
-        rgba(255,255,255,.15)
+        110deg,
+        rgba(15,23,42,.96) 0%,
+        rgba(15,23,42,.88) 45%,
+        rgba(15,23,42,.65) 75%,
+        rgba(15,23,42,.45) 100%
     );
-
+    z-index:1;
 }
 
 .hero-content{
-
     position:relative;
-
     z-index:2;
-
-    max-width:560px;
-
+    max-width:720px;
     margin-left:8%;
-
 }
 
 .hero-tag{
-
-    color:#0035c5;
-
-    font-size:14px;
-
+    color:#d4a853;
+    font-size:12px;
     font-weight:700;
-
-    letter-spacing:2px;
-
+    letter-spacing:2.5px;
+    text-transform:uppercase;
 }
 
 .hero h1{
-
-    font-size:58px;
-
+    font-family:'Cinzel', 'Playfair Display', Georgia, serif;
+    font-size:56px;
     line-height:1.15;
-
     margin:18px 0;
-
+    color:#ffffff;
+    text-shadow:0 4px 25px rgba(0,0,0,.8);
 }
 
 .hero p{
-
-    font-size:18px;
-
-    color:#555;
-
-    line-height:1.8;
-
+    font-size:17px;
+    color:#ffffff;
+    line-height:1.75;
     margin-bottom:35px;
-
+    text-shadow:0 2px 12px rgba(0,0,0,.8);
+    font-weight:500;
 }
 
-.hero-btn{
-
+.hero-btn, .bespoke-btn{
     border:none;
-
-    padding:15px 40px;
-
-    background:#0035c5;
-
-    color:white;
-
-    border-radius:12px;
-
+    padding:18px 38px;
+    background:#0f172a;
+    color:#ffffff !important;
+    border-radius:8px;
     cursor:pointer;
-
-    transition:.3s;
-
-    font-size:16px;
-
-    font-weight:600;
-
+    transition:all .3s ease;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    text-decoration:none;
+    box-shadow:0 8px 25px rgba(15,23,42,.4);
+    border:1.5px solid #8b6b2d;
 }
 
-.hero-btn:hover{
-
-    transform:translateY(-4px);
-
-    box-shadow:0 12px 28px rgba(0,53,197,.28);
-
+.hero-btn:hover, .bespoke-btn:hover{
+    background:#8b6b2d;
+    color:#ffffff !important;
+    border-color:#8b6b2d;
+    transform:translateY(-3px);
+    box-shadow:0 12px 35px rgba(139,107,45,.5);
 }
 
 /*==========================
@@ -389,227 +368,143 @@ PRODUCT CARD
 ==========================*/
 
 .product-card{
-
     background:#fff;
-
-    border-radius:18px;
-
+    border-radius:16px;
     padding:14px;
-
     position:relative;
-
     overflow:hidden;
-
     display:flex;
-
     flex-direction:column;
-
-    transition:.35s;
-
-    box-shadow:0 5px 18px rgba(0,0,0,.05);
-
+    transition:all .35s cubic-bezier(.25,1,.5,1);
+    box-shadow:0 4px 15px rgba(0,0,0,.04);
+    border:1px solid #e2e8f0;
+    text-decoration:none;
 }
 
 .product-card:hover{
-
-    transform:translateY(-8px);
-
-    box-shadow:0 12px 35px rgba(0,0,0,.12);
-
+    transform:translateY(-6px);
+    box-shadow:0 12px 30px rgba(0,0,0,.1);
+    border-color:#8b6b2d;
 }
 
 .discount{
-
     position:absolute;
-
     top:16px;
-
     left:16px;
-
-    background:#e53935;
-
+    background:#dc2626;
     color:white;
-
     padding:4px 10px;
-
     border-radius:20px;
-
-    font-size:12px;
-
-    font-weight:600;
-
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1px;
     z-index:20;
-
 }
 
 .product-image{
-
     position:relative;
-
     overflow:hidden;
-
-    border-radius:14px;
-
+    border-radius:12px;
 }
 
 .product-img{
-
     width:100%;
-
     aspect-ratio:4/5;
-
     object-fit:cover;
-
     display:block;
-
-    transition:.45s;
-
-    background:#ececec;
-
+    transition:transform .45s cubic-bezier(.25,1,.5,1);
+    background:#f8fafc;
 }
 
 .product-card:hover .product-img{
-
     transform:scale(1.06);
-
 }
 
 .wishlist{
-
     position:absolute;
-
     right:12px;
-
     bottom:12px;
-
-    width:42px;
-
-    height:42px;
-
+    width:38px;
+    height:38px;
     border:none;
-
     border-radius:50%;
-
-    background:rgba(255,255,255,.95);
-
+    background:rgba(255,255,255,.9);
+    backdrop-filter:blur(4px);
     cursor:pointer;
-
-    font-size:18px;
-
+    font-size:16px;
     opacity:0;
-
-    transition:.35s;
-
-    box-shadow:0 5px 15px rgba(0,0,0,.1);
-
+    transition:.3s;
+    box-shadow:0 4px 12px rgba(0,0,0,.1);
 }
 
 .product-card:hover .wishlist{
-
     opacity:1;
-
 }
 
 .wishlist:hover{
-
-    background:#0035c5;
-
+    background:#0f172a;
     color:#fff;
-
 }
 
 .product-info{
-
     display:flex;
-
     flex-direction:column;
-
     flex:1;
-
 }
 
 .brand{
-
-    margin-top:15px;
-
-    color:#888;
-
-    font-size:13px;
-
+    margin-top:14px;
+    color:#8b6b2d;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
 }
 
 .product-title{
-
-    margin-top:6px;
-
-    font-size:16px;
-
+    margin-top:4px;
+    font-size:15px;
     font-weight:600;
-
-    line-height:24px;
-
-    min-height:48px;
-
-    color:#222;
-
+    line-height:22px;
+    min-height:44px;
+    color:#0f172a;
 }
 
 .rating{
-
-    margin-top:8px;
-
-    color:#f5b301;
-
+    margin-top:6px;
+    color:#f59e0b;
     font-size:14px;
-
 }
 
 .product-price{
-
-    margin-top:12px;
-
-    color:#0035c5;
-
-    font-size:21px;
-
-    font-weight:700;
-
+    margin-top:10px;
+    color:#8b6b2d;
+    font-size:20px;
+    font-weight:800;
 }
 
 .buy-btn{
-
-    margin-top:18px;
-
+    margin-top:14px;
     border:none;
-
-    border-radius:10px;
-
-    background:#0035c5;
-
+    border-radius:8px;
+    background:#0f172a;
     color:#fff;
-
-    padding:12px;
-
+    padding:11px;
     cursor:pointer;
-
-    font-size:15px;
-
-    font-weight:600;
-
-    transition:.3s;
-
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    transition:all .3s ease;
 }
 
 .buy-btn:hover{
-
-    background:#00269b;
-
+    background:#8b6b2d;
+    box-shadow:0 4px 15px rgba(139,107,45,.3);
 }
 
 .buy-btn:active{
-
     transform:scale(.98);
-
 }
 
 /*==========================

@@ -20,21 +20,37 @@ const Login = () => {
     const [errorMsg, setErrorMsg] = useState("");
 
     const handleChange = (e) => {
-
         setForm({
             ...form,
             [e.target.name]: e.target.value
         });
         setErrorMsg("");
+    };
 
+    // ============================
+    // HELPER: xác định trang điến
+    // admin | sale | warehouse → /admin
+    // customer → /
+    // ============================
+    const getRedirectPath = (userData) => {
+        const roleStr = userData?.role ? String(userData.role).toLowerCase().trim() : "";
+        const isInternal =
+            userData?.isAdmin ||
+            userData?.is_admin ||
+            roleStr === "admin" ||
+            roleStr === "manager" ||
+            roleStr === "sale" ||
+            roleStr === "sales" ||
+            roleStr === "warehouse" ||
+            roleStr === "staff" ||
+            roleStr === "support";
+        return isInternal ? "/admin" : "/";
     };
 
     // ============================
     // LOGIN EMAIL
     // ============================
-
     const handleLogin = async (e) => {
-
         e.preventDefault();
 
         if (!form.email || !form.password) {
@@ -43,7 +59,6 @@ const Login = () => {
         }
 
         try {
-
             setLoading(true);
             setErrorMsg("");
 
@@ -51,9 +66,7 @@ const Login = () => {
                 "http://localhost:5000/api/auth/login",
                 {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         email: form.email,
                         password: form.password
@@ -64,10 +77,10 @@ const Login = () => {
             const data = await res.json();
 
             if (data.success) {
-
-                // Lưu vào localStorage TRƯỚC khi navigate (tránh race condition)
                 const userData = data.user;
                 const tokenData = data.token;
+
+                // Lưu vào localStorage
                 try {
                     localStorage.setItem("user", JSON.stringify(userData));
                     if (tokenData) localStorage.setItem("token", tokenData);
@@ -78,67 +91,39 @@ const Login = () => {
                 // Cập nhật context
                 login(userData, tokenData);
 
-                const roleStr = userData?.role ? String(userData.role).toLowerCase() : "";
-                const isAdminUser = userData?.isAdmin || userData?.is_admin || roleStr === "admin" || roleStr === "manager";
+                // Phân quyền điều hướng theo role
+                const redirectPath = getRedirectPath(userData);
 
-                // Dùng window.location.href để force reload, đảm bảo AuthContext đọc lại từ localStorage
-                if (isAdminUser) {
-                    window.location.href = "/admin";
-                } else {
-                    navigate("/");
-                }
+                // Dùng window.location.href để force reload,
+                // đảm bảo AuthContext đọc lại từ localStorage
+                window.location.href = redirectPath;
 
             } else {
-
                 setErrorMsg(data.message || "Đăng nhập không thành công.");
-
             }
 
         } catch (err) {
-
             console.log(err);
             setErrorMsg("Không thể kết nối tới Server.");
-
         } finally {
-
             setLoading(false);
-
         }
-
     };
-
 
     // ============================
     // LOGIN GOOGLE
     // ============================
-
     const handleGoogleLogin = async () => {
-
         try {
-
-            const result = await signInWithPopup(
-                auth,
-                googleProvider
-            );
-
+            const result = await signInWithPopup(auth, googleProvider);
             const googleUser = await loginWithGoogle(result.user);
 
-            const roleStr = googleUser?.role ? String(googleUser.role).toLowerCase() : "";
-            const isAdmin = googleUser?.isAdmin || googleUser?.is_admin || roleStr === "admin" || roleStr === "manager";
-
-            if (isAdmin) {
-                navigate("/admin");
-            } else {
-                navigate("/");
-            }
-
+            const redirectPath = getRedirectPath(googleUser);
+            navigate(redirectPath);
         } catch (err) {
-
             console.log(err);
             setErrorMsg(err.message);
-
         }
-
     };
 
     return (

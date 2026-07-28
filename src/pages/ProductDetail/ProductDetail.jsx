@@ -1,9 +1,28 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { useAuth } from "../../context/AuthContext";
+import { API_URL, UPLOADS_URL } from "../../config/api";
+
+import {
+    FiShoppingBag,
+    FiHeart,
+    FiShield,
+    FiTruck,
+    FiLock,
+    FiPackage,
+    FiStar,
+    FiChevronRight,
+    FiCheck,
+    FiMinus,
+    FiPlus,
+    FiMaximize2,
+    FiShare2
+} from "react-icons/fi";
+
+import { HiShieldCheck, HiSparkles } from "react-icons/hi";
 
 import "../../css/pages/ProductDetail.css";
 
@@ -24,6 +43,9 @@ function ProductDetail() {
     const [selectedColor, setSelectedColor] = useState(null);
     const [selectedSize, setSelectedSize] = useState(null);
     const [quantity, setQuantity] = useState(1);
+    const [isWishlisted, setIsWishlisted] = useState(false);
+    const [activeTab, setActiveTab] = useState("description");
+    const [zoomImage, setZoomImage] = useState(false);
 
     // AI STYLIST STATES
     const [aiOutfits, setAiOutfits] = useState([]);
@@ -44,7 +66,7 @@ function ProductDetail() {
     // =============================
     const fetchReviews = async () => {
         try {
-            const res = await fetch(`http://localhost:5000/api/products/${id}/reviews`);
+            const res = await fetch(`${API_URL}/api/products/${id}/reviews`);
             const data = await res.json();
             if (data.success) {
                 setReviews(data.reviews || []);
@@ -58,7 +80,7 @@ function ProductDetail() {
 
     const fetchRelatedProducts = async () => {
         try {
-            const res = await fetch("http://localhost:5000/api/products/all");
+            const res = await fetch(`${API_URL}/api/products/all`);
             const data = await res.json();
             const allProducts = Array.isArray(data) ? data : (data?.products || data?.data || []);
             setRelatedProducts(allProducts.filter(p => p.id !== Number(id)).slice(0, 4));
@@ -74,7 +96,7 @@ function ProductDetail() {
         setLoadingAi(true);
         setShowAiModal(true);
         try {
-            const res = await fetch("http://localhost:5000/api/ai/recommend-outfit", {
+            const res = await fetch(`${API_URL}/api/ai/recommend-outfit`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -119,7 +141,7 @@ function ProductDetail() {
 
         setSubmittingReview(true);
         try {
-            const res = await fetch(`http://localhost:5000/api/products/${id}/reviews`, {
+            const res = await fetch(`${API_URL}/api/products/${id}/reviews`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -158,7 +180,7 @@ function ProductDetail() {
         }
 
         try {
-            const response = await fetch("http://localhost:5000/api/cart/add", {
+            const response = await fetch(`${API_URL}/api/cart/add`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -184,6 +206,11 @@ function ProductDetail() {
         }
     };
 
+    const handleBuyNow = async () => {
+        await handleAddToCart();
+        navigate("/cart");
+    };
+
     // =============================
     // EFFECTS (LOAD & COLOR CHANGE)
     // =============================
@@ -198,17 +225,17 @@ function ProductDetail() {
         const loadData = async () => {
             try {
                 // PRODUCT
-                const productRes = await fetch(`http://localhost:5000/api/products/${id}`);
+                const productRes = await fetch(`${API_URL}/api/products/${id}`);
                 const productData = await productRes.json();
                 setProduct(productData);
 
                 // COLORS
-                const colorRes = await fetch(`http://localhost:5000/api/products/${id}/colors`);
+                const colorRes = await fetch(`${API_URL}/api/products/${id}/colors`);
                 const colorData = await colorRes.json();
                 setColors(colorData);
 
                 // SIZES
-                const sizeRes = await fetch(`http://localhost:5000/api/products/${id}/sizes`);
+                const sizeRes = await fetch(`${API_URL}/api/products/${id}/sizes`);
                 const sizeData = await sizeRes.json();
                 setSizes(sizeData);
 
@@ -217,17 +244,17 @@ function ProductDetail() {
                     const firstColorId = colorData[0].id;
                     setSelectedColor(firstColorId);
 
-                    const imageRes = await fetch(`http://localhost:5000/api/products/${id}/images?color=${firstColorId}`);
+                    const imageRes = await fetch(`${API_URL}/api/products/${id}/images?color=${firstColorId}`);
                     const imageData = await imageRes.json();
                     setImages(imageData);
 
                     if (imageData.length > 0) {
-                        setMainImage(`http://localhost:5000/uploads/${imageData[0].image_url}`);
+                        setMainImage(`${UPLOADS_URL}/${imageData[0].image_url}`);
                     } else if (productData.image_url) {
-                        setMainImage(`http://localhost:5000/uploads/${productData.image_url}`);
+                        setMainImage(`${UPLOADS_URL}/${productData.image_url}`);
                     }
                 } else if (productData.image_url) {
-                    setMainImage(`http://localhost:5000/uploads/${productData.image_url}`);
+                    setMainImage(`${UPLOADS_URL}/${productData.image_url}`);
                 }
             } catch (err) {
                 console.log(err);
@@ -238,309 +265,556 @@ function ProductDetail() {
 
     useEffect(() => {
         if (!selectedColor) return;
-        fetch(`http://localhost:5000/api/products/${id}/images?color=${selectedColor}`)
+        fetch(`${API_URL}/api/products/${id}/images?color=${selectedColor}`)
             .then(res => res.json())
             .then(data => {
                 setImages(data);
                 if (data.length > 0) {
-                    setMainImage(`http://localhost:5000/uploads/${data[0].image_url}`);
+                    setMainImage(`${UPLOADS_URL}/${data[0].image_url}`);
                 }
             })
             .catch(console.error);
     }, [selectedColor, id]);
 
+    // Active color object
+    const activeColorObj = colors.find(c => c.id === selectedColor);
+
     // =============================
     // RENDER
     // =============================
     if (!product) {
-        return <h2>Loading...</h2>;
+        return (
+            <>
+                <Header />
+                <div className="product-detail-skeleton">
+                    <div className="skeleton-spinner"></div>
+                    <p>Loading Luxury Collection...</p>
+                </div>
+                <Footer />
+            </>
+        );
     }
 
     return (
         <>
             <Header />
 
-            <div className="detail-container">
-                {/* LEFT - GALLERY */}
-                <div className="gallery">
-                    <div className="thumb-list">
-                        {images.map((img) => (
-                            <img
-                                key={img.id}
-                                src={`http://localhost:5000/uploads/${img.image_url}`}
-                                alt={product.name}
-                                className={mainImage === `http://localhost:5000/uploads/${img.image_url}` ? "thumb active" : "thumb"}
-                                onClick={() => setMainImage(`http://localhost:5000/uploads/${img.image_url}`)}
-                            />
-                        ))}
-                    </div>
-                    <div className="main-image">
-                        {mainImage ? (
-                            <img src={mainImage} alt={product.name} />
-                        ) : (
-                            <div style={{ height: "550px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                No Image
-                            </div>
-                        )}
-                    </div>
+            <div className="luxury-product-page">
+                {/* ── BREADCRUMB ───────────────────────────── */}
+                <div className="product-breadcrumb">
+                    <Link to="/">HOME</Link>
+                    <FiChevronRight className="bc-icon" />
+                    <Link to="/products">HANDBAGS</Link>
+                    <FiChevronRight className="bc-icon" />
+                    <span className="current">{product.name}</span>
                 </div>
 
-                {/* RIGHT - INFO */}
-                <div className="detail-info">
-                    <h1>{product.name}</h1>
+                {/* ── MAIN PRODUCT GRID ────────────────────── */}
+                <div className="detail-container">
+                    
+                    {/* LEFT - GALLERY */}
+                    <div className="gallery">
+                        {/* THUMBNAILS */}
+                        <div className="thumb-list">
+                            {images.map((img) => {
+                                const imgSrc = `${UPLOADS_URL}/${img.image_url}`;
+                                const isActive = mainImage === imgSrc;
+                                return (
+                                    <div
+                                        key={img.id}
+                                        className={`thumb-wrapper ${isActive ? "active" : ""}`}
+                                        onClick={() => setMainImage(imgSrc)}
+                                    >
+                                        <img src={imgSrc} alt={product.name} className="thumb" />
+                                    </div>
+                                );
+                            })}
+                        </div>
 
-                    <div className="rating">
-                        ★★★★★ <span>({totalReviews} Reviews)</span>
-                    </div>
+                        {/* MAIN IMAGE CARD */}
+                        <div className="main-image-card">
+                            <span className="luxury-badge">HERITAGE SELECTION</span>
+                            
+                            <button
+                                className="zoom-btn"
+                                onClick={() => setZoomImage(!zoomImage)}
+                                title="Zoom Image"
+                            >
+                                <FiMaximize2 />
+                            </button>
 
-                    <h2>{Number(product.price).toLocaleString()} VNĐ</h2>
-                    <p>{product.description}</p>
-
-                    {/* COLOR OPTIONS */}
-                    <div className="option-group">
-                        <h4>Color</h4>
-                        <div className="colors">
-                            {colors.map((color) => (
-                                <button
-                                    key={color.id}
-                                    title={color.color_name}
-                                    className={selectedColor === color.id ? "color active" : "color"}
-                                    style={{ backgroundColor: color.color_code }}
-                                    onClick={() => setSelectedColor(color.id)}
+                            {mainImage ? (
+                                <img
+                                    src={mainImage}
+                                    alt={product.name}
+                                    className={`main-img ${zoomImage ? "zoomed" : ""}`}
+                                    onClick={() => setZoomImage(!zoomImage)}
                                 />
-                            ))}
+                            ) : (
+                                <div className="no-img-placeholder">
+                                    <span>NO IMAGE AVAILABLE</span>
+                                </div>
+                            )}
                         </div>
                     </div>
 
-                    {/* SIZE OPTIONS */}
-                    {sizes.length > 0 && (
-                        <div className="option-group">
-                            <h4>Size</h4>
-                            <div className="sizes">
-                                {sizes.map((size) => (
-                                    <button
-                                        key={size.id}
-                                        className={selectedSize === size.id ? "size active" : "size"}
-                                        onClick={() => setSelectedSize(size.id)}
-                                    >
-                                        {size.size_name}
-                                    </button>
+                    {/* RIGHT - PRODUCT INFO */}
+                    <div className="detail-info">
+                        
+                        {/* BRAND BADGE */}
+                        <div className="product-brand-tag">
+                            <span>LUXURY EDITION</span>
+                            <span className="dot">•</span>
+                            <span className="in-stock-label">IN STOCK</span>
+                        </div>
+
+                        {/* TITLE */}
+                        <h1 className="product-title">{product.name}</h1>
+
+                        {/* RATING & REVIEWS SUMMARY */}
+                        <div className="product-rating-bar">
+                            <div className="stars">
+                                {[1, 2, 3, 4, 5].map((star) => (
+                                    <FiStar
+                                        key={star}
+                                        className={star <= Math.round(averageRating) ? "star filled" : "star"}
+                                    />
                                 ))}
                             </div>
-                        </div>
-                    )}
-
-                    {/* QUANTITY */}
-                    <div className="quantity">
-                        <button onClick={() => quantity > 1 && setQuantity(quantity - 1)}>-</button>
-                        <span>{quantity}</span>
-                        <button onClick={() => setQuantity(quantity + 1)}>+</button>
-                    </div>
-{/* ================= ACTIONS ================= */}
-<div className="product-actions-wrapper" style={{ marginTop: "30px", width: "100%" }}>
-                        
-                        {/* Hàng 1: Add to Cart và Buy Now xếp ngang */}
-                        <div style={{ display: "flex", gap: "12px", marginBottom: "16px", width: "100%" }}>
-                            <button 
-                                onClick={handleAddToCart}
-                                style={{
-                                    flex: 1,
-                                    padding: "16px 0",
-                                    backgroundColor: "#0f172a",
-                                    color: "#ffffff",
-                                    border: "1px solid #0f172a",
-                                    borderRadius: "4px",
-                                    fontWeight: "600",
-                                    fontSize: "14px",
-                                    letterSpacing: "1px",
-                                    cursor: "pointer",
-                                    textTransform: "uppercase",
-                                    transition: "all 0.3s ease"
-                                }}
-                                onMouseOver={(e) => { e.target.style.backgroundColor = "#000"; e.target.style.borderColor = "#000"; }}
-                                onMouseOut={(e) => { e.target.style.backgroundColor = "#0f172a"; e.target.style.borderColor = "#0f172a"; }}
+                            <span className="rating-num">{averageRating}</span>
+                            <span className="divider">|</span>
+                            <a
+                                href="#reviews-section"
+                                className="reviews-link"
+                                onClick={() => setActiveTab("reviews")}
                             >
-                                Add To Cart
-                            </button>
-
-                            <button 
-                                style={{
-                                    flex: 1,
-                                    padding: "16px 0",
-                                    backgroundColor: "#ffffff",
-                                    color: "#0f172a",
-                                    border: "1px solid #0f172a",
-                                    borderRadius: "4px",
-                                    fontWeight: "600",
-                                    fontSize: "14px",
-                                    letterSpacing: "1px",
-                                    cursor: "pointer",
-                                    textTransform: "uppercase",
-                                    transition: "all 0.3s ease"
-                                }}
-                                onMouseOver={(e) => { e.target.style.backgroundColor = "#f8fafc"; }}
-                                onMouseOut={(e) => { e.target.style.backgroundColor = "#ffffff"; }}
-                            >
-                                Buy Now
-                            </button>
+                                {totalReviews} Verified Customer Reviews
+                            </a>
                         </div>
 
-                        {/* Hàng 2: Nút AI Stylist (Premium Look) */}
-                        <button
-                            onClick={handleGetAiStylist}
-                            style={{
-                                width: "100%",
-                                padding: "16px",
-                                background: "linear-gradient(90deg, #1e1b4b, #4338ca, #312e81)",
-                                backgroundSize: "200% auto",
-                                color: "#ffffff",
-                                border: "none",
-                                borderRadius: "4px",
-                                fontWeight: "600",
-                                fontSize: "15px",
-                                cursor: "pointer",
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                gap: "10px",
-                                boxShadow: "0 4px 15px rgba(67, 56, 202, 0.2)",
-                                transition: "all 0.3s ease"
-                            }}
-                            onMouseOver={(e) => { e.currentTarget.style.backgroundPosition = "right center"; e.currentTarget.style.boxShadow = "0 6px 20px rgba(67, 56, 202, 0.4)"; }}
-                            onMouseOut={(e) => { e.currentTarget.style.backgroundPosition = "left center"; e.currentTarget.style.boxShadow = "0 4px 15px rgba(67, 56, 202, 0.2)"; }}
-                        >
-                            <span style={{ fontSize: "18px" }}>✨</span> 
-                            <span>AI Stylist: Gợi ý phối đồ với túi này</span>
-                        </button>
-                    </div>
+                        {/* PRICE DISPLAY */}
+                        <div className="price-container">
+                            <span className="current-price">
+                                {Number(product.price).toLocaleString("vi-VN")} ₫
+                            </span>
+                            <span className="tax-notice">Taxes & Duty Included</span>
+                        </div>
 
+                        {/* SHORT DESCRIPTION */}
+                        <p className="product-desc-short">{product.description}</p>
+
+                        {/* COLOR SELECTOR */}
+                        {colors.length > 0 && (
+                            <div className="option-group">
+                                <div className="option-header">
+                                    <span className="option-title">COLOR:</span>
+                                    <span className="option-selected">{activeColorObj?.color_name || "Select Color"}</span>
+                                </div>
+                                <div className="colors-grid">
+                                    {colors.map((color) => {
+                                        const isSelected = selectedColor === color.id;
+                                        return (
+                                            <button
+                                                key={color.id}
+                                                title={color.color_name}
+                                                className={`color-swatch ${isSelected ? "active" : ""}`}
+                                                style={{ backgroundColor: color.color_code || "#000" }}
+                                                onClick={() => setSelectedColor(color.id)}
+                                            >
+                                                {isSelected && <FiCheck className="check-icon" />}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* SIZE SELECTOR */}
+                        {sizes.length > 0 && (
+                            <div className="option-group">
+                                <div className="option-header">
+                                    <span className="option-title">SIZE:</span>
+                                    <a href="#size-guide" onClick={(e) => { e.preventDefault(); alert("Standard Luxury Dimensions. Fits daily essentials gracefully."); }} className="size-guide-btn">
+                                        Size Guide
+                                    </a>
+                                </div>
+                                <div className="sizes-grid">
+                                    {sizes.map((size) => {
+                                        const isSelected = selectedSize === size.id;
+                                        return (
+                                            <button
+                                                key={size.id}
+                                                className={`size-btn ${isSelected ? "active" : ""}`}
+                                                onClick={() => setSelectedSize(size.id)}
+                                            >
+                                                {size.size_name}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* QUANTITY & ACTIONS */}
+                        <div className="quantity-and-actions">
+                            <div className="quantity-selector">
+                                <button
+                                    onClick={() => quantity > 1 && setQuantity(quantity - 1)}
+                                    disabled={quantity <= 1}
+                                    aria-label="Decrease quantity"
+                                >
+                                    <FiMinus />
+                                </button>
+                                <span className="qty-num">{quantity}</span>
+                                <button
+                                    onClick={() => setQuantity(quantity + 1)}
+                                    aria-label="Increase quantity"
+                                >
+                                    <FiPlus />
+                                </button>
+                            </div>
+
+                            <button
+                                className="wishlist-btn"
+                                onClick={() => setIsWishlisted(!isWishlisted)}
+                                title={isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
+                            >
+                                <FiHeart className={isWishlisted ? "heart-filled" : ""} />
+                            </button>
+
+                            <button
+                                className="share-btn"
+                                onClick={() => { navigator.clipboard.writeText(window.location.href); alert("Link copied to clipboard!"); }}
+                                title="Share Product"
+                            >
+                                <FiShare2 />
+                            </button>
+                        </div>
+
+                        {/* MAIN ACTION BUTTONS */}
+                        <div className="primary-actions">
+                            <button className="btn-add-cart" onClick={handleAddToCart}>
+                                <FiShoppingBag /> ADD TO CART
+                            </button>
+
+                            <button className="btn-buy-now" onClick={handleBuyNow}>
+                                BUY NOW
+                            </button>
+                        </div>
+
+                        {/* AI STYLIST BUTTON */}
+                        <div className="ai-stylist-banner">
+                            <button className="ai-stylist-btn" onClick={handleGetAiStylist}>
+                                <HiSparkles className="sparkle-icon" />
+                                <span>AI STYLIST: Gợi ý phối đồ với chiếc túi này</span>
+                            </button>
+                        </div>
+
+                        {/* TRUST PROPOSITIONS */}
+                        <div className="trust-props-grid">
+                            <div className="trust-prop-card">
+                                <FiTruck className="prop-icon" />
+                                <div>
+                                    <h5>Free Express Shipping</h5>
+                                    <p>Complimentary delivery on all luxury orders</p>
+                                </div>
+                            </div>
+                            <div className="trust-prop-card">
+                                <HiShieldCheck className="prop-icon" />
+                                <div>
+                                    <h5>Authenticity Guaranteed</h5>
+                                    <p>100% genuine craftsmanship with serial verification</p>
+                                </div>
+                            </div>
+                            <div className="trust-prop-card">
+                                <FiLock className="prop-icon" />
+                                <div>
+                                    <h5>Secure Payment</h5>
+                                    <p>Encrypted 256-bit payment gateway protection</p>
+                                </div>
+                            </div>
+                            <div className="trust-prop-card">
+                                <FiPackage className="prop-icon" />
+                                <div>
+                                    <h5>Signature Packaging</h5>
+                                    <p>Arrives in luxury box with silk dust cover</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
+
+                {/* ── TABS SECTION (DESCRIPTION, SPECS, REVIEWS) ────────────── */}
+                <section className="product-tabs-section" id="reviews-section">
+                    <div className="tabs-container">
+                        <div className="tabs-header">
+                            <button
+                                className={`tab-btn ${activeTab === "description" ? "active" : ""}`}
+                                onClick={() => setActiveTab("description")}
+                            >
+                                Description
+                            </button>
+                            <button
+                                className={`tab-btn ${activeTab === "specs" ? "active" : ""}`}
+                                onClick={() => setActiveTab("specs")}
+                            >
+                                Specifications
+                            </button>
+                            <button
+                                className={`tab-btn ${activeTab === "reviews" ? "active" : ""}`}
+                                onClick={() => setActiveTab("reviews")}
+                            >
+                                Reviews ({totalReviews})
+                            </button>
+                        </div>
+
+                        <div className="tab-content">
+                            {/* DESCRIPTION TAB */}
+                            {activeTab === "description" && (
+                                <div className="tab-pane fade-in">
+                                    <h3>Craftsmanship & Design</h3>
+                                    <p>{product.description}</p>
+                                    <div className="highlights-grid">
+                                        <div className="hl-item">
+                                            <h4>Premium Leather Selection</h4>
+                                            <p>Hand-picked top grain leather treated with natural vegetable tanning techniques for durable luxury.</p>
+                                        </div>
+                                        <div className="hl-item">
+                                            <h4>Handcrafted Hardware</h4>
+                                            <p>Gold-finish metallic fittings polished by master artisans to resist tarnishing and scratch marks.</p>
+                                        </div>
+                                        <div className="hl-item">
+                                            <h4>Ergonomic Interior</h4>
+                                            <p>Soft suede lining featuring multiple zip compartments for modern daily organization.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* SPECIFICATIONS TAB */}
+                            {activeTab === "specs" && (
+                                <div className="tab-pane fade-in">
+                                    <h3>Product Specifications</h3>
+                                    <table className="specs-table">
+                                        <tbody>
+                                            <tr>
+                                                <th>Product Name</th>
+                                                <td>{product.name}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Material</th>
+                                                <td>100% Genuine Italian Calfskin Leather</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Lining</th>
+                                                <td>Microfiber Suede Touch</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Hardware</th>
+                                                <td>Polished 24k Gold-Tone Metal Fittings</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Color</th>
+                                                <td>{activeColorObj?.color_name || product.color || "Classic Heritage"}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Origin</th>
+                                                <td>Handcrafted in Florence, Italy</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Included</th>
+                                                <td>Authenticity Card, Serial Seal, Dust Bag, Gift Box</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )}
+
+                            {/* REVIEWS TAB */}
+                            {activeTab === "reviews" && (
+                                <div className="tab-pane fade-in">
+                                    <div className="reviews-summary-card">
+                                        <div className="score-box">
+                                            <span className="big-score">{averageRating}</span>
+                                            <div className="stars">
+                                                {[1, 2, 3, 4, 5].map((s) => (
+                                                    <FiStar key={s} className={s <= Math.round(averageRating) ? "star filled" : "star"} />
+                                                ))}
+                                            </div>
+                                            <p>{totalReviews} Verified Customer Reviews</p>
+                                        </div>
+
+                                        <form onSubmit={handleReviewSubmit} className="review-form">
+                                            <h4>Write a Review</h4>
+                                            <div className="star-rating-selector">
+                                                <span>Rating:</span>
+                                                {[1, 2, 3, 4, 5].map((star) => (
+                                                    <span
+                                                        key={star}
+                                                        onClick={() => setNewRating(star)}
+                                                        className={`star-select ${star <= newRating ? "selected" : ""}`}
+                                                    >
+                                                        ★
+                                                    </span>
+                                                ))}
+                                            </div>
+                                            <textarea
+                                                className="review-textarea"
+                                                rows="3"
+                                                placeholder="Share your experience regarding leather texture, packaging, or elegance..."
+                                                value={newComment}
+                                                onChange={(e) => setNewComment(e.target.value)}
+                                                required
+                                            />
+                                            <button type="submit" className="btn-submit-review" disabled={submittingReview}>
+                                                {submittingReview ? "Submitting..." : "Submit Review"}
+                                            </button>
+                                        </form>
+                                    </div>
+
+                                    {/* REVIEWS LIST */}
+                                    <div className="reviews-list">
+                                        {reviews.length === 0 ? (
+                                            <p className="no-reviews">No reviews yet. Be the first to share your thoughts on this piece!</p>
+                                        ) : (
+                                            reviews.map((rev) => (
+                                                <div key={rev.id} className="review-card">
+                                                    <div className="review-header">
+                                                        <div className="reviewer-info">
+                                                            <div className="avatar-circle">
+                                                                {(rev.user_fullname || "K").charAt(0).toUpperCase()}
+                                                            </div>
+                                                            <div>
+                                                                <h5>{rev.user_fullname || "Verified Client"}</h5>
+                                                                <span className="rev-date">{new Date(rev.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="rev-stars">
+                                                            {"★".repeat(rev.rating)}
+                                                        </div>
+                                                    </div>
+                                                    <p className="rev-comment">"{rev.comment}"</p>
+                                                </div>
+                                            ))
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </section>
+
+                {/* ── LOOKBOOK SECTION ───────────────────────────── */}
+                <section className="lookbook-section">
+                    <div className="lookbook-header">
+                        <span>LUXURY STYLING LOOKBOOK</span>
+                        <h2>Inspired by Modern Elegance</h2>
+                        <p>Discover timeless styling inspirations and pair your favorite handbag with effortlessly elegant looks.</p>
+                    </div>
+                    <div className="lookbook-banner">
+                        <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1600&auto=format&fit=crop" alt="Lookbook" />
+                    </div>
+                    <div className="lookbook-grid">
+                        <div className="look-card">
+                            <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=1200&auto=format&fit=crop" alt="Look 1" />
+                            <div className="overlay">
+                                <h4>LOOK 01</h4>
+                                <span>Urban Parisian Elegance</span>
+                            </div>
+                        </div>
+                        <div className="look-card">
+                            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200&auto=format&fit=crop" alt="Look 2" />
+                            <div className="overlay">
+                                <h4>LOOK 02</h4>
+                                <span>Minimalist Monochrome</span>
+                            </div>
+                        </div>
+                        <div className="look-card">
+                            <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?q=80&w=1200&auto=format&fit=crop" alt="Look 3" />
+                            <div className="overlay">
+                                <h4>LOOK 03</h4>
+                                <span>Evening Glamour</span>
+                            </div>
+                        </div>
+                        <div className="look-card">
+                            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1200&auto=format&fit=crop" alt="Look 4" />
+                            <div className="overlay">
+                                <h4>LOOK 04</h4>
+                                <span>Heritage Resort Style</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* ── RELATED PRODUCTS ───────────────────────────── */}
+                {relatedProducts.length > 0 && (
+                    <section className="related-products-section">
+                        <div className="section-header">
+                            <span>CURATED SELECTION</span>
+                            <h2>You May Also Admire</h2>
+                        </div>
+                        <div className="related-grid">
+                            {relatedProducts.map((rel) => (
+                                <Link to={`/product/${rel.id}`} key={rel.id} className="related-card">
+                                    <div className="rel-img-wrapper">
+                                        <img
+                                            src={`${UPLOADS_URL}/${rel.image_url}`}
+                                            alt={rel.name}
+                                            onError={(e) => {
+                                                if (!e.target.dataset.err) {
+                                                    e.target.dataset.err = 1;
+                                                    e.target.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='350'><rect width='300' height='350' fill='%23f8fafc'/><text x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%2394a3b8' font-family='sans-serif'>HERITAGE LUXURY</text></svg>";
+                                                }
+                                            }}
+                                        />
+                                    </div>
+                                    <div className="rel-info">
+                                        <h4>{rel.name}</h4>
+                                        <span className="rel-price">{Number(rel.price).toLocaleString("vi-VN")} ₫</span>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
             </div>
 
-            {/* LOOKBOOK SECTION */}
-            <section className="lookbook-section">
-                <div className="lookbook-header">
-                    <span>LUXURY LOOKBOOK</span>
-                    <h2>Inspired by Modern Elegance</h2>
-                    <p>Discover timeless styling inspirations and pair your favorite handbag with effortlessly elegant looks.</p>
-                </div>
-                <div className="lookbook-banner">
-                    <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1600&auto=format&fit=crop" alt="Lookbook" />
-                </div>
-                <div className="lookbook-grid">
-                    <div className="look-card">
-                        <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=1200&auto=format&fit=crop" alt="Look 1" />
-                        <div className="overlay">
-                            <h4>LOOK 01</h4>
-                            <span>View Look →</span>
-                        </div>
-                    </div>
-                    <div className="look-card">
-                        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200&auto=format&fit=crop" alt="Look 2" />
-                        <div className="overlay">
-                            <h4>LOOK 02</h4>
-                            <span>View Look →</span>
-                        </div>
-                    </div>
-                    <div className="look-card">
-                        <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?q=80&w=1200&auto=format&fit=crop" alt="Look 3" />
-                        <div className="overlay">
-                            <h4>LOOK 03</h4>
-                            <span>View Look →</span>
-                        </div>
-                    </div>
-                    <div className="look-card">
-                        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1200&auto=format&fit=crop" alt="Look 4" />
-                        <div className="overlay">
-                            <h4>LOOK 04</h4>
-                            <span>View Look →</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* REVIEWS SECTION */}
-            <section style={{ maxWidth: "1200px", margin: "40px auto", padding: "0 20px" }}>
-                <div style={{ background: "#ffffff", borderRadius: "16px", padding: "32px", border: "1px solid #e2e8f0", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
-                    <h2 style={{ fontSize: "22px", fontWeight: "700", margin: "0 0 8px", color: "#0f172a" }}>
-                        Đánh giá sản phẩm ({averageRating} ★ / {totalReviews} lượt đánh giá)
-                    </h2>
-                    <p style={{ color: "#64748b", fontSize: "14px", margin: "0 0 24px" }}>
-                        Cảm nhận thực tế từ các khách hàng đã mua sản phẩm này
-                    </p>
-
-                    {/* REVIEW FORM */}
-                    <form onSubmit={handleReviewSubmit} style={{ background: "#f8fafc", padding: "20px", borderRadius: "12px", border: "1px solid #e2e8f0", marginBottom: "32px" }}>
-                        <h4 style={{ margin: "0 0 12px", fontSize: "16px", fontWeight: "600" }}>Gửi đánh giá của bạn</h4>
-                        <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
-                            <label style={{ fontSize: "14px", fontWeight: "600" }}>Chọn số sao: </label>
-                            {[1, 2, 3, 4, 5].map((star) => (
-                                <span
-                                    key={star}
-                                    onClick={() => setNewRating(star)}
-                                    style={{ cursor: "pointer", fontSize: "22px", color: star <= newRating ? "#f59e0b" : "#cbd5e1" }}
-                                >
-                                    ★
-                                </span>
-                            ))}
-                        </div>
-                        <textarea
-                            className="form-control"
-                            rows="3"
-                            placeholder="Chia sẻ trải nghiệm của bạn về kiểu dáng, chất liệu da, dịch vụ đóng gói..."
-                            value={newComment}
-                            onChange={(e) => setNewComment(e.target.value)}
-                            required
-                            style={{ width: "100%", marginBottom: "12px" }}
-                        />
-                        <button type="submit" className="add-promo-btn" disabled={submittingReview}>
-                            {submittingReview ? "Đang gửi..." : "Gửi đánh giá ngay"}
-                        </button>
-                    </form>
-
-                    {/* REVIEWS LIST */}
-                    {reviews.length === 0 ? (
-                        <p style={{ color: "#64748b", fontStyle: "italic", textAlign: "center", padding: "20px" }}>
-                            Chưa có bình luận nào. Hãy là người đầu tiên đánh giá sản phẩm này!
-                        </p>
-                    ) : (
-                        <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-                            {reviews.map((rev) => (
-                                <div key={rev.id} style={{ padding: "16px", borderBottom: "1px solid #f1f5f9" }}>
-                                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
-                                        <span style={{ fontWeight: "700", color: "#0f172a" }}>{rev.user_fullname || "Khách hàng"}</span>
-                                        <span style={{ color: "#f59e0b", fontSize: "16px" }}>{"★".repeat(rev.rating)}</span>
-                                    </div>
-                                    <p style={{ margin: "0 0 6px", fontSize: "14px", color: "#334155" }}>"{rev.comment}"</p>
-                                    <span style={{ fontSize: "12px", color: "#94a3b8" }}>{new Date(rev.created_at).toLocaleDateString("vi-VN")}</span>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div>
-            </section>
-
-            {/* AI STYLIST MODAL - ĐẶT Ở NGOÀI CÙNG ĐỂ KHÔNG BỊ LỖI HIỂN THỊ */}
+            {/* ── AI STYLIST MODAL ──────────────────────────────── */}
             {showAiModal && (
-                <div className="ai-modal-overlay" style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", background: "rgba(0,0,0,0.6)", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000 }}>
-                    <div className="ai-modal-content" style={{ background: "white", padding: "30px", borderRadius: "12px", width: "90%", maxWidth: "600px", maxHeight: "80vh", overflowY: "auto", position: "relative" }}>
-                        <button onClick={() => setShowAiModal(false)} style={{ position: "absolute", top: "15px", right: "15px", border: "none", background: "none", fontSize: "20px", cursor: "pointer" }}>✕</button>
+                <div className="ai-modal-overlay" onClick={() => setShowAiModal(false)}>
+                    <div className="ai-modal-card" onClick={(e) => e.stopPropagation()}>
+                        <button className="ai-close-btn" onClick={() => setShowAiModal(false)}>✕</button>
 
-                        <h2 style={{ color: "#4f46e5", marginBottom: "15px" }}>✨ Gợi ý phong cách từ AI Stylist</h2>
-                        <p style={{ color: "#666", marginBottom: "20px" }}>Dành riêng cho chiếc túi: <b>{product?.name}</b></p>
+                        <div className="ai-modal-header">
+                            <span className="ai-sparkle-badge">✨ AI STYLIST CONSULTANT</span>
+                            <h2>Styling Inspirations</h2>
+                            <p>Exclusive outfit recommendations for <strong>{product?.name}</strong></p>
+                        </div>
 
                         {loadingAi ? (
-                            <div style={{ textAlign: "center", padding: "40px", color: "#666" }}>
-                                <p>🤖 AI đang phân tích kiểu dáng và mix-match trang phục cho bạn...</p>
+                            <div className="ai-loading-box">
+                                <div className="ai-spinner"></div>
+                                <p>AI is curating high-fashion ensemble combinations for you...</p>
                             </div>
                         ) : (
                             <div className="outfit-list">
                                 {aiOutfits.map((outfit, index) => (
-                                    <div key={index} style={{ background: "#f8fafc", padding: "16px", borderRadius: "8px", marginBottom: "15px", borderLeft: "4px solid #6366f1" }}>
-                                        <h3 style={{ color: "#1e293b", fontSize: "18px", marginBottom: "8px" }}>👗 {outfit.styleName} <span style={{ fontSize: "12px", background: "#e0e7ff", color: "#3730a3", padding: "2px 8px", borderRadius: "4px", float: "right" }}>{outfit.occasion}</span></h3>
-                                        <p style={{ margin: "6px 0", color: "#334155" }}><b>Trang phục:</b> {outfit.clothingSuggestion}</p>
-                                        <p style={{ margin: "6px 0", color: "#334155" }}><b>Giày & Phụ kiện:</b> {outfit.shoesAndAccessories}</p>
-                                        <p style={{ margin: "6px 0", color: "#64748b", fontStyle: "italic", fontSize: "14px" }}>💡 <b>Tip màu sắc:</b> {outfit.colorTip}</p>
+                                    <div key={index} className="outfit-card">
+                                        <div className="outfit-card-header">
+                                            <h3>👗 {outfit.styleName}</h3>
+                                            <span className="occasion-tag">{outfit.occasion}</span>
+                                        </div>
+                                        <div className="outfit-detail-row">
+                                            <strong>Apparel:</strong> <span>{outfit.clothingSuggestion}</span>
+                                        </div>
+                                        <div className="outfit-detail-row">
+                                            <strong>Footwear & Accessories:</strong> <span>{outfit.shoesAndAccessories}</span>
+                                        </div>
+                                        <div className="outfit-color-tip">
+                                            💡 <strong>Palette Tip:</strong> {outfit.colorTip}
+                                        </div>
                                     </div>
                                 ))}
                             </div>

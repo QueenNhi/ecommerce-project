@@ -1,12 +1,33 @@
-
 import "../../css/admin/AdminNavbar.css";
+import { useAuth } from "../../context/AuthContext";
 import {
     FiSearch,
     FiBell,
     FiHelpCircle
 } from "react-icons/fi";
 
+/** Avatar mặc định khi user không có ảnh */
+const DEFAULT_AVATAR = "https://ui-avatars.com/api/?background=8b6b2d&color=fff&size=100&bold=true&name=";
+
 const AdminNavbar = () => {
+
+    const { user, roleName } = useAuth();
+
+    // Lấy tên hiển thị — ưu tiên fullname → name → email prefix
+    const displayName =
+        user?.fullname ||
+        user?.full_name ||
+        user?.name ||
+        user?.username ||
+        user?.email?.split("@")[0] ||
+        "Quản trị viên";
+
+    // Avatar: ưu tiên avatar user → fallback UI Avatars với tên
+    const avatarSrc =
+        user?.avatar ||
+        user?.photoURL ||
+        user?.photo_url ||
+        `${DEFAULT_AVATAR}${encodeURIComponent(displayName)}`;
 
     return (
 
@@ -20,7 +41,7 @@ const AdminNavbar = () => {
 
                 <input
                     type="text"
-                    placeholder="Search archives..."
+                    placeholder="Tìm kiếm..."
                 />
 
             </div>
@@ -29,7 +50,7 @@ const AdminNavbar = () => {
 
             <div className="navbar-right">
 
-                <button className="navbar-icon">
+                <button className="navbar-icon" title="Thông báo">
 
                     <FiBell />
 
@@ -37,7 +58,7 @@ const AdminNavbar = () => {
 
                 </button>
 
-                <button className="navbar-icon">
+                <button className="navbar-icon" title="Trợ giúp">
 
                     <FiHelpCircle />
 
@@ -47,15 +68,20 @@ const AdminNavbar = () => {
 
                     <div className="admin-info">
 
-                        <h4>Julian Heritage</h4>
+                        <h4>{displayName}</h4>
 
-                        <span>Chief Curator</span>
+                        <span>{roleName}</span>
 
                     </div>
 
                     <img
-                        src="https://i.pravatar.cc/100"
-                        alt="admin"
+                        src={avatarSrc}
+                        alt={displayName}
+                        onError={(e) => {
+                            // Fallback nếu avatar URL bị lỗi
+                            e.target.onerror = null;
+                            e.target.src = `${DEFAULT_AVATAR}${encodeURIComponent(displayName)}`;
+                        }}
                     />
 
                 </div>

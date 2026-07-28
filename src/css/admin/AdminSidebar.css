@@ -14,20 +14,70 @@
 ========================= */
 
 .sidebar-logo{
-    padding:28px;
+    padding:24px 28px 16px;
     border-bottom:1px solid #f0f0f0;
     flex-shrink:0;
 }
 
 .sidebar-logo h2{
-    font-size:24px;
+    font-size:22px;
     color:#222;
-    margin-bottom:6px;
+    margin-bottom:4px;
 }
 
 .sidebar-logo span{
     color:#999;
+    font-size:12px;
+}
+
+/* =========================
+   USER PROFILE CARD
+========================= */
+
+.sidebar-user{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:16px 20px;
+    background:#faf7f2;
+    border-bottom:1px solid #f0ebe0;
+    flex-shrink:0;
+}
+
+.sidebar-user-avatar{
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid #d4a853;
+    flex-shrink:0;
+}
+
+.sidebar-user-info{
+    min-width:0;
+}
+
+.sidebar-user-name{
     font-size:13px;
+    font-weight:700;
+    color:#1a1a1a;
+    margin:0 0 3px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    max-width:160px;
+}
+
+.sidebar-user-role{
+    font-size:11px;
+    color:#8b6b2d;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    background:#f0e6d3;
+    padding:2px 8px;
+    border-radius:20px;
+    display:inline-block;
 }
 
 /* =========================
@@ -38,16 +88,16 @@
     flex:1;
     overflow-y:auto;
     list-style:none;
-    padding:20px 0;
+    padding:12px 0;
     margin:0;
 }
 
 .sidebar-menu::-webkit-scrollbar{
-    width:6px;
+    width:4px;
 }
 
 .sidebar-menu::-webkit-scrollbar-thumb{
-    background:#d5d5d5;
+    background:#e0d5c5;
     border-radius:20px;
 }
 
@@ -59,20 +109,18 @@
     display:flex;
     align-items:center;
     gap:14px;
-
     width:100%;
-
-    padding:15px 30px;
-
+    padding:13px 28px;
     color:#666;
     text-decoration:none;
-
-    transition:.3s;
-    font-size:15px;
+    transition:.2s;
+    font-size:14px;
+    position:relative;
 }
 
 .sidebar-menu li a svg{
-    font-size:18px;
+    font-size:17px;
+    flex-shrink:0;
 }
 
 .sidebar-menu li a:hover{
@@ -84,7 +132,7 @@
     background:#faf7f2;
     color:#8b6b2d;
     font-weight:600;
-    border-left:4px solid #8b6b2d;
+    border-left:3px solid #8b6b2d;
 }
 
 .sidebar-menu li a.active svg{
@@ -92,32 +140,19 @@
 }
 
 /* =========================
-   BUTTON
+   BADGE (NEW tag)
 ========================= */
 
-.sidebar-banner{
-    padding:24px;
-    flex-shrink:0;
-}
-
-.sidebar-banner button{
-    width:100%;
-    padding:14px;
-
-    border:none;
-    border-radius:8px;
-
+.sidebar-badge{
+    margin-left:auto;
+    font-size:9px;
+    font-weight:800;
+    letter-spacing:0.8px;
     background:#8b6b2d;
     color:#fff;
-
-    cursor:pointer;
-    font-weight:600;
-
-    transition:.3s;
-}
-
-.sidebar-banner button:hover{
-    background:#705520;
+    padding:2px 6px;
+    border-radius:4px;
+    text-transform:uppercase;
 }
 
 /* =========================
@@ -126,7 +161,7 @@
 
 .sidebar-bottom{
     border-top:1px solid #ececec;
-    padding:15px 0;
+    padding:10px 0;
     flex-shrink:0;
 }
 
@@ -134,13 +169,17 @@
     display:flex;
     align-items:center;
     gap:14px;
-
-    padding:15px 30px;
-
+    padding:13px 28px;
     color:#666;
     text-decoration:none;
+    transition:.2s;
+    font-size:14px;
+    cursor:pointer;
+}
 
-    transition:.3s;
+.bottom-item svg{
+    font-size:17px;
+    flex-shrink:0;
 }
 
 .bottom-item:hover{
@@ -151,5 +190,11 @@
 .bottom-item.active{
     background:#faf7f2;
     color:#8b6b2d;
-    border-left:4px solid #8b6b2d;
+    border-left:3px solid #8b6b2d;
 }
+
+/* Sign Out — màu đỏ nhẹ khi hover */
+.bottom-item--signout:hover{
+    background:#fff5f5;
+    color:#dc2626;
+}
