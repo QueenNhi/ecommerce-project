@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
+import { UPLOADS_URL } from "../config/api";
 
 const ProductCard = ({ product }) => {
 
   const imageUrl = product.image_url
-    ? `http://localhost:5000/uploads/${product.image_url}`
+    ? `${UPLOADS_URL}/${product.image_url}`
     : "https://placehold.co/500x700";
 
   return (

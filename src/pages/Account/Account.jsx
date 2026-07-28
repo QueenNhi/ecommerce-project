@@ -3,6 +3,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { useAuth } from "../../context/AuthContext";
 import "../../css/Account.css";
+import { API_URL } from "../../config/api";
 
 const Account = () => {
     const { user } = useAuth();
@@ -19,7 +20,7 @@ const Account = () => {
             return;
         }
         try {
-            const res = await fetch(`http://localhost:5000/api/orders/user/${user.id}`);
+            const res = await fetch(`${API_URL}/api/orders/user/${user.id}`);
             const data = await res.json();
             if (data.success && Array.isArray(data.orders)) {
                 setOrders(data.orders);

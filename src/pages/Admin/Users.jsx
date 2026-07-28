@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
+import { API_URL } from "../../config/api";
 import "../../css/admin/Customers.css";
 
 const AdminCustomers = () => {
@@ -12,7 +13,7 @@ const AdminCustomers = () => {
 
     const fetchCustomers = async () => {
         try {
-            const res = await fetch("http://localhost:5000/api/admin/customers");
+            const res = await fetch(`${API_URL}/api/admin/customers`);
             const data = await res.json();
             if (data.success && Array.isArray(data.customers)) {
                 setCustomers(data.customers);
@@ -32,7 +33,7 @@ const AdminCustomers = () => {
         const newStatus = customer.status === "active" ? "blocked" : "active";
 
         try {
-            const res = await fetch(`http://localhost:5000/api/admin/customers/${customer.id}/status`, {
+            const res = await fetch(`${API_URL}/api/admin/customers/${customer.id}/status`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ status: newStatus })
@@ -53,7 +54,7 @@ const AdminCustomers = () => {
 
     const handleDeleteCustomer = async (id) => {
         try {
-            const res = await fetch(`http://localhost:5000/api/admin/customers/${id}`, {
+            const res = await fetch(`${API_URL}/api/admin/customers/${id}`, {
                 method: "DELETE"
             });
             const data = await res.json();

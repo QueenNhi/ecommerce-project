@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import { API_URL } from "../../config/api";
 import "../../css/Offers.css";
 
 const Offers = () => {
@@ -10,7 +11,7 @@ const Offers = () => {
 
     const fetchPromotions = async () => {
         try {
-            const res = await fetch("http://localhost:5000/api/admin/promotions");
+            const res = await fetch(`${API_URL}/api/admin/promotions`);
             const data = await res.json();
             if (data.success && Array.isArray(data.promotions)) {
                 setPromotions(data.promotions.filter(p => p.status === "active"));

@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { API_URL } from "../config/api";
 
 const AuthContext = createContext();
 
@@ -37,7 +38,7 @@ export const AuthProvider = ({ children }) => {
         let backendToken = null;
 
         try {
-            const res = await fetch("http://localhost:5000/api/auth/google-login", {
+            const res = await fetch(`${API_URL}/api/auth/google-login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

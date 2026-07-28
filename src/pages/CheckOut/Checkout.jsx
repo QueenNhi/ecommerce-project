@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { useAuth } from "../../context/AuthContext";
+import { API_URL, UPLOADS_URL } from "../../config/api";
 import "./Checkout.css";
 
 const Checkout = () => {
@@ -36,7 +37,7 @@ const Checkout = () => {
     }, [user]);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/api/cart/${userId}`)
+        fetch(`${API_URL}/api/cart/${userId}`)
             .then(res => res.json())
             .then(data => {
                 if (Array.isArray(data)) {
@@ -85,7 +86,7 @@ const Checkout = () => {
                 .filter(Boolean)
                 .join(", ");
 
-            const response = await fetch("http://localhost:5000/api/orders", {
+            const response = await fetch(`${API_URL}/api/orders`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -108,7 +109,7 @@ const Checkout = () => {
 
                 // Handles VNPAY payment redirect
                 if (form.payment === "vnpay") {
-                    const vnpRes = await fetch("http://localhost:5000/api/payment/vnpay_create_url", {
+                    const vnpRes = await fetch(`${API_URL}/api/payment/vnpay_create_url`, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({
@@ -307,7 +308,7 @@ const Checkout = () => {
                                             <div className="checkout-item" key={item.id}>
                                                 <div className="checkout-image">
                                                     <img
-                                                        src={`http://localhost:5000/uploads/${item.image_url}`}
+                                                        src={`${UPLOADS_URL}/${item.image_url}`}
                                                         alt={item.name}
                                                     />
                                                 </div>

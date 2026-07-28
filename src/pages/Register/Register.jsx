@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { API_URL } from "../../config/api";
 import "./Register.css";
 import { useAuth } from "../../context/AuthContext";
 
@@ -17,6 +18,7 @@ const Register = () => {
     });
 
     const [loading, setLoading] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("");
 
     const handleChange = (e) => {
 
@@ -37,7 +39,7 @@ const Register = () => {
             !form.password
         ) {
 
-            alert("Vui lòng nhập đầy đủ thông tin.");
+            setErrorMsg("Vui lòng điền đầy đủ các thông tin bắt buộc (*).");
 
             return;
 
@@ -45,7 +47,7 @@ const Register = () => {
 
         if (form.password !== form.confirmPassword) {
 
-            alert("Mật khẩu xác nhận không khớp.");
+            setErrorMsg("Mật khẩu xác nhận không trùng khớp!");
 
             return;
 
@@ -57,7 +59,7 @@ const Register = () => {
 
             const res = await fetch(
 
-                "http://localhost:5000/api/auth/register",
+                `${API_URL}/api/auth/register`,
 
                 {
 

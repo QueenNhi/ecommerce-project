@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import ProductCard from "../../components/ProductCard";
+import { API_URL } from "../../config/api";
 import "./Categories.css";
 
 const Categories = () => {
@@ -20,9 +21,9 @@ const Categories = () => {
         setLoading(true);
 
         Promise.all([
-            fetch("http://localhost:5000/api/products/all").then(res => res.json()),
-            fetch("http://localhost:5000/api/brands").then(res => res.json()),
-            fetch("http://localhost:5000/api/categories").then(res => res.json())
+            fetch(`${API_URL}/api/products/all`).then(res => res.json()),
+            fetch(`${API_URL}/api/brands`).then(res => res.json()),
+            fetch(`${API_URL}/api/categories`).then(res => res.json())
         ])
             .then(([productData, brandData, categoryData]) => {
 

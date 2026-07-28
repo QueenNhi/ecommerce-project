@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import { API_URL, UPLOADS_URL } from "../../config/api";
 
 function OrderSuccess() {
     const { id } = useParams();
@@ -9,7 +10,7 @@ function OrderSuccess() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/api/orders/${id}`)
+        fetch(`${API_URL}/api/orders/${id}`)
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
@@ -93,7 +94,7 @@ function OrderSuccess() {
                             <div key={item.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 0", borderBottom: "1px solid #f0f0f0" }}>
                                 <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
                                     <img 
-                                        src={`http://localhost:5000/uploads/${item.image_url}`} 
+                                        src={`${UPLOADS_URL}/${item.image_url}`} 
                                         alt={item.name} 
                                         style={{ width: "60px", height: "60px", objectFit: "cover", borderRadius: "6px", backgroundColor: "#eee" }} 
                                     />

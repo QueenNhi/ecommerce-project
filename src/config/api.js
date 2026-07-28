@@ -1,14 +1,14 @@
 /**
- * Trung tâm cấu hình API URL
- * Sử dụng VITE_API_URL từ .env nếu có, fallback sang localhost:5000
- *
- * Cách dùng trong component:
- *   import { API_URL, UPLOADS_URL } from '../../config/api';
- *   fetch(`${API_URL}/api/products/all`)
- *   src={`${UPLOADS_URL}/${product.image_url}`}
+ * Trung tâm cấu hình API URL cho toàn bộ ứng dụng Frontend
+ * Tự động đọc VITE_API_URL từ environment variable (.env / Vercel),
+ * fallback về "http://localhost:5000" khi chạy local.
  */
+const getBaseUrl = () => {
+    let url = import.meta.env.VITE_API_URL || "https://ecommerce-project-n45y.onrender.com";
+    return url.replace(/\/+$/, "").replace(/\/api$/, "");
+};
 
-export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+export const API_URL = getBaseUrl();
 export const UPLOADS_URL = `${API_URL}/uploads`;
 
 export default API_URL;
