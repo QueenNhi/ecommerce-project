@@ -72,22 +72,113 @@
    PAYMENT
 ========================= */
 
+/* =========================
+   PAYMENT
+========================= */
+
 .payment-method{
     display:flex;
     flex-direction:column;
-    gap:15px;
+    gap:14px;
 }
 
-.payment-method label{
+.payment-option {
     display:flex;
-    align-items:center;
-    gap:12px;
+    align-items:flex-start;
+    gap:14px;
+    padding:16px 20px;
+    border:1.5px solid #e2e8f0;
+    border-radius:10px;
     cursor:pointer;
-    color:#555;
+    transition:all .3s ease;
+    background:#fafafa;
 }
 
-.payment-method input{
-    accent-color:#000;
+.payment-option.active, .payment-option:hover {
+    border-color:#8b6b2d;
+    background:#fffdf9;
+    box-shadow: 0 4px 15px rgba(139,107,45,0.08);
+}
+
+.payment-option input {
+    margin-top: 4px;
+    accent-color:#8b6b2d;
+}
+
+.option-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.option-info strong {
+    font-size: 15px;
+    color: #0f172a;
+}
+
+.option-info span {
+    font-size: 13px;
+    color: #64748b;
+}
+
+/* BANK DETAILS VIETQR BOX */
+.bank-details-box {
+    margin-top: 20px;
+    padding: 24px;
+    background: #fdfbf7;
+    border: 1.5px solid #d4a853;
+    border-radius: 12px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+}
+
+.qr-container {
+    width: 140px;
+    height: 140px;
+    background: #ffffff;
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    flex-shrink: 0;
+}
+
+.vietqr-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.bank-info-rows p {
+    margin: 6px 0;
+    font-size: 14px;
+    color: #334155;
+}
+
+.highlight-price {
+    color: #8b6b2d;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.copy-text {
+    font-family: monospace;
+    font-weight: 700;
+    font-size: 15px;
+    color: #0f172a;
+    background: #f1f5f9;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.transfer-note-alert {
+    margin-top: 10px !important;
+    padding: 10px 14px;
+    background: rgba(212,168,83,0.15);
+    border-radius: 6px;
+    color: #8b6b2d !important;
+    font-size: 13px !important;
 }
 
 /* =========================

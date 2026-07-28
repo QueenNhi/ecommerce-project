@@ -1,0 +1,142 @@
+.vnpay-return-page {
+    min-height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    background: #faf9f6;
+}
+
+.vnpay-card {
+    background: #ffffff;
+    max-width: 580px;
+    width: 100%;
+    border-radius: 16px;
+    padding: 42px;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05);
+}
+
+.status-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.success-icon {
+    color: #16a34a;
+}
+
+.fail-icon {
+    color: #dc2626;
+}
+
+.vnp-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.success-badge {
+    background: rgba(22, 163, 74, 0.1);
+    color: #16a34a;
+    border: 1px solid rgba(22, 163, 74, 0.3);
+}
+
+.fail-badge {
+    background: rgba(220, 38, 38, 0.1);
+    color: #dc2626;
+    border: 1px solid rgba(220, 38, 38, 0.3);
+}
+
+.vnpay-card h1 {
+    font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
+    font-size: 28px;
+    color: #0f172a;
+    margin: 0 0 14px;
+}
+
+.vnp-message {
+    color: #475569;
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 28px;
+}
+
+.vnp-details {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 32px;
+    border: 1px solid #f1f5f9;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed #e2e8f0;
+    font-size: 14px;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-row span {
+    color: #64748b;
+}
+
+.detail-row strong {
+    color: #0f172a;
+}
+
+.vnp-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+}
+
+.vnp-btn {
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.vnp-btn.primary {
+    background: #8b6b2d;
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 4px 15px rgba(139, 107, 45, 0.3);
+}
+
+.vnp-btn.primary:hover {
+    background: #0f172a;
+    transform: translateY(-2px);
+}
+
+.vnp-btn.outline {
+    background: #ffffff;
+    color: #0f172a;
+    border: 1.5px solid #0f172a;
+}
+
+.vnp-btn.outline:hover {
+    background: #0f172a;
+    color: #ffffff;
+    transform: translateY(-2px);
+}

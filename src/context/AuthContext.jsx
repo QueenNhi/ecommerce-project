@@ -33,17 +33,32 @@ export const AuthProvider = ({ children }) => {
     };
 
     const loginWithGoogle = async (firebaseUser) => {
-        let userToken = "";
+        let backendUser = null;
+        let backendToken = null;
+
         try {
-            if (firebaseUser.getIdToken) {
-                userToken = await firebaseUser.getIdToken();
+            const res = await fetch("http://localhost:5000/api/auth/google-login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: firebaseUser.email,
+                    fullname: firebaseUser.displayName || firebaseUser.email?.split("@")[0] || "Google User",
+                    avatar: firebaseUser.photoURL || "",
+                    firebaseUid: firebaseUser.uid
+                })
+            });
+
+            const data = await res.json();
+            if (res.ok && data.success) {
+                backendUser = data.user;
+                backendToken = data.token;
             }
         } catch (err) {
-            console.error("Error getting idToken from firebaseUser:", err);
+            console.error("Backend Google Login Sync error:", err);
         }
 
-        const googleUser = {
-            id: firebaseUser.uid || firebaseUser.email,
+        const finalUser = backendUser || {
+            id: 1,
             fullname: firebaseUser.displayName || firebaseUser.email?.split("@")[0] || "Google User",
             email: firebaseUser.email || "",
             avatar: firebaseUser.photoURL || "",
@@ -51,15 +66,15 @@ export const AuthProvider = ({ children }) => {
         };
 
         try {
-            localStorage.setItem("user", JSON.stringify(googleUser));
-            localStorage.setItem("token", userToken || "google-firebase-token");
+            localStorage.setItem("user", JSON.stringify(finalUser));
+            if (backendToken) localStorage.setItem("token", backendToken);
         } catch (e) {
             console.error("Error saving googleUser to localStorage:", e);
         }
 
-        setUser(googleUser);
-        setToken(userToken || "google-firebase-token");
-        return googleUser;
+        setUser(finalUser);
+        setToken(backendToken || null);
+        return finalUser;
     };
 
     const logout = () => {

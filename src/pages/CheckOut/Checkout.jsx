@@ -104,8 +104,30 @@ const Checkout = () => {
             const data = await response.json();
 
             if (response.ok && data.success) {
+                const orderId = data.orderId;
+
+                // Handles VNPAY payment redirect
+                if (form.payment === "vnpay") {
+                    const vnpRes = await fetch("http://localhost:5000/api/payment/vnpay_create_url", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            orderId,
+                            amount: total
+                        })
+                    });
+
+                    const vnpData = await vnpRes.json();
+                    if (vnpRes.ok && vnpData.paymentUrl) {
+                        window.location.href = vnpData.paymentUrl;
+                        return;
+                    } else {
+                        alert("Không thể kết nối cổng VNPAY: " + (vnpData.message || "Vui lòng thử lại"));
+                    }
+                }
+
                 alert("🎉 Đặt hàng thành công!");
-                navigate(`/order-success/${data.orderId}`);
+                navigate(`/order-success/${orderId}`);
             } else {
                 alert(data.message || "Đặt hàng thất bại. Vui lòng thử lại.");
             }
@@ -147,10 +169,11 @@ const Checkout = () => {
                                 />
                                 <input
                                     type="email"
-                                    placeholder="Email"
+                                    placeholder="Email nhận thông báo *"
                                     name="email"
                                     value={form.email}
                                     onChange={handleChange}
+                                    required
                                 />
                             </div>
                         </div>
@@ -193,7 +216,7 @@ const Checkout = () => {
                         <div className="checkout-card">
                             <h3>Phương thức thanh toán</h3>
                             <div className="payment-method">
-                                <label>
+                                <label className={`payment-option ${form.payment === "cod" ? "active" : ""}`}>
                                     <input
                                         type="radio"
                                         name="payment"
@@ -201,19 +224,13 @@ const Checkout = () => {
                                         checked={form.payment === "cod"}
                                         onChange={handleChange}
                                     />
-                                    Thanh toán khi nhận hàng (COD)
+                                    <div className="option-info">
+                                        <strong>💵 Thanh toán khi nhận hàng (COD)</strong>
+                                        <span>Thanh toán tiền mặt trực tiếp cho shipper khi nhận hàng</span>
+                                    </div>
                                 </label>
-                                <label>
-                                    <input
-                                        type="radio"
-                                        name="payment"
-                                        value="bank"
-                                        checked={form.payment === "bank"}
-                                        onChange={handleChange}
-                                    />
-                                    Chuyển khoản ngân hàng
-                                </label>
-                                <label>
+
+                                <label className={`payment-option ${form.payment === "vnpay" ? "active" : ""}`}>
                                     <input
                                         type="radio"
                                         name="payment"
@@ -221,9 +238,48 @@ const Checkout = () => {
                                         checked={form.payment === "vnpay"}
                                         onChange={handleChange}
                                     />
-                                    VNPay
+                                    <div className="option-info">
+                                        <strong>💳 Cổng thanh toán VNPAY (QR / ATM / Visa)</strong>
+                                        <span>Thanh toán an toàn qua cổng ngân hàng VNPAY Sandbox</span>
+                                    </div>
+                                </label>
+
+                                <label className={`payment-option ${form.payment === "bank_transfer" ? "active" : ""}`}>
+                                    <input
+                                        type="radio"
+                                        name="payment"
+                                        value="bank_transfer"
+                                        checked={form.payment === "bank_transfer"}
+                                        onChange={handleChange}
+                                    />
+                                    <div className="option-info">
+                                        <strong>🏦 Chuyển khoản Ngân hàng (VietQR)</strong>
+                                        <span>Quét mã QR Chuyển khoản bằng ứng dụng ngân hàng bất kỳ</span>
+                                    </div>
                                 </label>
                             </div>
+
+                            {/* BANK TRANSFER QR CODE BOX */}
+                            {form.payment === "bank_transfer" && (
+                                <div className="bank-details-box">
+                                    <div className="qr-container">
+                                        <img
+                                            src={`https://img.vietqr.io/image/MB-0987654321-compact2.png?amount=${total}&addInfo=HERITAGE%20LX&accountName=HERITAGE%20LUXURY`}
+                                            alt="VietQR Heritage Banking"
+                                            className="vietqr-img"
+                                        />
+                                    </div>
+                                    <div className="bank-info-rows">
+                                        <p><strong>Ngân hàng:</strong> MB Bank (Ngân hàng Quân Đội)</p>
+                                        <p><strong>Số tài khoản:</strong> <span className="copy-text">0987654321</span></p>
+                                        <p><strong>Chủ tài khoản:</strong> HERITAGE LUXURY</p>
+                                        <p><strong>Số tiền:</strong> <span className="highlight-price">{total.toLocaleString("vi-VN")} ₫</span></p>
+                                        <p className="transfer-note-alert">
+                                            📌 <strong>Nội dung chuyển khoản:</strong> HERITAGE LX-[Mã đơn hàng]
+                                        </p>
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         <button
@@ -231,7 +287,7 @@ const Checkout = () => {
                             onClick={handleOrder}
                             disabled={submitting}
                         >
-                            {submitting ? "ĐANG XỬ LÝ..." : "ĐẶT HÀNG"}
+                            {submitting ? "ĐANG XỬ LÝ..." : (form.payment === "vnpay" ? "THANH TOÁN QUA VNPAY" : "XÁC NHẬN ĐẶT HÀNG")}
                         </button>
                     </div>
 
@@ -287,12 +343,12 @@ const Checkout = () => {
                                         onClick={handleOrder}
                                         disabled={submitting}
                                     >
-                                        {submitting ? "ĐANG XỬ LÝ..." : "THANH TOÁN"}
+                                        {submitting ? "ĐANG XỬ LÝ..." : (form.payment === "vnpay" ? "THANH TOÁN VNPAY" : "THANH TOÁN")}
                                     </button>
 
                                     <p className="checkout-note">
-                                        Thanh toán bảo mật.<br />
-                                        Miễn phí đổi trả trong vòng 30 ngày.
+                                        Thanh toán bảo mật SSL.<br />
+                                        Miễn phí vận chuyển & Hộp quà Luxury.
                                     </p>
                                 </>
                             )}

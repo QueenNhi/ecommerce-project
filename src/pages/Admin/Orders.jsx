@@ -203,8 +203,44 @@ const AdminOrders = () => {
                                             <td style={{ fontWeight: "700", color: "#0f172a" }}>
                                                 {Number(order.total_price).toLocaleString("vi-VN")}₫
                                             </td>
-                                            <td style={{ textTransform: "uppercase", fontSize: "12px", fontWeight: "600" }}>
-                                                {order.payment_method}
+                                            <td style={{ fontSize: "12px", fontWeight: "600" }}>
+                                                <div style={{ textTransform: "uppercase", marginBottom: "4px" }}>
+                                                    {order.payment_method}
+                                                </div>
+                                                {order.payment_status === "paid" ? (
+                                                    <span style={{ padding: "3px 8px", borderRadius: "12px", background: "#f0fdf4", color: "#166534", border: "1px solid #bbf7d0", fontSize: "10px", fontWeight: "700" }}>
+                                                        ✓ ĐÃ THANH TOÁN
+                                                    </span>
+                                                ) : (
+                                                    <div style={{ display: "flex", flexDirection: "column", gap: "4px", alignItems: "flex-start" }}>
+                                                        <span style={{ padding: "3px 8px", borderRadius: "12px", background: "#fffbeb", color: "#b45309", border: "1px solid #fef3c7", fontSize: "10px", fontWeight: "700" }}>
+                                                            ⌛ CHƯA THANH TOÁN
+                                                        </span>
+                                                        <button
+                                                            style={{ padding: "4px 8px", background: "#8b6b2d", color: "#fff", border: "none", borderRadius: "4px", fontSize: "10px", cursor: "pointer", fontWeight: "700" }}
+                                                            onClick={async () => {
+                                                                if (window.confirm(`Xác nhận khách hàng đã chuyển khoản thành công cho đơn hàng #LX-${order.id}?`)) {
+                                                                    try {
+                                                                        const res = await fetch(`http://localhost:5000/api/admin/orders/${order.id}/payment-status`, {
+                                                                            method: "PUT",
+                                                                            headers: { "Content-Type": "application/json" },
+                                                                            body: JSON.stringify({ payment_status: "paid" })
+                                                                        });
+                                                                        const data = await res.json();
+                                                                        if (res.ok && data.success) {
+                                                                            alert("✅ Đã xác nhận thanh toán thành công và gửi email tới khách hàng.");
+                                                                            fetchOrders();
+                                                                        }
+                                                                    } catch (err) {
+                                                                        console.error(err);
+                                                                    }
+                                                                }
+                                                            }}
+                                                        >
+                                                            Xác nhận đã CK
+                                                        </button>
+                                                    </div>
+                                                )}
                                             </td>
                                             <td>
                                                 <select

@@ -28,6 +28,9 @@ import Account from "../pages/Account/Account";
 
 import NotFound from "../pages/NotFound/NotFound";
 import OrderSuccess from "../pages/OrderSuccess/OrderSuccess";
+import VnPayReturn from "../pages/Payment/VnPayReturn";
+import ForgotPassword from "../pages/Auth/ForgotPassword";
+import ResetPassword from "../pages/Auth/ResetPassword";
 
 // ============================================================
 // ROUTE GUARDS
@@ -196,10 +199,12 @@ function AppRoutes() {
                         path="/account"
                         element={<PrivateRoute><Account /></PrivateRoute>}
                     />
-
-                    {/* ── Auth Pages ── */}
+                    {/* ── Auth & Payment Flow Pages ── */}
                     <Route path="/register" element={<Register />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/forgot-password" element={<ForgotPassword />} />
+                    <Route path="/reset-password" element={<ResetPassword />} />
+                    <Route path="/payment/vnpay-return" element={<VnPayReturn />} />
 
                     {/* ── Admin Only Pages (chỉ admin) ── */}
                     {/* Dashboard — Mọi nhân viên nội bộ đếu vào được */}
