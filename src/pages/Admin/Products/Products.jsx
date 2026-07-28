@@ -1,10 +1,11 @@
-    import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
     import AdminLayout from "../../../layouts/AdminLayout";
     import ViewProductModal from "./ViewProductModal";
     import DeleteProductModal from "./DeleteProductModal";
     import "../../../css/admin/Products.css";
     import ProductModal from "./ProductModal";
     import { exportProducts } from "../../../services/productService";
+    import { UPLOADS_URL } from "../../../config/api"; // <--- ĐÃ THÊM DÒNG IMPORT NÀY
 
     import {
         getAllProducts,
