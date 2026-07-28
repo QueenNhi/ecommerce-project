@@ -1,11 +1,15 @@
 {
   "rewrites": [
     {
-      "source": "/api/:match*",
-      "destination": "https://ecommerce-project-n45y.onrender.com/api/:match*"
+      "source": "/api/:path*",
+      "destination": "https://ecommerce-project-n45y.onrender.com/api/:path*"
     },
     {
-      "source": "/(.*)",
+      "source": "/uploads/:path*",
+      "destination": "https://ecommerce-project-n45y.onrender.com/uploads/:path*"
+    },
+    {
+      "source": "/((?!api|uploads).*)",
       "destination": "/index.html"
     }
   ]
