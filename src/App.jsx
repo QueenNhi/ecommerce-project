@@ -4,7 +4,7 @@ import Footer from "./components/Footer";
 import ProductCard from "./components/ProductCard";
 import { Link, useNavigate } from "react-router-dom";
 import { API_URL } from "./config/api";
-import API from "../services/api"; // Chỉnh lại đường dẫn 상대 (relative path) cho đúng với thư mục của bạn
+
 import {
     FiTruck,
     FiShield,
@@ -36,21 +36,23 @@ function App() {
     const craftImageRef = useRef(null);
 
     // Lấy sản phẩm nổi bật (giới hạn 8 sp)
-    // Lấy sản phẩm nổi bật (giới hạn 8 sp)
-useEffect(() => {
-    API.get("/products")
-        .then((res) => {
-            const data = res.data;
-            const list = Array.isArray(data) ? data : (data?.products || []);
-            setProducts(list.slice(0, 8)); // Chỉ hiện 8 SP nổi bật ở trang chủ
-            setLoading(false);
-        })
-        .catch((err) => {
-            console.error(err);
-            setError(err.message || "Không thể kết nối tới server");
-            setLoading(false);
-        });
-}, []);
+    useEffect(() => {
+        fetch(`${API_URL}/api/products`)
+            .then((res) => {
+                if (!res.ok) throw new Error("Không thể kết nối tới server");
+                return res.json();
+            })
+            .then((data) => {
+                const list = Array.isArray(data) ? data : (data?.products || []);
+                setProducts(list.slice(0, 8)); // Chỉ hiện 8 SP nổi bật ở trang chủ
+                setLoading(false);
+            })
+            .catch((err) => {
+                console.error(err);
+                setError(err.message);
+                setLoading(false);
+            });
+    }, []);
 
     // Lấy danh mục
     useEffect(() => {
