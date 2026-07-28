@@ -1,14 +1,11 @@
-import axios from "axios";
-
-const API_URL = "http://localhost:5000/api/categories";
+import API from "./api";
 
 // =======================
 // GET ALL
 // =======================
-
 export const getAllCategories = async () => {
     try {
-        const { data } = await axios.get(API_URL);
+        const { data } = await API.get("/categories");
         return data;
     } catch (err) {
         console.error(err);
@@ -19,57 +16,33 @@ export const getAllCategories = async () => {
 // =======================
 // CREATE
 // =======================
-
 export const createCategory = async (category) => {
-
-    const { data } = await axios.post(API_URL, category);
-
+    const { data } = await API.post("/categories", category);
     return data.category;
-
 };
 
 // =======================
 // UPDATE
 // =======================
-
 export const updateCategory = async (id, category) => {
-
-    const { data } = await axios.put(
-        `${API_URL}/${id}`,
-        category
-    );
-
+    const { data } = await API.put(`/categories/${id}`, category);
     return data.category;
-
 };
 
 // =======================
 // DELETE
 // =======================
-
 export const deleteCategory = async (id) => {
-
-    const { data } = await axios.delete(
-        `${API_URL}/${id}`
-    );
-
+    const { data } = await API.delete(`/categories/${id}`);
     return data;
-
 };
 
 // =======================
 // EXPORT
 // =======================
-
 export const exportCategories = async () => {
-
-    const response = await axios.get(
-        `${API_URL}/export`,
-        {
-            responseType: "blob",
-        }
-    );
-
+    const response = await API.get("/categories/export", {
+        responseType: "blob",
+    });
     return response.data;
-
 };
