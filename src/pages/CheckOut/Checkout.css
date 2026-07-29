@@ -3,9 +3,11 @@
 ========================= */
 
 .checkout-page{
-    max-width:1400px;
-    margin:50px auto;
-    padding:0 40px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 50px auto;
+    padding: 0 40px;
+    box-sizing: border-box;
 }
 
 .checkout-container{

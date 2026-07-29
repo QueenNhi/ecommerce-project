@@ -22,8 +22,10 @@ body{
 }
 
 .register-container{
-    width:1180px;
+    width:100%;
+    max-width:1180px;
     min-height:760px;
+    box-sizing:border-box;
     background:#fff;
     display:flex;
     border-radius:24px;

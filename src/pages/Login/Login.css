@@ -55,8 +55,10 @@ img{
 
 .login-container{
 
-    width:1120px;
+    width:100%;
+    max-width:1120px;
     min-height:700px;
+    box-sizing:border-box;
 
     background:#fff;
 
