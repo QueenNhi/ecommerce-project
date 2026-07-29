@@ -610,75 +610,64 @@
 }
 
 /* ==========================================
-   RESPONSIVE
+   RESPONSIVE (Admin Categories.css)
 ========================================== */
 
-@media(max-width:992px){
-
-    .category-toolbar{
-
-        flex-direction:column;
-
-        align-items:stretch;
-
+@media (max-width: 991px) {
+    .category-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
     }
 
-    .search-box{
-
-        max-width:100%;
-
+    .search-box {
+        max-width: 100%;
     }
 
-    .toolbar-actions{
-
-        justify-content:flex-end;
-
+    .toolbar-actions {
+        justify-content: flex-end;
     }
 
-    .category-table-wrapper{
-
-        overflow-x:auto;
-
+    .category-table-wrapper {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
-    .category-table{
-
-        min-width:900px;
-
+    .category-table {
+        min-width: 700px;
     }
 
+    .category-modal {
+        width: 90%;
+        max-width: 90%;
+        max-height: 88vh;
+    }
 }
 
-@media(max-width:768px){
-
-    .toolbar-actions{
-
-        width:100%;
-
+@media (max-width: 767px) {
+    .toolbar-actions {
+        width: 100%;
     }
 
     .export-btn,
-
-    .add-btn{
-
-        flex:1;
-
-        justify-content:center;
-
+    .add-btn {
+        flex: 1;
+        justify-content: center;
+        min-height: 44px;
     }
 
-    .table-footer{
-
-        flex-direction:column;
-
-        align-items:flex-start;
-
+    .table-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
     }
 
-    .category-modal{
-
-        width:95%;
-
+    .category-modal {
+        width: 95%;
+        max-width: 95%;
+        max-height: 85vh;
+        overflow-y: auto;
     }
-
 }

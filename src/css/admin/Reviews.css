@@ -114,3 +114,21 @@
     font-size: 15px;
     letter-spacing: 1px;
 }
+
+@media (max-width: 991px) {
+    .admin-reviews-page {
+        padding: 16px;
+    }
+    .reviews-tabs {
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 575px) {
+    .admin-reviews-page {
+        padding: 12px;
+    }
+    .reviews-header h1 {
+        font-size: 20px;
+    }
+}

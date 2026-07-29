@@ -1323,64 +1323,67 @@ PRODUCT MODAL
 
 }
 
-/* Responsive */
+/* ============================================================
+   RESPONSIVE (Admin Products.css)
+   ============================================================ */
 
-@media(max-width:900px){
-
-    .product-modal{
-
-        width:95vw;
-
-        max-height:92vh;
-
+@media (max-width: 991px) {
+    .product-modal {
+        width: 90%;
+        max-width: 90%;
+        max-height: 88vh;
     }
 
-    .form-grid{
-
-        grid-template-columns:1fr;
-
+    .form-grid {
+        grid-template-columns: 1fr;
     }
 
+    .view-body {
+        grid-template-columns: 1fr;
+        padding: 20px;
+        gap: 20px;
+    }
+
+    .products-table-container,
+    .table-responsive,
+    .admin-table-wrapper {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
 }
 
-@media(max-width:600px){
-
-    .product-form{
-
-        padding:20px;
-
+@media (max-width: 575px) {
+    .product-modal {
+        width: 95%;
+        max-width: 95%;
+        max-height: 85vh;
     }
 
-    .product-modal .modal-header{
-
-        padding:18px 20px;
-
+    .product-form {
+        padding: 16px;
     }
 
-    .product-modal .modal-footer{
+    .product-modal .modal-header {
+        padding: 16px;
+    }
 
-        padding:18px 20px;
-
-        flex-direction:column-reverse;
-
+    .product-modal .modal-footer {
+        padding: 16px;
+        flex-direction: column-reverse;
+        gap: 10px;
     }
 
     .cancel-btn,
-
-    .save-btn{
-
-        width:100%;
-
+    .save-btn {
+        width: 100%;
+        min-height: 44px;
     }
 
     .upload-box img,
-
-    .image-preview img{
-
-        width:140px;
-
-        height:140px;
-
+    .image-preview img {
+        width: 120px;
+        height: 120px;
     }
-
 }

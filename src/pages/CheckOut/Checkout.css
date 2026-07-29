@@ -350,38 +350,61 @@
 }
 
 /* =========================
-   RESPONSIVE
+   RESPONSIVE (Checkout.css)
 ========================= */
 
-@media(max-width:1100px){
-
-    .checkout-container{
-        grid-template-columns:1fr;
+@media (max-width: 991px) {
+    .checkout-page {
+        margin: 30px auto;
+        padding: 0 20px;
     }
-
-    .checkout-right{
-        position:static;
+    .checkout-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
     }
-
+    .checkout-right {
+        position: static;
+    }
+    .bank-details-box {
+        flex-direction: column;
+        text-align: center;
+    }
 }
 
-@media(max-width:768px){
-
-    .checkout-page{
-        padding:0 20px;
+@media (max-width: 767px) {
+    .checkout-page {
+        margin: 20px auto;
+        padding: 0 14px;
     }
-
-    .checkout-left h1{
-        font-size:32px;
+    .checkout-left h1 {
+        font-size: 28px;
+        margin-bottom: 20px;
     }
-
-    .checkout-item{
-        grid-template-columns:70px 1fr;
+    .checkout-card {
+        padding: 20px 16px;
     }
-
-    .checkout-price{
-        grid-column:2;
-        margin-top:10px;
+    .checkout-item {
+        grid-template-columns: 60px 1fr;
+        gap: 12px;
     }
+    .checkout-price {
+        grid-column: 2;
+        margin-top: 6px;
+    }
+    .checkout-btn {
+        width: 100%;
+        min-height: 44px;
+    }
+}
 
+@media (max-width: 575px) {
+    .checkout-left h1 {
+        font-size: 24px;
+    }
+    .checkout-card {
+        padding: 16px 12px;
+    }
+    .payment-option {
+        padding: 12px 14px;
+    }
 }

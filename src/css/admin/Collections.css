@@ -65,3 +65,26 @@
     color: #64748b;
     line-height: 1.5;
 }
+
+@media (max-width: 991px) {
+    .admin-collections-page {
+        padding: 16px;
+    }
+    .collections-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+}
+
+@media (max-width: 575px) {
+    .admin-collections-page {
+        padding: 12px;
+    }
+    .collections-header h1 {
+        font-size: 20px;
+    }
+    .collections-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+}

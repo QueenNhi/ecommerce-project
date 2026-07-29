@@ -132,3 +132,34 @@
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
     padding: 24px;
 }
+
+@media (max-width: 991px) {
+    .admin-promotions-page {
+        padding: 16px;
+    }
+    .promo-modal-card {
+        width: 90%;
+        max-width: 90%;
+        max-height: 88vh;
+        overflow-y: auto;
+    }
+}
+
+@media (max-width: 575px) {
+    .admin-promotions-page {
+        padding: 12px;
+    }
+    .promotions-header h1 {
+        font-size: 20px;
+    }
+    .add-promo-btn {
+        width: 100%;
+        min-height: 44px;
+    }
+    .promo-modal-card {
+        width: 95%;
+        max-width: 95%;
+        max-height: 85vh;
+        padding: 16px;
+    }
+}

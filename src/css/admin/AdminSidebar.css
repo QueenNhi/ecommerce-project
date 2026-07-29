@@ -197,4 +197,73 @@
 .bottom-item--signout:hover{
     background:#fff5f5;
     color:#dc2626;
+}
+
+/* ============================================================
+   RESPONSIVE ADMIN SIDEBAR
+   ============================================================ */
+@media (max-width: 991px) {
+    .admin-sidebar {
+        width: 100%;
+        min-width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid #ececec;
+    }
+
+    .sidebar-logo {
+        padding: 14px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .sidebar-logo h2 {
+        font-size: 18px;
+        margin: 0;
+    }
+
+    .sidebar-user {
+        padding: 10px 16px;
+    }
+
+    .sidebar-menu {
+        display: flex;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 8px 12px;
+        gap: 6px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .sidebar-menu::-webkit-scrollbar {
+        display: none;
+    }
+
+    .sidebar-menu li a {
+        padding: 8px 14px;
+        border-radius: 8px;
+        font-size: 13px;
+    }
+
+    .sidebar-menu li a.active {
+        border-left: none;
+        background: #8b6b2d;
+        color: #ffffff;
+    }
+
+    .sidebar-menu li a.active svg {
+        color: #ffffff;
+    }
+
+    .sidebar-bottom {
+        display: flex;
+        align-items: center;
+        padding: 6px 12px;
+    }
+
+    .bottom-item {
+        padding: 8px 14px;
+        font-size: 13px;
+    }
 }

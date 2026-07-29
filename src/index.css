@@ -10,12 +10,20 @@ RESET
 
 html{
     scroll-behavior:smooth;
+    max-width: 100%;
 }
 
 body{
     font-family:Inter,sans-serif;
     background:#f6faff;
     color:#222;
+    overflow-x:hidden;
+    max-width:100%;
+}
+
+img, video{
+    max-width:100%;
+    height:auto;
 }
 
 a{
@@ -575,143 +583,128 @@ ANIMATION
 }
 
 /*==========================
-RESPONSIVE
+RESPONSIVE BREAKPOINTS
 ==========================*/
 
-@media(max-width:1200px){
-
-.product-grid{
-
-grid-template-columns:repeat(4,1fr);
-
+/* Laptop: 992px – 1199px */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .product-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
 }
 
+/* Tablet: 768px – 991px */
+@media (min-width: 768px) and (max-width: 991px) {
+    body {
+        font-size: 15px;
+    }
+    .header-container {
+        padding: 0 20px;
+    }
+    .hero {
+        height: 60vh;
+        min-height: 480px;
+    }
+    .hero h1 {
+        font-size: 40px;
+    }
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+    .modal-content, .modal-dialog {
+        width: 90%;
+        max-width: 90%;
+    }
 }
 
-@media(max-width:992px){
-
-.hero{
-
-height:60vh;
-
+/* Mobile Large: 576px – 767px */
+@media (min-width: 576px) and (max-width: 767px) {
+    body {
+        font-size: 14px;
+    }
+    .header-container {
+        padding: 0 16px;
+    }
+    .hero {
+        height: 50vh;
+        min-height: 420px;
+    }
+    .hero-content {
+        margin: 0 16px;
+    }
+    .hero h1 {
+        font-size: 32px;
+    }
+    .hero p {
+        font-size: 15px;
+    }
+    .section-title {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    .section-title h2 {
+        font-size: 26px;
+    }
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+    button, .hero-btn, .buy-btn, .icon-btn, .craft-btn, .bespoke-btn {
+        min-height: 44px;
+    }
+    .modal-content, .modal-dialog {
+        width: 95%;
+        max-width: 95%;
+        max-height: 85vh;
+        overflow-y: auto;
+    }
 }
 
-.hero h1{
-
-font-size:42px;
-
-}
-
-.product-grid{
-
-grid-template-columns:repeat(3,1fr);
-
-}
-
-}
-
-@media(max-width:768px){
-
-.header-container{
-
-padding:0 18px;
-
-}
-
-.nav{
-
-display:none;
-
-}
-
-.hero{
-
-height:55vh;
-
-}
-
-.hero-content{
-
-margin:0 25px;
-
-}
-
-.hero h1{
-
-font-size:34px;
-
-}
-
-.hero p{
-
-font-size:16px;
-
-}
-
-.section-title{
-
-flex-direction:column;
-
-align-items:flex-start;
-
-gap:12px;
-
-}
-
-.section-title h2{
-
-font-size:28px;
-
-}
-
-.product-grid{
-
-grid-template-columns:repeat(2,1fr);
-
-gap:18px;
-
-}
-
-}
-
-@media(max-width:500px){
-
-.product-grid{
-
-grid-template-columns:1fr;
-
-}
-
-.hero{
-
-height:480px;
-
-}
-
-.hero h1{
-
-font-size:28px;
-
-}
-
-.hero p{
-
-font-size:15px;
-
-}
-
-.hero-btn{
-
-width:100%;
-
-}
-
-.logo{
-
-font-size:22px;
-
-}
-
+/* Mobile Small: < 576px */
+@media (max-width: 575px) {
+    body {
+        font-size: 14px;
+    }
+    .header-container {
+        padding: 0 12px;
+    }
+    .product-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .hero {
+        height: auto;
+        min-height: 440px;
+        padding: 40px 16px;
+    }
+    .hero-content {
+        margin: 0;
+    }
+    .hero h1 {
+        font-size: 26px;
+    }
+    .hero p {
+        font-size: 14px;
+    }
+    .hero-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    .logo {
+        font-size: 20px;
+    }
+    button, .hero-btn, .buy-btn, .icon-btn, .craft-btn, .bespoke-btn {
+        min-height: 44px;
+    }
+    .modal-content, .modal-dialog {
+        width: 95%;
+        max-width: 95%;
+        max-height: 85vh;
+        overflow-y: auto;
+    }
 }
 /*==========================
 CRAFT SECTION

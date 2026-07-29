@@ -16,4 +16,20 @@
     padding:30px;
     background:#f5f6fa;
     overflow-y:auto;
+    min-width:0;
+}
+
+@media (max-width: 991px) {
+    .admin-layout {
+        flex-direction: column;
+    }
+    .admin-content {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 575px) {
+    .admin-content {
+        padding: 12px;
+    }
 }

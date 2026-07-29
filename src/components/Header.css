@@ -157,3 +157,77 @@
     background-color: #f1f5f9;
     color: #2563eb;
 }
+
+/* ============================================================
+   RESPONSIVE HEADER MEDIA QUERIES
+   ============================================================ */
+@media (max-width: 1199px) {
+    .main-nav {
+        gap: 16px;
+    }
+    .header-search-form input {
+        width: 140px;
+    }
+}
+
+@media (max-width: 991px) {
+    .main-header {
+        padding: 10px 16px;
+    }
+    .header-inner {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    .luxury-logo {
+        font-size: 18px;
+        letter-spacing: 1px;
+    }
+    .main-nav {
+        order: 3;
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 4px;
+        gap: 14px;
+        -webkit-overflow-scrolling: touch;
+    }
+    .main-nav::-webkit-scrollbar {
+        display: none;
+    }
+    .main-nav a {
+        font-size: 13px;
+        padding: 4px 10px;
+        background: #1e293b;
+        border-radius: 12px;
+        display: inline-block;
+    }
+    .header-right {
+        gap: 10px;
+    }
+    .header-search-form input {
+        width: 110px;
+    }
+}
+
+@media (max-width: 575px) {
+    .main-header {
+        padding: 8px 12px;
+    }
+    .luxury-logo {
+        font-size: 15px;
+        letter-spacing: 0.5px;
+    }
+    .header-search-form {
+        padding: 2px 8px;
+    }
+    .header-search-form input {
+        width: 80px;
+        font-size: 11px;
+    }
+    .cart-icon-btn,
+    .user-icon-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+}

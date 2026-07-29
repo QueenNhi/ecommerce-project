@@ -221,3 +221,39 @@
 .recent-orders-table tr:last-child td {
     border-bottom: none;
 }
+
+/* ============================================================
+   RESPONSIVE ADMIN DASHBOARD
+   ============================================================ */
+@media (max-width: 991px) {
+    .admin-dashboard {
+        padding: 16px;
+    }
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .dashboard-cards {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+    }
+}
+
+@media (max-width: 575px) {
+    .admin-dashboard {
+        padding: 12px;
+    }
+    .dashboard-header h1 {
+        font-size: 20px;
+    }
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    .recent-orders-container {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}

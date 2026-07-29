@@ -351,12 +351,53 @@
     font-weight: 700;
 }
 
-/* RESPONSIVE MEDIA QUERIES */
-@media (max-width: 768px) {
+/* RESPONSIVE MEDIA QUERIES (Admin Orders.css) */
+@media (max-width: 991px) {
     .admin-orders-page {
         padding: 16px;
     }
+
+    .orders-table-container,
+    .admin-table-container,
+    table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .modal-content {
+        width: 90%;
+        max-width: 90%;
+        max-height: 88vh;
+        overflow-y: auto;
+    }
+
     .modal-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+@media (max-width: 575px) {
+    .admin-orders-page {
+        padding: 12px;
+    }
+
+    .modal-content {
+        width: 95%;
+        max-width: 95%;
+        max-height: 85vh;
+        padding: 20px 16px;
+    }
+
+    .btn-view-detail {
+        min-height: 44px;
+    }
+
+    .modal-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
     }
 }

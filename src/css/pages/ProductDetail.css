@@ -1295,62 +1295,77 @@
 }
 
 /* ============================================================
-   RESPONSIVE BREAKPOINTS
+   RESPONSIVE BREAKPOINTS (ProductDetail.css)
    ============================================================ */
-@media (max-width: 1024px) {
+@media (max-width: 991px) {
     .detail-container {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 36px;
+        padding: 0 16px;
     }
 
     .gallery {
         position: static;
-    }
-
-    .lookbook-grid,
-    .related-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
-    .gallery {
         flex-direction: column-reverse;
+        gap: 16px;
     }
 
     .thumb-list {
         flex-direction: row;
         max-height: unset;
         overflow-x: auto;
+        padding-bottom: 8px;
     }
 
     .thumb-wrapper {
-        width: 70px;
-        height: 80px;
+        width: 76px;
+        height: 86px;
+    }
+
+    .lookbook-grid,
+    .related-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+}
+
+@media (max-width: 767px) {
+    .product-breadcrumb {
+        padding: 16px;
     }
 
     .main-image-card {
-        min-height: 400px;
+        min-height: 350px;
     }
 
     .detail-info {
-        padding: 24px;
+        padding: 20px 16px;
     }
 
     .product-title {
-        font-size: 26px;
+        font-size: 24px;
     }
 
     .current-price {
-        font-size: 26px;
+        font-size: 24px;
     }
 
     .primary-actions {
         grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .add-to-cart-btn,
+    .buy-now-btn,
+    .stylist-ai-btn {
+        width: 100%;
+        min-height: 44px;
+        justify-content: center;
     }
 
     .trust-props-grid {
         grid-template-columns: 1fr;
+        gap: 12px;
     }
 
     .reviews-summary-card {
@@ -1363,19 +1378,37 @@
         padding-right: 0;
         padding-bottom: 20px;
     }
-}
-
-@media (max-width: 480px) {
-    .lookbook-grid,
-    .related-grid {
-        grid-template-columns: 1fr;
-    }
 
     .tabs-header {
+        overflow-x: auto;
+        white-space: nowrap;
         gap: 16px;
+        padding-bottom: 6px;
     }
 
     .tab-btn {
         font-size: 13px;
+    }
+}
+
+@media (max-width: 575px) {
+    .lookbook-grid,
+    .related-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .thumb-wrapper {
+        width: 64px;
+        height: 72px;
+    }
+
+    .tabs-header {
+        gap: 12px;
+    }
+
+    .tab-btn {
+        font-size: 12px;
+        padding: 10px 4px;
     }
 }

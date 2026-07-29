@@ -140,3 +140,21 @@
     color: #dc2626;
     border: 1px solid #fca5a5;
 }
+
+@media (max-width: 991px) {
+    .admin-customers-page {
+        padding: 16px;
+    }
+    .customers-search-bar {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 575px) {
+    .admin-customers-page {
+        padding: 12px;
+    }
+    .customers-header h1 {
+        font-size: 20px;
+    }
+}

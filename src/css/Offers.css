@@ -100,3 +100,31 @@
 .copy-btn:hover {
     background-color: #2563eb;
 }
+
+@media (max-width: 991px) {
+    .offers-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (max-width: 767px) {
+    .offers-banner {
+        padding: 40px 16px;
+    }
+    .offers-banner h1 {
+        font-size: 28px;
+    }
+    .offers-container {
+        padding: 0 16px;
+        margin: 24px auto;
+    }
+    .offers-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .copy-btn {
+        min-height: 44px;
+        padding: 10px 16px;
+    }
+}

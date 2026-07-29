@@ -751,63 +751,168 @@
 }
 
 /* ============================================================
-   RESPONSIVE BREAKPOINTS FOR HOMEPAGE
+   RESPONSIVE BREAKPOINTS FOR HOMEPAGE (App.css)
    ============================================================ */
-@media (max-width: 1200px) {
-    .product-grid,
-    .categories-grid,
-    .values-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
 
+/* Laptop: 992px – 1199px */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .product-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+    .categories-grid,
+    .values-grid,
     .luxury-ticker-bar {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+    .craft-section,
+    .bespoke-section {
+        gap: 50px;
     }
 }
 
-@media (max-width: 900px) {
-    .hero h1 {
-        font-size: 38px;
+/* Tablet: 768px – 991px */
+@media (min-width: 768px) and (max-width: 991px) {
+    .hero {
+        height: auto;
+        min-height: 520px;
+        padding: 60px 5%;
     }
-
+    .hero h1 {
+        font-size: 40px;
+    }
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+    .categories-grid,
+    .values-grid,
+    .luxury-ticker-bar {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
     .craft-section,
     .bespoke-section {
         grid-template-columns: 1fr;
-        gap: 50px;
+        gap: 40px;
+        margin: 60px auto;
     }
-
     .craft-text,
     .craft-image {
-        transform: translateY(40px);
+        transform: translateY(20px);
     }
-
+    .craft-card {
+        right: 16px;
+        bottom: -16px;
+        padding: 14px 20px;
+    }
     .bespoke-gallery {
         justify-content: center;
     }
-
     .material-1 { height: 320px; }
     .material-2 { height: 260px; }
 }
 
-@media (max-width: 600px) {
+/* Mobile Large: 576px – 767px */
+@media (min-width: 576px) and (max-width: 767px) {
     .hero {
-        height: 75vh;
-        padding: 0 20px;
+        height: auto;
+        min-height: 460px;
+        padding: 50px 20px;
     }
-
     .hero h1 {
-        font-size: 30px;
+        font-size: 32px;
     }
-
+    .hero-description {
+        font-size: 14px;
+        margin-bottom: 24px;
+    }
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+    .categories-grid,
+    .values-grid,
+    .luxury-ticker-bar {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+    .craft-section,
+    .bespoke-section {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        margin: 50px auto;
+        padding: 0 16px;
+    }
+    .craft-text h2,
+    .bespoke-content h2 {
+        font-size: 32px;
+    }
+    .craft-card {
+        position: relative;
+        right: 0;
+        bottom: 0;
+        margin-top: 12px;
+    }
+    .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
     .hero-btn {
         width: 100%;
         justify-content: center;
+        min-height: 44px;
     }
+}
 
-    .product-grid,
+/* Mobile Small: < 576px */
+@media (max-width: 575px) {
+    .hero {
+        height: auto;
+        min-height: 420px;
+        padding: 40px 16px;
+    }
+    .hero h1 {
+        font-size: 26px;
+    }
+    .hero-description {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+    .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .hero-btn {
+        width: 100%;
+        justify-content: center;
+        min-height: 44px;
+    }
+    .product-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
     .categories-grid,
     .values-grid,
     .luxury-ticker-bar {
         grid-template-columns: 1fr;
+        gap: 16px;
     }
+    .category-card {
+        height: 280px;
+    }
+    .craft-section,
+    .bespoke-section {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        margin: 40px auto;
+        padding: 0 16px;
+    }
+    .craft-text h2,
+    .bespoke-content h2 {
+        font-size: 26px;
+    }
+    .material-1 { width: 55%; height: 240px; }
+    .material-2 { width: 45%; height: 180px; }
 }

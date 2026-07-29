@@ -650,3 +650,57 @@ img{
 
 }
 
+/* ==========================================
+   RESPONSIVE (Login.css)
+========================================== */
+
+@media (max-width: 1199px) {
+    .login-container {
+        width: 100%;
+        max-width: 960px;
+        min-height: auto;
+    }
+}
+
+@media (max-width: 991px) {
+    .login-page {
+        padding: 30px 16px;
+    }
+    .login-container {
+        flex-direction: column;
+        max-width: 520px;
+        border-radius: 20px;
+    }
+    .login-left {
+        width: 100%;
+        height: 200px;
+    }
+    .login-overlay h2 {
+        font-size: 32px;
+    }
+    .login-right {
+        width: 100%;
+        padding: 32px 24px;
+    }
+}
+
+@media (max-width: 575px) {
+    .login-page {
+        padding: 20px 12px;
+    }
+    .login-left {
+        display: none;
+    }
+    .login-right {
+        padding: 24px 16px;
+    }
+    .login-title h1 {
+        font-size: 26px;
+    }
+    .login-btn,
+    .btn-login {
+        min-height: 44px;
+        width: 100%;
+    }
+}
+

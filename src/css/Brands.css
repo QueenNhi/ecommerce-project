@@ -73,3 +73,33 @@
     margin: 0 0 16px;
     line-height: 1.5;
 }
+
+@media (max-width: 991px) {
+    .brands-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (max-width: 767px) {
+    .brands-banner {
+        padding: 40px 16px;
+    }
+    .brands-banner h1 {
+        font-size: 28px;
+    }
+    .brands-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+    .brand-card {
+        padding: 24px 16px;
+    }
+}
+
+@media (max-width: 575px) {
+    .brands-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}

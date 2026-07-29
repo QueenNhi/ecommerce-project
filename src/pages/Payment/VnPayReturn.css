@@ -140,3 +140,20 @@
     color: #ffffff;
     transform: translateY(-2px);
 }
+
+@media (max-width: 575px) {
+    .vnpay-return-page {
+        padding: 30px 14px;
+    }
+    .vnpay-card {
+        padding: 24px 16px;
+    }
+    .vnp-actions {
+        flex-direction: column;
+    }
+    .vnp-btn {
+        width: 100%;
+        min-height: 44px;
+        justify-content: center;
+    }
+}

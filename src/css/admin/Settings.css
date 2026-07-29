@@ -112,3 +112,26 @@ input:checked + .slider {
 input:checked + .slider:before {
     transform: translateX(24px);
 }
+
+@media (max-width: 991px) {
+    .admin-settings-page {
+        padding: 16px;
+    }
+    .settings-card {
+        padding: 20px 16px;
+    }
+}
+
+@media (max-width: 575px) {
+    .admin-settings-page {
+        padding: 12px;
+    }
+    .settings-header h1 {
+        font-size: 20px;
+    }
+    .toggle-switch-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+}

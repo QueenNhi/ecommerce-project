@@ -235,57 +235,56 @@ body{
 
 }
 
-/* Responsive */
+/* Responsive (Register.css) */
 
-@media(max-width:992px){
-
-    .register-container{
-        flex-direction:column;
-        width:100%;
+@media (max-width: 1199px) {
+    .register-container {
+        width: 100%;
+        max-width: 960px;
+        min-height: auto;
     }
-
-    .register-left{
-        width:100%;
-        height:320px;
-    }
-
-    .register-right{
-        width:100%;
-        padding:50px 30px;
-    }
-
-    .register-box{
-        max-width:500px;
-    }
-
 }
 
-@media(max-width:768px){
-
-    .register-overlay{
-        left:30px;
-        bottom:30px;
+@media (max-width: 991px) {
+    .register-page {
+        padding: 30px 16px;
     }
-
-    .register-overlay h2{
-        font-size:34px;
+    .register-container {
+        flex-direction: column;
+        width: 100%;
+        max-width: 540px;
+        border-radius: 20px;
     }
-
-    .register-box h1{
-        font-size:38px;
+    .register-left {
+        width: 100%;
+        height: 200px;
     }
-
+    .register-right {
+        width: 100%;
+        padding: 36px 24px;
+    }
+    .register-box {
+        max-width: 100%;
+    }
 }
 
-@media(max-width:480px){
-
-    .register-right{
-        padding:35px 20px;
+@media (max-width: 575px) {
+    .register-page {
+        padding: 20px 12px;
     }
-
-    .register-box h1{
-        font-size:32px;
+    .register-left {
+        display: none;
     }
-
+    .register-right {
+        padding: 24px 16px;
+    }
+    .register-box h1 {
+        font-size: 26px;
+    }
+    .register-btn,
+    .btn-register {
+        min-height: 44px;
+        width: 100%;
+    }
 }
 

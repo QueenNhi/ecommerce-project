@@ -349,3 +349,43 @@
 .btn-danger:hover {
     background-color: #b91c1c;
 }
+
+@media (max-width: 991px) {
+    .admin-brands-page {
+        padding: 16px;
+    }
+    .brands-action-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+    .brand-search-input {
+        width: 100%;
+    }
+    .brand-modal-card {
+        width: 90%;
+        max-width: 90%;
+        max-height: 88vh;
+        overflow-y: auto;
+    }
+}
+
+@media (max-width: 575px) {
+    .admin-brands-page {
+        padding: 12px;
+    }
+    .brands-header h1 {
+        font-size: 20px;
+    }
+    .add-brand-btn {
+        width: 100%;
+        min-height: 44px;
+        justify-content: center;
+    }
+    .brand-modal-card {
+        width: 95%;
+        max-width: 95%;
+        max-height: 85vh;
+        padding: 16px;
+    }
+}

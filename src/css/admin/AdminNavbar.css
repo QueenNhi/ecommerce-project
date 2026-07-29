@@ -143,3 +143,35 @@
     object-fit:cover;
 
 }
+
+@media (max-width: 991px) {
+    .admin-navbar {
+        padding: 10px 16px;
+        height: auto;
+        gap: 12px;
+    }
+    .navbar-search {
+        width: 100%;
+        max-width: 220px;
+        height: 38px;
+    }
+    .navbar-right {
+        gap: 12px;
+    }
+    .admin-info {
+        display: none;
+    }
+}
+
+@media (max-width: 575px) {
+    .admin-navbar {
+        padding: 8px 12px;
+    }
+    .navbar-search {
+        max-width: 140px;
+        padding: 0 8px;
+    }
+    .navbar-search input {
+        font-size: 12px;
+    }
+}

@@ -215,68 +215,92 @@
 }
 
 /* =========================
-   RESPONSIVE
+   RESPONSIVE (Categories.css)
 ========================= */
 
-@media(max-width:1200px){
-
-    .shop-grid{
-
-        grid-template-columns:repeat(2,1fr);
-
+@media (min-width: 992px) and (max-width: 1199px) {
+    .shop-container {
+        grid-template-columns: 240px 1fr;
+        gap: 30px;
     }
-
+    .shop-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
 }
 
-@media(max-width:900px){
-
-    .shop-container{
-
-        grid-template-columns:1fr;
-
+@media (min-width: 768px) and (max-width: 991px) {
+    .shop-page {
+        margin: 30px auto;
+        padding: 0 24px;
     }
-
-    .shop-sidebar{
-
-        position:static;
-
-        height:auto;
-
-        overflow:visible;
-
-        border:1px solid #eee;
-
-        border-radius:10px;
-
-        border-right:none;
-
-        padding:25px;
-
-        margin-bottom:35px;
-
+    .shop-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
     }
-
+    .shop-sidebar {
+        position: static;
+        height: auto;
+        border-right: none;
+        border: 1px solid #ececec;
+        border-radius: 12px;
+        padding: 20px;
+    }
+    .shop-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
 }
 
-@media(max-width:650px){
-
-    .shop-page{
-
-        padding:0 20px;
-
+@media (min-width: 576px) and (max-width: 767px) {
+    .shop-page {
+        margin: 20px auto;
+        padding: 0 16px;
     }
-
-    .shop-title h1{
-
-        font-size:34px;
-
+    .shop-title h1 {
+        font-size: 32px;
     }
-
-    .shop-grid{
-
-        grid-template-columns:1fr;
-
+    .shop-container {
+        grid-template-columns: 1fr;
+        gap: 24px;
     }
+    .shop-sidebar {
+        position: static;
+        height: auto;
+        border-right: none;
+        border: 1px solid #ececec;
+        border-radius: 12px;
+        padding: 16px;
+    }
+    .shop-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+}
 
+@media (max-width: 575px) {
+    .shop-page {
+        margin: 20px auto;
+        padding: 0 12px;
+    }
+    .shop-title h1 {
+        font-size: 26px;
+    }
+    .shop-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .shop-sidebar {
+        position: static;
+        height: auto;
+        border-right: none;
+        border: 1px solid #ececec;
+        border-radius: 12px;
+        padding: 14px;
+    }
+    .shop-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
 }
 
