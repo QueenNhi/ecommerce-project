@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { API_URL } from "../../config/api";
 import "./Login.css";
 
-import { signInWithPopup } from "firebase/auth";
+import { signInWithPopup, signInWithRedirect, getRedirectResult } from "firebase/auth";
 import { auth, googleProvider } from "../../firebase";
 import { useAuth } from "../../context/AuthContext";
 
@@ -19,6 +19,40 @@ const Login = () => {
 
     const [loading, setLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
+
+    const isMobileDevice = () => {
+        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent) || (window.innerWidth <= 768 && 'ontouchstart' in window);
+    };
+
+    // Handle Firebase OAuth redirect result when returning on mobile devices
+    useEffect(() => {
+        let isMounted = true;
+        const handleRedirectResult = async () => {
+            try {
+                const result = await getRedirectResult(auth);
+                if (result && result.user && isMounted) {
+                    setLoading(true);
+                    const googleUser = await loginWithGoogle(result.user);
+                    const redirectPath = getRedirectPath(googleUser);
+                    window.location.href = redirectPath;
+                }
+            } catch (err) {
+                console.error("Firebase Google Redirect Login Error:", err);
+                if (isMounted) {
+                    const code = err?.code || "auth/google-redirect-failed";
+                    const message = err?.message || "Đăng nhập Google thất bại.";
+                    setErrorMsg(`Lỗi Google Login [${code}]: ${message}`);
+                }
+            } finally {
+                if (isMounted) {
+                    setLoading(false);
+                }
+            }
+        };
+
+        handleRedirectResult();
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const handleChange = (e) => {
         setForm({
@@ -116,14 +150,28 @@ const Login = () => {
     // ============================
     const handleGoogleLogin = async () => {
         try {
-            const result = await signInWithPopup(auth, googleProvider);
-            const googleUser = await loginWithGoogle(result.user);
+            setErrorMsg("");
+            setLoading(true);
 
-            const redirectPath = getRedirectPath(googleUser);
-            navigate(redirectPath);
+            if (isMobileDevice()) {
+                // Trên di động (iPhone/Safari, Android), dùng signInWithRedirect để tránh bị chặn popup
+                await signInWithRedirect(auth, googleProvider);
+            } else {
+                // Trên Desktop (Windows, macOS, Linux), dùng signInWithPopup
+                const result = await signInWithPopup(auth, googleProvider);
+                if (result && result.user) {
+                    const googleUser = await loginWithGoogle(result.user);
+                    const redirectPath = getRedirectPath(googleUser);
+                    window.location.href = redirectPath;
+                }
+            }
         } catch (err) {
-            console.log(err);
-            setErrorMsg(err.message);
+            console.error("Firebase Google Login Error:", err);
+            const code = err?.code || "auth/google-login-failed";
+            const message = err?.message || "Đăng nhập bằng Google thất bại.";
+            setErrorMsg(`Lỗi Google Login [${code}]: ${message}`);
+        } finally {
+            setLoading(false);
         }
     };
 
