@@ -776,14 +776,14 @@
 @media (min-width: 768px) and (max-width: 991px) {
     .hero {
         height: auto;
-        min-height: 520px;
-        padding: 60px 5%;
+        min-height: 480px;
+        padding: 50px 5%;
     }
     .hero h1 {
-        font-size: 40px;
+        font-size: 38px;
     }
     .product-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         gap: 20px;
     }
     .categories-grid,
@@ -796,15 +796,18 @@
     .bespoke-section {
         grid-template-columns: 1fr;
         gap: 40px;
-        margin: 60px auto;
+        margin: 50px auto;
+        padding: 0 20px;
     }
     .craft-text,
     .craft-image {
         transform: translateY(20px);
     }
     .craft-card {
-        right: 16px;
-        bottom: -16px;
+        right: 0;
+        bottom: 0;
+        position: relative;
+        margin-top: 12px;
         padding: 14px 20px;
     }
     .bespoke-gallery {
@@ -814,80 +817,20 @@
     .material-2 { height: 260px; }
 }
 
-/* Mobile Large: 576px – 767px */
-@media (min-width: 576px) and (max-width: 767px) {
+/* Mobile: < 768px */
+@media (max-width: 767px) {
     .hero {
         height: auto;
-        min-height: 460px;
-        padding: 50px 20px;
-    }
-    .hero h1 {
-        font-size: 32px;
-    }
-    .hero-description {
-        font-size: 14px;
-        margin-bottom: 24px;
-    }
-    .product-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-    }
-    .categories-grid,
-    .values-grid,
-    .luxury-ticker-bar {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-    }
-    .craft-section,
-    .bespoke-section {
-        grid-template-columns: 1fr;
-        gap: 36px;
-        margin: 50px auto;
-        padding: 0 16px;
-    }
-    .craft-text h2,
-    .bespoke-content h2 {
-        font-size: 32px;
-    }
-    .craft-card {
-        position: relative;
-        right: 0;
-        bottom: 0;
-        margin-top: 12px;
-    }
-    .hero-actions {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    .hero-btn {
-        width: 100%;
-        justify-content: center;
-        min-height: 44px;
-    }
-}
-
-/* Mobile Small: < 576px */
-@media (max-width: 575px) {
-    .hero {
-        height: auto;
-        min-height: 420px;
+        min-height: 400px;
         padding: 40px 16px;
     }
     .hero h1 {
-        font-size: 26px;
+        font-size: 28px;
     }
     .hero-description {
         font-size: 14px;
         line-height: 1.6;
-    }
-    .hero-actions {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    .hero-btn {
-        width: 100%;
-        justify-content: center;
-        min-height: 44px;
+        margin-bottom: 24px;
     }
     .product-grid {
         grid-template-columns: 1fr;
@@ -900,7 +843,7 @@
         gap: 16px;
     }
     .category-card {
-        height: 280px;
+        height: 260px;
     }
     .craft-section,
     .bespoke-section {
@@ -911,8 +854,24 @@
     }
     .craft-text h2,
     .bespoke-content h2 {
-        font-size: 26px;
+        font-size: 28px;
     }
-    .material-1 { width: 55%; height: 240px; }
-    .material-2 { width: 45%; height: 180px; }
+    .craft-card {
+        position: relative;
+        right: 0;
+        bottom: 0;
+        margin-top: 12px;
+        width: 100%;
+    }
+    .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .hero-btn {
+        width: 100%;
+        justify-content: center;
+        min-height: 44px;
+    }
+    .material-1 { width: 55%; height: 220px; }
+    .material-2 { width: 45%; height: 170px; }
 }

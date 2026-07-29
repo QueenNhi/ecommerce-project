@@ -158,8 +158,28 @@
     color: #2563eb;
 }
 
+.hamburger-btn {
+    display: none;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 4px;
+    align-items: center;
+    justify-content: center;
+}
+
+.drawer-header {
+    display: none;
+}
+
+.mobile-nav-backdrop {
+    display: none;
+}
+
 /* ============================================================
-   RESPONSIVE HEADER MEDIA QUERIES
+   RESPONSIVE HEADER & DRAWER MEDIA QUERIES
    ============================================================ */
 @media (max-width: 1199px) {
     .main-nav {
@@ -172,62 +192,140 @@
 
 @media (max-width: 991px) {
     .main-header {
-        padding: 10px 16px;
+        padding: 10px 14px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
+
     .header-inner {
-        flex-wrap: wrap;
-        gap: 12px;
+        width: 100%;
+        max-width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
     }
+
+    .hamburger-btn {
+        display: flex;
+        order: 1;
+    }
+
     .luxury-logo {
-        font-size: 18px;
+        order: 2;
+        font-size: 16px;
         letter-spacing: 1px;
     }
-    .main-nav {
-        order: 3;
-        width: 100%;
-        overflow-x: auto;
-        white-space: nowrap;
-        padding-bottom: 4px;
-        gap: 14px;
-        -webkit-overflow-scrolling: touch;
-    }
-    .main-nav::-webkit-scrollbar {
-        display: none;
-    }
-    .main-nav a {
-        font-size: 13px;
-        padding: 4px 10px;
-        background: #1e293b;
-        border-radius: 12px;
-        display: inline-block;
-    }
-    .header-right {
-        gap: 10px;
-    }
-    .header-search-form input {
-        width: 110px;
-    }
-}
 
-@media (max-width: 575px) {
-    .main-header {
-        padding: 8px 12px;
+    .header-right {
+        order: 3;
+        gap: 8px;
+        margin-left: auto;
     }
-    .luxury-logo {
-        font-size: 15px;
-        letter-spacing: 0.5px;
-    }
+
     .header-search-form {
         padding: 2px 8px;
     }
+
     .header-search-form input {
-        width: 80px;
+        width: 90px;
+        font-size: 12px;
+    }
+
+    /* SLIDE-IN DRAWER NAVIGATION */
+    .mobile-nav-backdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.7);
+        backdrop-filter: blur(4px);
+        z-index: 1001;
+    }
+
+    .main-nav {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: -320px;
+        width: 280px;
+        height: 100vh;
+        background-color: #0f172a;
+        padding: 24px 20px;
+        gap: 16px;
+        z-index: 1002;
+        box-shadow: 4px 0 25px rgba(0, 0, 0, 0.3);
+        transition: left 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        overflow-y: auto;
+    }
+
+    .main-nav.drawer-open {
+        left: 0;
+    }
+
+    .drawer-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #334155;
+        margin-bottom: 8px;
+    }
+
+    .drawer-logo {
+        font-size: 16px;
+        font-weight: 800;
+        color: #ffffff;
+        text-decoration: none;
+        letter-spacing: 1.5px;
+    }
+
+    .drawer-logo span {
+        color: #d97706;
+        font-weight: 300;
+    }
+
+    .drawer-close-btn {
+        background: none;
+        border: none;
+        color: #94a3b8;
+        font-size: 20px;
+        cursor: pointer;
+        padding: 4px;
+    }
+
+    .drawer-close-btn:hover {
+        color: #ffffff;
+    }
+
+    .main-nav a {
+        font-size: 15px;
+        padding: 10px 14px;
+        border-radius: 8px;
+        color: #cbd5e1;
+        font-weight: 600;
+    }
+
+    .main-nav a:hover {
+        background-color: #1e293b;
+        color: #fbbf24;
+    }
+}
+
+@media (max-width: 480px) {
+    .luxury-logo {
+        font-size: 14px;
+        letter-spacing: 0.5px;
+    }
+    .header-search-form input {
+        width: 70px;
         font-size: 11px;
     }
     .cart-icon-btn,
     .user-icon-btn {
-        width: 36px;
-        height: 36px;
-        font-size: 16px;
+        width: 34px;
+        height: 34px;
+        font-size: 15px;
     }
 }

@@ -232,7 +232,7 @@
 @media (min-width: 768px) and (max-width: 991px) {
     .shop-page {
         margin: 30px auto;
-        padding: 0 24px;
+        padding: 0 20px;
     }
     .shop-container {
         grid-template-columns: 1fr;
@@ -247,41 +247,15 @@
         padding: 20px;
     }
     .shop-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         gap: 20px;
     }
 }
 
-@media (min-width: 576px) and (max-width: 767px) {
+@media (max-width: 767px) {
     .shop-page {
         margin: 20px auto;
-        padding: 0 16px;
-    }
-    .shop-title h1 {
-        font-size: 32px;
-    }
-    .shop-container {
-        grid-template-columns: 1fr;
-        gap: 24px;
-    }
-    .shop-sidebar {
-        position: static;
-        height: auto;
-        border-right: none;
-        border: 1px solid #ececec;
-        border-radius: 12px;
-        padding: 16px;
-    }
-    .shop-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-    }
-}
-
-@media (max-width: 575px) {
-    .shop-page {
-        margin: 20px auto;
-        padding: 0 12px;
+        padding: 0 14px;
     }
     .shop-title h1 {
         font-size: 26px;

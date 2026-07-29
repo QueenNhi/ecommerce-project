@@ -11,6 +11,7 @@ const Header = () => {
     const [cartCount, setCartCount] = useState(0);
     const [showMenu, setShowMenu] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
+    const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
     const menuRef = useRef(null);
 
@@ -70,18 +71,44 @@ const Header = () => {
         <header className="main-header">
             <div className="header-inner">
 
-                {/* LOGO (Bấm vào đây luôn luôn về trang chủ /) */}
+                {/* HAMBURGER BUTTON FOR MOBILE */}
+                <button
+                    className="hamburger-btn"
+                    onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
+                    aria-label="Toggle navigation"
+                >
+                    ☰
+                </button>
+
+                {/* LOGO */}
                 <Link to="/" className="luxury-logo">
                     HERITAGE <span>LUXURY</span>
                 </Link>
 
-                {/* NAVIGATION LINKS */}
-                <nav className="main-nav">
-                    <Link to="/">Trang Chủ</Link> {/* <-- Thêm nút này để quay về trang chủ chính xác */}
-                    <Link to="/products">Túi Xách</Link>
-                    <Link to="/categories">Danh Mục</Link>
-                    <Link to="/offers">Ưu Đãi</Link>
-                    <Link to="/brands">Thương Hiệu</Link>
+                {/* OVERLAY FOR MOBILE DRAWER */}
+                {isMobileNavOpen && (
+                    <div
+                        className="mobile-nav-backdrop"
+                        onClick={() => setIsMobileNavOpen(false)}
+                    />
+                )}
+
+                {/* NAVIGATION LINKS (SLIDE-IN DRAWER ON MOBILE) */}
+                <nav className={`main-nav ${isMobileNavOpen ? "drawer-open" : ""}`}>
+                    <div className="drawer-header">
+                        <Link to="/" className="drawer-logo" onClick={() => setIsMobileNavOpen(false)}>
+                            HERITAGE <span>LUXURY</span>
+                        </Link>
+                        <button className="drawer-close-btn" onClick={() => setIsMobileNavOpen(false)}>
+                            ✕
+                        </button>
+                    </div>
+
+                    <Link to="/" onClick={() => setIsMobileNavOpen(false)}>Trang Chủ</Link>
+                    <Link to="/products" onClick={() => setIsMobileNavOpen(false)}>Túi Xách</Link>
+                    <Link to="/categories" onClick={() => setIsMobileNavOpen(false)}>Danh Mục</Link>
+                    <Link to="/offers" onClick={() => setIsMobileNavOpen(false)}>Ưu Đãi</Link>
+                    <Link to="/brands" onClick={() => setIsMobileNavOpen(false)}>Thương Hiệu</Link>
                 </nav>
 
                 {/* LIVE SEARCH & ACTIONS */}
@@ -90,7 +117,7 @@ const Header = () => {
                     <form className="header-search-form" onSubmit={handleSearchSubmit}>
                         <input
                             type="text"
-                            placeholder="Tìm kiếm túi xách xa xỉ..."
+                            placeholder="Tìm kiếm túi xách..."
                             value={searchQuery}
                             onChange={e => setSearchQuery(e.target.value)}
                         />

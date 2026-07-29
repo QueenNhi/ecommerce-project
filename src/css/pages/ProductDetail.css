@@ -1297,29 +1297,30 @@
 /* ============================================================
    RESPONSIVE BREAKPOINTS (ProductDetail.css)
    ============================================================ */
-@media (max-width: 991px) {
+/* Laptop & Tablet: 2 cột co lại (768px – 1199px) */
+@media (min-width: 768px) and (max-width: 1199px) {
     .detail-container {
-        grid-template-columns: 1fr;
-        gap: 36px;
-        padding: 0 16px;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        padding: 0 20px;
     }
 
     .gallery {
         position: static;
         flex-direction: column-reverse;
-        gap: 16px;
+        gap: 14px;
     }
 
     .thumb-list {
         flex-direction: row;
         max-height: unset;
         overflow-x: auto;
-        padding-bottom: 8px;
+        padding-bottom: 6px;
     }
 
     .thumb-wrapper {
-        width: 76px;
-        height: 86px;
+        width: 70px;
+        height: 80px;
     }
 
     .lookbook-grid,
@@ -1329,25 +1330,58 @@
     }
 }
 
+/* Mobile: 1 cột (< 768px) */
 @media (max-width: 767px) {
-    .product-breadcrumb {
-        padding: 16px;
+    .detail-container {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 0 14px;
+    }
+
+    .gallery {
+        position: static;
+        flex-direction: column-reverse;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .thumb-list {
+        flex-direction: row;
+        max-height: unset;
+        overflow-x: auto;
+        padding-bottom: 6px;
+    }
+
+    .thumb-wrapper {
+        width: 64px;
+        height: 74px;
     }
 
     .main-image-card {
-        min-height: 350px;
+        min-height: 280px;
+        max-width: 100%;
+    }
+
+    .main-image-card img {
+        max-width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    .product-breadcrumb {
+        padding: 14px;
     }
 
     .detail-info {
-        padding: 20px 16px;
+        padding: 16px 12px;
     }
 
     .product-title {
-        font-size: 24px;
+        font-size: 22px;
     }
 
     .current-price {
-        font-size: 24px;
+        font-size: 22px;
     }
 
     .primary-actions {
@@ -1365,7 +1399,7 @@
 
     .trust-props-grid {
         grid-template-columns: 1fr;
-        gap: 12px;
+        gap: 10px;
     }
 
     .reviews-summary-card {
@@ -1376,39 +1410,23 @@
         border-right: none;
         border-bottom: 1px solid #e2e8f0;
         padding-right: 0;
-        padding-bottom: 20px;
+        padding-bottom: 16px;
     }
 
     .tabs-header {
         overflow-x: auto;
         white-space: nowrap;
-        gap: 16px;
+        gap: 12px;
         padding-bottom: 6px;
     }
 
     .tab-btn {
         font-size: 13px;
     }
-}
 
-@media (max-width: 575px) {
     .lookbook-grid,
     .related-grid {
         grid-template-columns: 1fr;
-        gap: 16px;
-    }
-
-    .thumb-wrapper {
-        width: 64px;
-        height: 72px;
-    }
-
-    .tabs-header {
-        gap: 12px;
-    }
-
-    .tab-btn {
-        font-size: 12px;
-        padding: 10px 4px;
+        gap: 14px;
     }
 }

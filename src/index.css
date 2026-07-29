@@ -1,36 +1,38 @@
-/*==========================
-RESET
-==========================*/
-
-*{
+*, *::before, *::after {
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
-html{
+html {
     scroll-behavior:smooth;
+    width: 100%;
     max-width: 100%;
+    overflow-x: hidden;
 }
 
-body{
+body {
     font-family:Inter,sans-serif;
     background:#f6faff;
     color:#222;
     overflow-x:hidden;
+    width:100%;
     max-width:100%;
+    margin:0;
+    padding:0;
 }
 
-img, video{
+img, video, iframe {
     max-width:100%;
     height:auto;
+    display:block;
 }
 
-a{
+a {
     text-decoration:none;
 }
 
-button{
+button {
     font-family:inherit;
 }
 
@@ -739,19 +741,15 @@ CRAFT SECTION
 }
 
 .craft-text{
-
-    transform:translateX(-180px);
-
+    transform:translateX(-80px);
 }
 
 .craft-image{
-
     position:relative;
-    width:430px;
+    width:100%;
+    max-width:430px;
     margin-left:auto;
-
-    transform:translateX(180px);
-
+    transform:translateX(80px);
 }
 
 /* Khi IntersectionObserver thêm class show */
@@ -852,9 +850,9 @@ CRAFT SECTION
 
     position:absolute;
 
-    right:-30px;
+    right:0;
 
-    bottom:30px;
+    bottom:20px;
 
     background:#fff;
 
@@ -883,34 +881,46 @@ CRAFT SECTION
 
 /* Responsive */
 
-@media(max-width:900px){
+@media(max-width:991px){
 
     .craft-section{
 
         grid-template-columns:1fr;
-        gap:50px;
+        gap:40px;
+        padding:0 16px;
 
     }
 
     .craft-text{
 
-        transform:translateY(80px);
+        transform:translateY(30px);
 
     }
 
     .craft-image{
 
         width:100%;
-        max-width:420px;
+        max-width:100%;
         margin:auto;
 
-        transform:translateY(80px);
+        transform:translateY(30px);
+
+    }
+
+    .craft-text.show,
+    .craft-image.show{
+
+        transform:translateY(0);
 
     }
 
     .craft-card{
 
-        right:20px;
+        position:relative;
+        right:0;
+        bottom:0;
+        margin-top:16px;
+        width:100%;
 
     }
 
@@ -1350,40 +1360,52 @@ FOOTER
 
 }
 
-@media(max-width:900px){
-
-    .footer-links{
-
-        grid-template-columns:repeat(2,1fr);
-
-        gap:35px;
-
+@media(max-width:991px){
+    .footer {
+        margin-top: 60px;
     }
 
+    .footer-container {
+        padding: 40px 20px 24px;
+    }
+
+    .footer-top {
+        gap: 40px;
+    }
+
+    .footer-links {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
 }
 
-@media(max-width:650px){
-
-    .footer-top{
-
-        flex-direction:column;
-
+@media(max-width:767px){
+    .footer-top {
+        flex-direction: column;
+        gap: 30px;
     }
 
-    .footer-links{
-
-        grid-template-columns:1fr;
-
+    .footer-brand {
+        max-width: 100%;
+        text-align: center;
     }
 
-    .footer-bottom{
-
-        flex-direction:column;
-
-        text-align:center;
-
+    .footer-links {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        text-align: center;
     }
 
+    .footer-bottom {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 16px;
+    }
+
+    .footer-social {
+        justify-content: center;
+    }
 }
 
 
