@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { useAuth } from "../../context/AuthContext";
@@ -96,7 +97,11 @@ const Account = () => {
                                         <tbody>
                                             {orders.map(order => (
                                                 <tr key={order.id}>
-                                                    <td style={{ fontWeight: "700", color: "#2563eb" }}>#LX-{order.id}</td>
+                                                    <td style={{ fontWeight: "700" }}>
+                                                        <Link to={`/orders/${order.id}`} style={{ color: "#8b6b2d", textDecoration: "none" }}>
+                                                            #LX-{order.id}
+                                                        </Link>
+                                                    </td>
                                                     <td>{new Date(order.created_at).toLocaleDateString("vi-VN")}</td>
                                                     <td>{order.total_items} sản phẩm</td>
                                                     <td style={{ textTransform: "uppercase", fontSize: "12px", fontWeight: "600" }}>{order.payment_method}</td>
