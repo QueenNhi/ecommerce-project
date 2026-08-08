@@ -9,7 +9,7 @@
       "destination": "https://ecommerce-project-n45y.onrender.com/uploads/:path*"
     },
     {
-      "source": "/((?!api|uploads).*)",
+      "source": "/:path*",
       "destination": "/index.html"
     }
   ]

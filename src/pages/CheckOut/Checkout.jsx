@@ -4,6 +4,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { useAuth } from "../../context/AuthContext";
 import { API_URL, UPLOADS_URL } from "../../config/api";
+import { validateCoupon } from "../../services/couponService";
 import "./Checkout.css";
 
 const Checkout = () => {
@@ -14,6 +15,13 @@ const Checkout = () => {
     const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
+
+    // State quản lý Mã giảm giá (Coupon)
+    const [couponCode, setCouponCode] = useState("");
+    const [discount, setDiscount] = useState(0);
+    const [appliedCoupon, setAppliedCoupon] = useState(null);
+    const [couponError, setCouponError] = useState("");
+    const [validatingCoupon, setValidatingCoupon] = useState(false);
 
     const [form, setForm] = useState({
         fullName: user?.fullname || "",
@@ -66,7 +74,46 @@ const Checkout = () => {
         0
     );
     const shipping = 0;
-    const total = subtotal + shipping;
+    const total = Math.max(0, subtotal + shipping - discount);
+
+    // Xử lý áp dụng mã giảm giá
+    const handleApplyCoupon = async (e) => {
+        if (e) e.preventDefault();
+        if (!couponCode.trim()) {
+            setCouponError("Vui lòng nhập mã giảm giá.");
+            return;
+        }
+
+        try {
+            setValidatingCoupon(true);
+            setCouponError("");
+
+            const result = await validateCoupon(couponCode, subtotal);
+            if (result.success && result.coupon) {
+                const discountVal = Number(result.coupon.calculatedDiscount || result.coupon.discount || 0);
+                setDiscount(discountVal);
+                setAppliedCoupon(result.coupon);
+                setCouponError("");
+            } else {
+                setCouponError(result.message || "Mã giảm giá không hợp lệ.");
+                setDiscount(0);
+                setAppliedCoupon(null);
+            }
+        } catch (err) {
+            console.error("Apply coupon error:", err);
+            setCouponError("Lỗi kết nối khi kiểm tra mã giảm giá.");
+        } finally {
+            setValidatingCoupon(false);
+        }
+    };
+
+    // Xử lý bỏ áp dụng mã giảm giá
+    const handleRemoveCoupon = () => {
+        setAppliedCoupon(null);
+        setDiscount(0);
+        setCouponCode("");
+        setCouponError("");
+    };
 
     const handleOrder = async () => {
         if (!form.fullName || !form.phone || !form.address) {
@@ -98,7 +145,11 @@ const Checkout = () => {
                     email: form.email,
                     address: fullAddress,
                     payment_method: form.payment,
-                    note: ""
+                    note: "",
+                    discount: discount,
+                    discount_amount: discount,
+                    coupon_code: appliedCoupon?.code || "",
+                    total: total
                 })
             });
 
@@ -325,15 +376,69 @@ const Checkout = () => {
                                         ))}
                                     </div>
 
-                                    <div className="summary-row">
-                                        <span>Tạm tính</span>
-                                        <span>{subtotal.toLocaleString("vi-VN")}₫</span>
-                                    </div>
-                                    <div className="summary-row">
-                                        <span>Phí vận chuyển</span>
-                                        <span>Miễn phí</span>
-                                    </div>
-                                    <hr />
+                                     {/* Ô NHẬP MÃ GIẢM GIÁ (COUPON) */}
+                                     <div className="checkout-coupon-box">
+                                         <label className="coupon-box-title">Mã giảm giá (Coupon)</label>
+                                         <div className="coupon-input-group">
+                                             <input
+                                                 type="text"
+                                                 className="coupon-input"
+                                                 placeholder="Nhập mã ưu đãi..."
+                                                 value={couponCode}
+                                                 onChange={(e) => {
+                                                     setCouponCode(e.target.value);
+                                                     setCouponError("");
+                                                 }}
+                                                 disabled={!!appliedCoupon || validatingCoupon}
+                                                 onKeyDown={(e) => {
+                                                     if (e.key === "Enter") {
+                                                         e.preventDefault();
+                                                         if (!appliedCoupon) handleApplyCoupon();
+                                                     }
+                                                 }}
+                                             />
+                                             {appliedCoupon ? (
+                                                 <button
+                                                     type="button"
+                                                     className="coupon-btn coupon-remove-btn"
+                                                     onClick={handleRemoveCoupon}
+                                                 >
+                                                     Bỏ áp dụng
+                                                 </button>
+                                             ) : (
+                                                 <button
+                                                     type="button"
+                                                     className="coupon-btn coupon-apply-btn"
+                                                     onClick={handleApplyCoupon}
+                                                     disabled={validatingCoupon || !couponCode.trim()}
+                                                 >
+                                                     {validatingCoupon ? "XỬ LÝ..." : "Áp dụng"}
+                                                 </button>
+                                             )}
+                                         </div>
+                                         {couponError && <p className="coupon-msg coupon-error-msg">⚠️ {couponError}</p>}
+                                         {appliedCoupon && (
+                                             <p className="coupon-msg coupon-success-msg">
+                                                 🎉 Đã áp dụng mã <strong>{appliedCoupon.code}</strong> (-{discount.toLocaleString("vi-VN")}₫)
+                                             </p>
+                                         )}
+                                     </div>
+
+                                     <div className="summary-row">
+                                         <span>Tạm tính</span>
+                                         <span>{subtotal.toLocaleString("vi-VN")}₫</span>
+                                     </div>
+                                     {discount > 0 && (
+                                         <div className="summary-row discount-row">
+                                             <span>Mã giảm giá ({appliedCoupon?.code})</span>
+                                             <span className="discount-amount-text">-{discount.toLocaleString("vi-VN")}₫</span>
+                                         </div>
+                                     )}
+                                     <div className="summary-row">
+                                         <span>Phí vận chuyển</span>
+                                         <span>Miễn phí</span>
+                                     </div>
+                                     <hr />
                                     <div className="summary-total">
                                         <span>Tổng cộng</span>
                                         <span>{total.toLocaleString("vi-VN")}₫</span>

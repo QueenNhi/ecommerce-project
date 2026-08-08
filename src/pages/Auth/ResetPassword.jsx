@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSearchParams, useNavigate, Link } from "react-router-dom";
+import { useSearchParams, useParams, useNavigate, Link } from "react-router-dom";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { API_URL } from "../../config/api";
@@ -7,8 +7,9 @@ import "./ForgotPassword.css";
 
 const ResetPassword = () => {
     const [searchParams] = useSearchParams();
+    const params = useParams();
     const navigate = useNavigate();
-    const token = searchParams.get("token");
+    const token = searchParams.get("token") || params.token;
 
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -20,12 +21,17 @@ const ResetPassword = () => {
         e.preventDefault();
 
         if (!token) {
-            setError("Mã xác thực không hợp lệ.");
+            setError("Liên kết đặt lại mật khẩu không hợp lệ hoặc thiếu mã xác nhận (token).");
             return;
         }
 
         if (newPassword !== confirmPassword) {
             setError("Mật khẩu xác nhận không trùng khớp.");
+            return;
+        }
+
+        if (newPassword.length < 6) {
+            setError("Mật khẩu mới phải có ít nhất 6 ký tự.");
             return;
         }
 
@@ -47,13 +53,13 @@ const ResetPassword = () => {
                 setSuccess(true);
                 setTimeout(() => {
                     navigate("/login");
-                }, 3000);
+                }, 2500);
             } else {
-                setError(data.message || "Không thể đặt lại mật khẩu.");
+                setError(data.message || "Không thể cập nhật mật khẩu. Mã xác nhận có thể đã hết hạn.");
             }
         } catch (err) {
             console.error(err);
-            setError("Lỗi kết nối máy chủ.");
+            setError("Lỗi kết nối máy chủ. Vui lòng thử lại sau.");
         } finally {
             setLoading(false);
         }

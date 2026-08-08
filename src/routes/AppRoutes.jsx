@@ -12,6 +12,8 @@ import AdminCategories from "../pages/Admin/AdminCategories/Categories";
 import Checkout from "../pages/CheckOut/Checkout";
 import Register from "../pages/Register/Register";
 import Login from "../pages/Login/Login";
+import ForgotPassword from "../pages/Auth/ForgotPassword";
+import ResetPassword from "../pages/Auth/ResetPassword";
 import Brands from "../pages/Admin/Brands/Brands";
 import AdminOrders from "../pages/Admin/Orders";
 import Promotions from "../pages/Admin/Promotions";
@@ -87,6 +89,11 @@ function AppRoutes() {
                     {/* Auth Pages */}
                     <Route path="/register" element={<Register />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/forgot-password" element={<ForgotPassword />} />
+                    <Route path="/reset-password" element={<ResetPassword />} />
+                    <Route path="/reset-password/:token" element={<ResetPassword />} />
+                    <Route path="/dat-lai-mat-khau" element={<ResetPassword />} />
+                    <Route path="/dat-lai-mat-khau/:token" element={<ResetPassword />} />
                     
                     {/* Admin Pages (Protected) */}
                     <Route path="/admin" element={<AdminRoute><Dashboard /></AdminRoute>} />

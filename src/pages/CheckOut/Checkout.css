@@ -352,6 +352,118 @@
 }
 
 /* =========================
+   COUPON SECTION
+========================= */
+
+.checkout-coupon-box {
+    margin-bottom: 22px;
+    padding: 16px;
+    background: #fdfbf7;
+    border: 1px dashed #d4a853;
+    border-radius: 10px;
+}
+
+.coupon-box-title {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #8b6b2d;
+    margin-bottom: 10px;
+}
+
+.coupon-input-group {
+    display: flex;
+    gap: 8px;
+}
+
+.coupon-input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    color: #0f172a;
+    background: #ffffff;
+    transition: border-color 0.2s;
+}
+
+.coupon-input:focus {
+    border-color: #8b6b2d;
+}
+
+.coupon-input:disabled {
+    background: #f1f5f9;
+    color: #64748b;
+    cursor: not-allowed;
+}
+
+.coupon-btn {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.coupon-apply-btn {
+    background: #1e293b;
+    color: #ffffff;
+}
+
+.coupon-apply-btn:hover:not(:disabled) {
+    background: #8b6b2d;
+}
+
+.coupon-apply-btn:disabled {
+    background: #cbd5e1;
+    cursor: not-allowed;
+}
+
+.coupon-remove-btn {
+    background: #ef4444;
+    color: #ffffff;
+}
+
+.coupon-remove-btn:hover {
+    background: #dc2626;
+}
+
+.coupon-msg {
+    margin-top: 10px !important;
+    font-size: 13px !important;
+    line-height: 1.4;
+}
+
+.coupon-error-msg {
+    color: #dc2626 !important;
+    font-weight: 500;
+}
+
+.coupon-success-msg {
+    color: #15803d !important;
+    font-weight: 500;
+}
+
+.discount-row {
+    color: #15803d !important;
+    font-weight: 600;
+}
+
+.discount-amount-text {
+    color: #dc2626;
+    font-weight: 700;
+}
+
+/* =========================
    RESPONSIVE (Checkout.css)
 ========================= */
 
