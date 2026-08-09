@@ -72,7 +72,7 @@ function AppRoutes() {
                     <Route path="/product/:id" element={<ProductDetail />} />
                     <Route path="/cart" element={<Cart />} />
                     <Route path="/products" element={<Products />} />
-                    
+
                     {/* Quản lý danh mục (Đã bổ sung route theo ID để tránh lỗi điều hướng) */}
                     <Route path="/categories" element={<Categories />} />
                     <Route path="/categories/:id" element={<Categories />} />
@@ -94,7 +94,7 @@ function AppRoutes() {
                     <Route path="/reset-password/:token" element={<ResetPassword />} />
                     <Route path="/dat-lai-mat-khau" element={<ResetPassword />} />
                     <Route path="/dat-lai-mat-khau/:token" element={<ResetPassword />} />
-                    
+
                     {/* Admin Pages (Protected) */}
                     <Route path="/admin" element={<AdminRoute><Dashboard /></AdminRoute>} />
                     <Route path="/admin/products" element={<AdminRoute><AdminProducts /></AdminRoute>} />
