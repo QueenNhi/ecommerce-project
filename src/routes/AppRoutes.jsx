@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "../context/AuthContext";
 
+import ScrollToTop from "../components/ScrollToTop";
 import App from "../App";
 import ProductDetail from "../pages/ProductDetail/ProductDetail";
 import Cart from "../pages/Cart/Cart";
@@ -64,6 +65,7 @@ function AppRoutes() {
     return (
         <AuthProvider>
             <BrowserRouter>
+                <ScrollToTop />
                 <Routes>
                     {/* Trang chủ */}
                     <Route path="/" element={<App />} />
