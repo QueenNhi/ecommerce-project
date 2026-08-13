@@ -215,6 +215,7 @@ function ProductDetail() {
     // EFFECTS (LOAD & COLOR CHANGE)
     // =============================
     useEffect(() => {
+        window.scrollTo(0, 0);
         if (id) {
             fetchReviews();
             fetchRelatedProducts();
