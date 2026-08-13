@@ -51,6 +51,8 @@ function ProductDetail() {
     const [aiOutfits, setAiOutfits] = useState([]);
     const [loadingAi, setLoadingAi] = useState(false);
     const [showAiModal, setShowAiModal] = useState(false);
+    const [streamingText, setStreamingText] = useState("");
+    const [isCachedResult, setIsCachedResult] = useState(false);
 
     // REVIEWS & RELATED PRODUCTS STATES
     const [reviews, setReviews] = useState([]);
@@ -90,31 +92,98 @@ function ProductDetail() {
     };
 
     // =============================
-    // AI STYLIST
+    // AI STYLIST (SSE STREAMING + CACHING)
     // =============================
     const handleGetAiStylist = async () => {
         setLoadingAi(true);
         setShowAiModal(true);
+        setAiOutfits([]);
+        setStreamingText("");
+        setIsCachedResult(false);
+
         try {
-            const res = await fetch(`${API_URL}/api/ai/recommend-outfit`, {
+            const response = await fetch(`${API_URL}/api/ai/recommend-outfit-stream`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    productName: product.name,
-                    productCategory: product.category,
-                    productDescription: product.description,
-                    productColor: product.color
+                    productName: product?.name || "",
+                    productCategory: product?.category || "Túi xách thời trang",
+                    productDescription: product?.description || "",
+                    productColor: product?.color || ""
                 })
             });
-            const data = await res.json();
-            if (data.success) {
-                setAiOutfits(data.recommendations);
-            } else {
-                alert(data.message || "Lỗi lấy gợi ý từ AI.");
+
+            if (!response.ok) {
+                throw new Error("Không thể kết nối dịch vụ AI Stream.");
+            }
+
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder("utf-8");
+            let accumulatedText = "";
+            let buffer = "";
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+
+                buffer += decoder.decode(value, { stream: true });
+                const lines = buffer.split("\n");
+                buffer = lines.pop() || "";
+
+                for (const line of lines) {
+                    const trimmed = line.trim();
+                    if (!trimmed || trimmed.startsWith(":")) continue;
+
+                    if (trimmed.startsWith("data: ")) {
+                        const dataStr = trimmed.replace(/^data:\s*/, "");
+                        if (dataStr === "[DONE]") break;
+
+                        try {
+                            const parsed = JSON.parse(dataStr);
+                            if (parsed.type === "cached") {
+                                setIsCachedResult(true);
+                                setAiOutfits(parsed.recommendations || []);
+                                setLoadingAi(false);
+                                return;
+                            } else if (parsed.type === "chunk") {
+                                accumulatedText += parsed.content;
+                                setStreamingText(accumulatedText);
+                            } else if (parsed.type === "done") {
+                                setAiOutfits(parsed.recommendations || []);
+                                setLoadingAi(false);
+                                return;
+                            } else if (parsed.type === "error") {
+                                alert(parsed.message || "Lỗi tạo phản hồi AI.");
+                            }
+                        } catch (e) {
+                            // Skip JSON parse error on partial SSE token
+                        }
+                    }
+                }
             }
         } catch (err) {
-            console.error("Fetch AI error:", err);
-            alert("Lỗi kết nối tới AI Stylist.");
+            console.error("Fetch AI SSE stream error, falling back to standard HTTP:", err);
+            try {
+                const res = await fetch(`${API_URL}/api/ai/recommend-outfit`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        productName: product?.name || "",
+                        productCategory: product?.category || "Túi xách thời trang",
+                        productDescription: product?.description || "",
+                        productColor: product?.color || ""
+                    })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    setAiOutfits(data.recommendations);
+                    if (data.cached) setIsCachedResult(true);
+                } else {
+                    alert(data.message || "Lỗi lấy gợi ý từ AI.");
+                }
+            } catch (e) {
+                alert("Lỗi kết nối tới AI Stylist.");
+            }
         } finally {
             setLoadingAi(false);
         }
@@ -789,35 +858,58 @@ function ProductDetail() {
                         <button className="ai-close-btn" onClick={() => setShowAiModal(false)}>✕</button>
 
                         <div className="ai-modal-header">
-                            <span className="ai-sparkle-badge">✨ AI STYLIST CONSULTANT</span>
+                            <span className="ai-sparkle-badge">
+                                {isCachedResult ? "⚡ SMART AI CACHE HIT (<5ms)" : "✨ REAL-TIME AI STYLIST"}
+                            </span>
                             <h2>Styling Inspirations</h2>
                             <p>Exclusive outfit recommendations for <strong>{product?.name}</strong></p>
                         </div>
 
                         {loadingAi ? (
                             <div className="ai-loading-box">
-                                <div className="ai-spinner"></div>
-                                <p>AI is curating high-fashion ensemble combinations for you...</p>
+                                {streamingText ? (
+                                    <div className="ai-streaming-container">
+                                        <div className="ai-stream-header">
+                                            <div className="ai-pulse-dot"></div>
+                                            <span>AI đang suy luận trực tiếp (Real-time SSE Streaming)...</span>
+                                        </div>
+                                        <div className="ai-stream-text">
+                                            {streamingText}
+                                            <span className="ai-cursor">|</span>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <div className="ai-spinner"></div>
+                                        <p>Đang kết nối siêu tốc tới AI Stylist...</p>
+                                    </>
+                                )}
                             </div>
                         ) : (
                             <div className="outfit-list">
-                                {aiOutfits.map((outfit, index) => (
-                                    <div key={index} className="outfit-card">
-                                        <div className="outfit-card-header">
-                                            <h3>👗 {outfit.styleName}</h3>
-                                            <span className="occasion-tag">{outfit.occasion}</span>
+                                {aiOutfits && aiOutfits.length > 0 ? (
+                                    aiOutfits.map((outfit, index) => (
+                                        <div key={index} className="outfit-card">
+                                            <div className="outfit-card-header">
+                                                <h3>👗 {outfit.styleName}</h3>
+                                                <span className="occasion-tag">{outfit.occasion}</span>
+                                            </div>
+                                            <div className="outfit-detail-row">
+                                                <strong>Apparel:</strong> <span>{outfit.clothingSuggestion}</span>
+                                            </div>
+                                            <div className="outfit-detail-row">
+                                                <strong>Footwear & Accessories:</strong> <span>{outfit.shoesAndAccessories}</span>
+                                            </div>
+                                            <div className="outfit-color-tip">
+                                                💡 <strong>Palette Tip:</strong> {outfit.colorTip}
+                                            </div>
                                         </div>
-                                        <div className="outfit-detail-row">
-                                            <strong>Apparel:</strong> <span>{outfit.clothingSuggestion}</span>
-                                        </div>
-                                        <div className="outfit-detail-row">
-                                            <strong>Footwear & Accessories:</strong> <span>{outfit.shoesAndAccessories}</span>
-                                        </div>
-                                        <div className="outfit-color-tip">
-                                            💡 <strong>Palette Tip:</strong> {outfit.colorTip}
-                                        </div>
-                                    </div>
-                                ))}
+                                    ))
+                                ) : (
+                                    <p style={{ textAlign: "center", color: "#64748b", padding: "20px" }}>
+                                        Không tìm thấy cấu trúc gợi ý phù hợp. Vui lòng thử lại.
+                                    </p>
+                                )}
                             </div>
                         )}
                     </div>
