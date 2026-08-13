@@ -43,13 +43,19 @@ const ResetPassword = () => {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    token,
-                    newPassword
+                    token: String(token || "").trim(),
+                    newPassword: String(newPassword || "").trim()
                 })
             });
 
             const data = await res.json();
             if (res.ok && data.success) {
+                try {
+                    localStorage.removeItem("user");
+                    localStorage.removeItem("token");
+                } catch (e) {
+                    console.error(e);
+                }
                 setSuccess(true);
                 setTimeout(() => {
                     navigate("/login");
