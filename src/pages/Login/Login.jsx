@@ -103,7 +103,7 @@ const Login = () => {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
-                        email: form.email.trim(),
+                        email: form.email,
                         password: form.password
                     })
                 }
