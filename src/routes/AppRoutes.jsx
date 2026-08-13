@@ -31,6 +31,7 @@ import Account from "../pages/Account/Account";
 import NotFound from "../pages/NotFound/NotFound";
 import OrderSuccess from "../pages/OrderSuccess/OrderSuccess";
 import OrderDetail from "../pages/OrderDetail/OrderDetail";
+import VnPayReturn from "../pages/Payment/VnPayReturn";
 
 
 
@@ -87,6 +88,10 @@ function AppRoutes() {
                     <Route path="/account" element={<Account />} />
                     <Route path="/checkout" element={<Checkout />} />
                     <Route path="/order-success/:id" element={<OrderSuccess />} />
+                    <Route path="/payment/vnpay-return" element={<VnPayReturn />} />
+                    <Route path="/payment/vnpay_return" element={<VnPayReturn />} />
+                    <Route path="/vnpay-return" element={<VnPayReturn />} />
+                    <Route path="/vnpay_return" element={<VnPayReturn />} />
 
                     {/* Auth Pages */}
                     <Route path="/register" element={<Register />} />
