@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import AdminLayout from "../../../layouts/AdminLayout";
-import { API_URL } from "../../../config/api";
+import { API_URL, getAuthHeaders } from "../../../config/api";
 import "../../../css/admin/Staff.css";
 
 // =============================================
@@ -165,7 +165,7 @@ const AddStaffModal = ({ onClose, onSuccess, showToast }) => {
         try {
             const res = await fetch(`${API_URL}/api/admin/staff`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: getAuthHeaders({ "Content-Type": "application/json" }),
                 body: JSON.stringify({
                     fullname: form.fullname.trim(),
                     email: form.email.trim().toLowerCase(),
@@ -339,7 +339,7 @@ const EditStaffModal = ({ staff, onClose, onSuccess, showToast }) => {
         try {
             const res = await fetch(`${API_URL}/api/admin/staff/${staff.id}`, {
                 method: "PUT",
-                headers: { "Content-Type": "application/json" },
+                headers: getAuthHeaders({ "Content-Type": "application/json" }),
                 body: JSON.stringify({
                     fullname: form.fullname.trim(),
                     phone: form.phone.trim(),
@@ -470,6 +470,7 @@ const DeleteStaffModal = ({ staff, onClose, onSuccess, showToast }) => {
         try {
             const res = await fetch(`${API_URL}/api/admin/staff/${staff.id}`, {
                 method: "DELETE",
+                headers: getAuthHeaders()
             });
             const data = await res.json();
 
@@ -560,7 +561,7 @@ const ResetPasswordModal = ({ staff, onClose, showToast }) => {
                 `${API_URL}/api/admin/staff/${staff.id}/reset-password`,
                 {
                     method: "PATCH",
-                    headers: { "Content-Type": "application/json" },
+                    headers: getAuthHeaders({ "Content-Type": "application/json" }),
                     body: JSON.stringify({ password: newPassword }),
                 }
             );
@@ -674,7 +675,9 @@ const AdminStaff = () => {
     const fetchStaff = useCallback(async () => {
         try {
             setLoading(true);
-            const res = await fetch(`${API_URL}/api/admin/staff`);
+            const res = await fetch(`${API_URL}/api/admin/staff`, {
+                headers: getAuthHeaders()
+            });
             const data = await res.json();
 
             if (data.success && Array.isArray(data.staff)) {
@@ -707,7 +710,7 @@ const AdminStaff = () => {
                 `${API_URL}/api/admin/staff/${staff.id}/status`,
                 {
                     method: "PATCH",
-                    headers: { "Content-Type": "application/json" },
+                    headers: getAuthHeaders({ "Content-Type": "application/json" }),
                     body: JSON.stringify({ status: newStatus }),
                 }
             );

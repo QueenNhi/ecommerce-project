@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
-import { API_URL } from "../../config/api";
+import { API_URL, getAuthHeaders } from "../../config/api";
 import "../../css/admin/Customers.css";
 
 const AdminCustomers = () => {
@@ -13,7 +13,9 @@ const AdminCustomers = () => {
 
     const fetchCustomers = async () => {
         try {
-            const res = await fetch(`${API_URL}/api/admin/customers`);
+            const res = await fetch(`${API_URL}/api/admin/customers`, {
+                headers: getAuthHeaders()
+            });
             const data = await res.json();
             if (data.success && Array.isArray(data.customers)) {
                 setCustomers(data.customers);
@@ -35,7 +37,7 @@ const AdminCustomers = () => {
         try {
             const res = await fetch(`${API_URL}/api/admin/customers/${customer.id}/status`, {
                 method: "PUT",
-                headers: { "Content-Type": "application/json" },
+                headers: getAuthHeaders({ "Content-Type": "application/json" }),
                 body: JSON.stringify({ status: newStatus })
             });
 
@@ -55,7 +57,8 @@ const AdminCustomers = () => {
     const handleDeleteCustomer = async (id) => {
         try {
             const res = await fetch(`${API_URL}/api/admin/customers/${id}`, {
-                method: "DELETE"
+                method: "DELETE",
+                headers: getAuthHeaders()
             });
             const data = await res.json();
             if (res.ok && data.success) {

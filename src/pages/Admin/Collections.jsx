@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
-import { API_URL } from "../../config/api";
+import { API_URL, getAuthHeaders } from "../../config/api";
 import "../../css/admin/Collections.css";
 
 const Collections = () => {
@@ -16,7 +16,9 @@ const Collections = () => {
 
     const fetchCollections = async () => {
         try {
-            const res = await fetch(`${API_URL}/api/admin/collections`);
+            const res = await fetch(`${API_URL}/api/admin/collections`, {
+                headers: getAuthHeaders()
+            });
             const data = await res.json();
             if (data.success && Array.isArray(data.collections)) {
                 setCollections(data.collections);
@@ -42,7 +44,7 @@ const Collections = () => {
         try {
             const res = await fetch(`${API_URL}/api/admin/collections`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: getAuthHeaders({ "Content-Type": "application/json" }),
                 body: JSON.stringify(formData)
             });
 

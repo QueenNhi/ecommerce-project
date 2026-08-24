@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { API_URL } from "../../../config/api";
+import { API_URL, getAuthHeaders } from "../../../config/api";
 import "../../../css/admin/Brands.css";
 
 const DeleteBrandModal = ({ brand, close, reload }) => {
@@ -13,7 +13,9 @@ const DeleteBrandModal = ({ brand, close, reload }) => {
         setErrorMsg("");
         setSuccessMsg("");
         try {
-            const res = await axios.delete(`${API_URL}/api/admin/brands/${brand.id}`);
+            const res = await axios.delete(`${API_URL}/api/admin/brands/${brand.id}`, {
+                headers: getAuthHeaders()
+            });
             if (res.data.success) {
                 setSuccessMsg("🗑️ Xóa thương hiệu thành công!");
                 reload();

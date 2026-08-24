@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
-import { API_URL, UPLOADS_URL } from "../../config/api";
+import { API_URL, UPLOADS_URL, getAuthHeaders } from "../../config/api";
 import "../../css/admin/Orders.css";
 
 const AdminOrders = () => {
@@ -18,7 +18,9 @@ const AdminOrders = () => {
     // ======================================
     const fetchOrders = async () => {
         try {
-            const res = await fetch(`${API_URL}/api/admin/orders/all`);
+            const res = await fetch(`${API_URL}/api/admin/orders/all`, {
+                headers: getAuthHeaders()
+            });
             const data = await res.json();
             if (data.success && Array.isArray(data.orders)) {
                 setOrders(data.orders);
@@ -44,9 +46,7 @@ const AdminOrders = () => {
         try {
             const res = await fetch(`${API_URL}/api/admin/orders/${orderId}/status`, {
                 method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: getAuthHeaders({ "Content-Type": "application/json" }),
                 body: JSON.stringify({ status: newStatus })
             });
 
@@ -224,7 +224,7 @@ const AdminOrders = () => {
                                                                     try {
                                                                         const res = await fetch(`${API_URL}/api/admin/orders/${order.id}/payment-status`, {
                                                                             method: "PUT",
-                                                                            headers: { "Content-Type": "application/json" },
+                                                                            headers: getAuthHeaders({ "Content-Type": "application/json" }),
                                                                             body: JSON.stringify({ payment_status: "paid" })
                                                                         });
                                                                         const data = await res.json();

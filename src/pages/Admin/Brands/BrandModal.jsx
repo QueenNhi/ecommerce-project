@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { API_URL, UPLOADS_URL } from "../../../config/api";
+import { API_URL, UPLOADS_URL, getAuthHeaders } from "../../../config/api";
 import "../../../css/admin/Brands.css";
 
 const BrandModal = ({ brand, close, reload }) => {
@@ -51,14 +51,14 @@ const BrandModal = ({ brand, close, reload }) => {
                 await axios.put(
                     `${API_URL}/api/admin/brands/${brand.id}`,
                     formData,
-                    { headers: { "Content-Type": "multipart/form-data" } }
+                    { headers: getAuthHeaders({ "Content-Type": "multipart/form-data" }) }
                 );
                 setSuccessMsg("✅ Cập nhật thương hiệu thành công!");
             } else {
                 await axios.post(
                     `${API_URL}/api/admin/brands`,
                     formData,
-                    { headers: { "Content-Type": "multipart/form-data" } }
+                    { headers: getAuthHeaders({ "Content-Type": "multipart/form-data" }) }
                 );
                 setSuccessMsg("🎉 Thêm thương hiệu mới thành công!");
             }

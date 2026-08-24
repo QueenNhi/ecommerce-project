@@ -3,7 +3,7 @@ import axios from "axios";
 import AdminLayout from "../../../layouts/AdminLayout";
 import BrandModal from "./BrandModal";
 import DeleteBrandModal from "./DeleteBrandModal";
-import { API_URL, UPLOADS_URL } from "../../../config/api";
+import { API_URL, UPLOADS_URL, getAuthHeaders } from "../../../config/api";
 import "../../../css/admin/Brands.css";
 
 const Brands = () => {
@@ -18,7 +18,9 @@ const Brands = () => {
     const getBrands = async () => {
         try {
             setLoading(true);
-            const res = await axios.get(`${API_URL}/api/admin/brands`);
+            const res = await axios.get(`${API_URL}/api/admin/brands`, {
+                headers: getAuthHeaders()
+            });
             // Backend trả về { success: true, brands: [...] }
             if (res.data?.success && Array.isArray(res.data?.brands)) {
                 setBrands(res.data.brands);

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
-import { API_URL } from "../../config/api";
+import { API_URL, getAuthHeaders } from "../../config/api";
 import "../../css/admin/Promotions.css";
 
 const Promotions = () => {
@@ -22,7 +22,9 @@ const Promotions = () => {
 
     const fetchPromotions = async () => {
         try {
-            const res = await fetch(`${API_URL}/api/admin/promotions`);
+            const res = await fetch(`${API_URL}/api/admin/promotions`, {
+                headers: getAuthHeaders()
+            });
             const data = await res.json();
             if (data.success && Array.isArray(data.promotions)) {
                 setPromotions(data.promotions);
@@ -74,13 +76,13 @@ const Promotions = () => {
             if (selectedPromo) {
                 res = await fetch(`${API_URL}/api/admin/promotions/${selectedPromo.id}`, {
                     method: "PUT",
-                    headers: { "Content-Type": "application/json" },
+                    headers: getAuthHeaders({ "Content-Type": "application/json" }),
                     body: JSON.stringify(formData)
                 });
             } else {
                 res = await fetch(`${API_URL}/api/admin/promotions`, {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: getAuthHeaders({ "Content-Type": "application/json" }),
                     body: JSON.stringify(formData)
                 });
             }
@@ -102,7 +104,8 @@ const Promotions = () => {
     const handleDelete = async (id) => {
         try {
             const res = await fetch(`${API_URL}/api/admin/promotions/${id}`, {
-                method: "DELETE"
+                method: "DELETE",
+                headers: getAuthHeaders()
             });
             const data = await res.json();
             if (res.ok && data.success) {

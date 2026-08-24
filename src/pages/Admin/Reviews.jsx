@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
-import { API_URL, UPLOADS_URL } from "../../config/api";
+import { API_URL, UPLOADS_URL, getAuthHeaders } from "../../config/api";
 import "../../css/admin/Reviews.css";
 
 const Reviews = () => {
@@ -13,7 +13,9 @@ const Reviews = () => {
 
     const fetchReviews = async () => {
         try {
-            const res = await fetch(`${API_URL}/api/admin/reviews`);
+            const res = await fetch(`${API_URL}/api/admin/reviews`, {
+                headers: getAuthHeaders()
+            });
             const data = await res.json();
             if (data.success && Array.isArray(data.reviews)) {
                 setReviews(data.reviews);
@@ -32,7 +34,8 @@ const Reviews = () => {
     const handleDelete = async (id) => {
         try {
             const res = await fetch(`${API_URL}/api/admin/reviews/${id}`, {
-                method: "DELETE"
+                method: "DELETE",
+                headers: getAuthHeaders()
             });
             const data = await res.json();
             if (res.ok && data.success) {

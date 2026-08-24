@@ -23,4 +23,19 @@ const getBaseUrl = () => {
 export const API_URL = getBaseUrl();
 export const UPLOADS_URL = `${API_URL}/uploads`;
 
+/**
+ * Tạo Headers có chứa Token xác thực cho các lệnh gọi fetch()
+ */
+export const getAuthHeaders = (additionalHeaders = {}) => {
+    const token = localStorage.getItem("token");
+    const headers = {
+        ...additionalHeaders
+    };
+    if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+    }
+    return headers;
+};
+
 export default API_URL;
+
