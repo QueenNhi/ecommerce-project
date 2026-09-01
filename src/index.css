@@ -8,14 +8,14 @@ html {
     scroll-behavior:smooth;
     width: 100%;
     max-width: 100%;
-    overflow-x: hidden;
+    overflow-x: clip;
 }
 
 body {
     font-family:Inter,sans-serif;
     background:#f6faff;
     color:#222;
-    overflow-x: hidden;
+    overflow-x: clip;
     width:100%;
     max-width:100%;
     margin:0;
