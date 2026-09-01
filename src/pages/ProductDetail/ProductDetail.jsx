@@ -208,11 +208,22 @@ function ProductDetail() {
             return;
         }
 
+        // Lấy token từ localStorage hoặc thông tin user đã lưu
+        const token = localStorage.getItem("token") || savedUser?.token || "";
+
+        if (!token || token === "undefined" || token === "null") {
+            alert("Vui lòng đăng nhập tài khoản của bạn để thực hiện đánh giá.");
+            return;
+        }
+
         setSubmittingReview(true);
         try {
             const res = await fetch(`${API_URL}/api/products/${id}/reviews`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
                 body: JSON.stringify({
                     user_id: activeUserId,
                     rating: Number(newRating),

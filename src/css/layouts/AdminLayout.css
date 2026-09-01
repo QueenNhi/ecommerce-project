@@ -33,3 +33,7 @@
         padding: 12px;
     }
 }
+/* Xóa kho?ng tr?ng du th?a do padding-top c?a body (index.css) */
+body.admin-body-active {
+    padding-top: 0 !important;
+}

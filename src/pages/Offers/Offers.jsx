@@ -11,7 +11,7 @@ const Offers = () => {
 
     const fetchPromotions = async () => {
         try {
-            const res = await fetch(`${API_URL}/api/admin/promotions`);
+            const res = await fetch(`${API_URL}/api/promotions/public`);
             const data = await res.json();
             if (data.success && Array.isArray(data.promotions)) {
                 setPromotions(data.promotions.filter(p => p.status === "active"));
