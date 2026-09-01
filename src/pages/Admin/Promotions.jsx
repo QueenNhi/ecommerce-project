@@ -15,6 +15,7 @@ const Promotions = () => {
         discount_percent: 10,
         min_order_amount: 1000000,
         expiration_date: "",
+        usage_limit_per_user: 1,
         status: "active"
     });
 
@@ -47,6 +48,7 @@ const Promotions = () => {
             discount_percent: 10,
             min_order_amount: 1000000,
             expiration_date: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
+            usage_limit_per_user: 1,
             status: "active"
         });
         setShowModal(true);
@@ -59,6 +61,7 @@ const Promotions = () => {
             discount_percent: promo.discount_percent || 0,
             min_order_amount: promo.min_order_amount || 0,
             expiration_date: promo.expiration_date ? new Date(promo.expiration_date).toISOString().split("T")[0] : "",
+            usage_limit_per_user: promo.usage_limit_per_user || 1,
             status: promo.status || "active"
         });
         setShowModal(true);
@@ -250,6 +253,18 @@ const Promotions = () => {
                                         className="form-control"
                                         value={formData.expiration_date}
                                         onChange={e => setFormData({ ...formData, expiration_date: e.target.value })}
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Giới hạn sử dụng / 1 khách hàng:</label>
+                                    <input
+                                        type="number"
+                                        className="form-control"
+                                        min="1"
+                                        value={formData.usage_limit_per_user}
+                                        onChange={(e) => setFormData({ ...formData, usage_limit_per_user: parseInt(e.target.value) || 1 })}
+                                        required
                                     />
                                 </div>
 

@@ -1,5 +1,7 @@
 import "../../css/admin/AdminSidebar.css";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { API_URL } from "../../config/api";
 import { useAuth } from "../../context/AuthContext";
 
 import {
@@ -42,6 +44,35 @@ const AdminSidebar = () => {
     };
 
     // ====================================================
+    // Notification Polling for Sidebar Red Dots
+    // ====================================================
+    const [unreadCounts, setUnreadCounts] = useState({ orders: 0, reviews: 0 });
+
+    useEffect(() => {
+        const fetchSidebarCounts = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                const res = await fetch(`${API_URL}/api/admin/notifications`, {
+                    headers: { "Authorization": `Bearer ${token}` }
+                });
+                const data = await res.json();
+                
+                if (data.success && data.notifications) {
+                    const unreadList = data.notifications.filter(n => !n.isRead);
+                    setUnreadCounts({
+                        orders: unreadList.filter(n => n.type === 'new_order').length,
+                        reviews: unreadList.filter(n => n.type === 'new_review').length
+                    });
+                }
+            } catch (err) { }
+        };
+
+        fetchSidebarCounts();
+        const interval = setInterval(fetchSidebarCounts, 30000); // 30s polling
+        return () => clearInterval(interval);
+    }, []);
+
+    // ====================================================
     // Định nghĩa menu với phân quyền
     // canAccess: admin | sales | warehouse
     // ====================================================
@@ -76,6 +107,7 @@ const AdminSidebar = () => {
             icon: <FiShoppingCart />,
             label: "Orders",
             canAccess: isAdmin || isSalesStaff || isWarehouseStaff,
+            hasUnread: unreadCounts.orders > 0
         },
         {
             to: "/admin/customers",
@@ -100,6 +132,7 @@ const AdminSidebar = () => {
             icon: <FiStar />,
             label: "Reviews",
             canAccess: isAdmin || isSalesStaff,
+            hasUnread: unreadCounts.reviews > 0
         },
         {
             to: "/admin/collections",
@@ -147,6 +180,16 @@ const AdminSidebar = () => {
                                 <span>{item.label}</span>
                                 {item.badge && (
                                     <span className="sidebar-badge">{item.badge}</span>
+                                )}
+                                {item.hasUnread && (
+                                    <span style={{
+                                        width: "8px",
+                                        height: "8px",
+                                        backgroundColor: "red",
+                                        borderRadius: "50%",
+                                        marginLeft: "auto",
+                                        flexShrink: 0
+                                    }}></span>
                                 )}
                             </NavLink>
                         </li>

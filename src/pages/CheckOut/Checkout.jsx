@@ -88,7 +88,7 @@ const Checkout = () => {
             setValidatingCoupon(true);
             setCouponError("");
 
-            const result = await validateCoupon(couponCode, subtotal);
+            const result = await validateCoupon(couponCode, subtotal, userId);
             if (result.success && result.coupon) {
                 const discountVal = Number(result.coupon.calculatedDiscount || result.coupon.discount || 0);
                 setDiscount(discountVal);

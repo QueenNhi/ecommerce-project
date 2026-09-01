@@ -6,7 +6,7 @@ import API from "./api";
  * @param {number} totalAmount Tổng tiền đơn hàng trước giảm giá
  * @returns {Promise<{success: boolean, message: string, coupon?: object}>}
  */
-export const validateCoupon = async (code, totalAmount = 0) => {
+export const validateCoupon = async (code, totalAmount = 0, user_id = null) => {
     if (!code || !code.trim()) {
         return {
             success: false,
@@ -19,7 +19,8 @@ export const validateCoupon = async (code, totalAmount = 0) => {
     try {
         const res = await API.post("/promotions/validate", {
             code: upperCode,
-            totalAmount
+            totalAmount,
+            user_id
         });
 
         if (res.data && res.data.success) {
