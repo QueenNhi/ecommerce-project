@@ -1,28 +1,29 @@
-.admin-layout{
-    display:flex;
-    min-height:100vh;
-    background:#f5f6fa;
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+    background: #f5f6fa;
 }
 
-.admin-main{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    min-width:0;
+.admin-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
 }
 
-.admin-content{
-    flex:1;
-    padding:30px;
-    background:#f5f6fa;
-    overflow-y:auto;
-    min-width:0;
+.admin-content {
+    flex: 1;
+    padding: 30px;
+    background: #f5f6fa;
+    overflow-y: auto;
+    min-width: 0;
 }
 
 @media (max-width: 991px) {
     .admin-layout {
         flex-direction: column;
     }
+
     .admin-content {
         padding: 16px;
     }
@@ -33,7 +34,7 @@
         padding: 12px;
     }
 }
-/* Xóa kho?ng tr?ng du th?a do padding-top c?a body (index.css) */
+
 body.admin-body-active {
     padding-top: 0 !important;
 }
