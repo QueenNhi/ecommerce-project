@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import AdminLayout from "../../layouts/AdminLayout";
 import { API_URL, UPLOADS_URL, getAuthHeaders } from "../../config/api";
 import "../../css/admin/Orders.css";
 
 const AdminOrders = () => {
+    const [searchParams, setSearchParams] = useSearchParams();
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState("all");
@@ -88,7 +90,22 @@ const AdminOrders = () => {
     const closeModal = () => {
         setSelectedOrder(null);
         setOrderItems([]);
+        if (searchParams.get("orderId")) {
+            searchParams.delete("orderId");
+            setSearchParams(searchParams);
+        }
     };
+
+    // Tự động mở chi tiết đơn hàng nếu có param orderId trên URL
+    useEffect(() => {
+        const orderIdParam = searchParams.get("orderId");
+        if (orders.length > 0 && orderIdParam && !selectedOrder) {
+            const foundOrder = orders.find(o => String(o.id) === String(orderIdParam));
+            if (foundOrder) {
+                handleViewDetail(foundOrder);
+            }
+        }
+    }, [orders, searchParams, selectedOrder]);
 
     // Filter orders by tab
     const filteredOrders = activeTab === "all"

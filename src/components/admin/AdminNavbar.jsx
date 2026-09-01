@@ -72,7 +72,7 @@ const AdminNavbar = () => {
             
             switch (notif.type) {
                 case 'new_order':
-                    navigate(`/admin/orders/${notif.reference_id || ''}`);
+                    navigate(`/admin/orders?orderId=${notif.reference_id || ''}`);
                     break;
                 case 'new_review':
                     navigate(`/admin/reviews`);
