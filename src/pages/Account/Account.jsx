@@ -21,7 +21,14 @@ const Account = () => {
             return;
         }
         try {
-            const res = await fetch(`${API_URL}/api/orders/user/${user.id}`);
+            const token = localStorage.getItem("token");
+            const res = await fetch(`${API_URL}/api/orders/user/${user.id}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
             const data = await res.json();
             if (data.success && Array.isArray(data.orders)) {
                 setOrders(data.orders);
