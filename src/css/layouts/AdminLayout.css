@@ -19,7 +19,7 @@
     background: #f5f6fa;
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* Cho phép các trang con tự scroll */
+    overflow-y: auto; /* Cho phép cuộn nội dung quản lý */
     min-width: 0;
 }
 
