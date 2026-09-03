@@ -442,11 +442,18 @@ function ProductDetail() {
                     {/* RIGHT - PRODUCT INFO */}
                     <div className="detail-info">
                         
-                        {/* BRAND BADGE */}
+                        {/* BRAND BADGE + STOCK STATUS */}
                         <div className="product-brand-tag">
                             <span>LUXURY EDITION</span>
                             <span className="dot">•</span>
-                            <span className="in-stock-label">IN STOCK</span>
+                            {(() => {
+                                const stock = Number(product.stock_quantity) || 0;
+                                const isOut = stock <= 0 || product.status === "Out of Stock";
+                                const isLow = !isOut && stock <= 10;
+                                if (isOut) return <span className="in-stock-label out-of-stock">Hết hàng</span>;
+                                if (isLow) return <span className="in-stock-label low-stock">⚠️ Sắp hết — Còn {stock} sp</span>;
+                                return <span className="in-stock-label">✅ Còn hàng: {stock} sp</span>;
+                            })()}
                         </div>
 
                         {/* TITLE */}
@@ -548,7 +555,11 @@ function ProductDetail() {
                                 </button>
                                 <span className="qty-num">{quantity}</span>
                                 <button
-                                    onClick={() => setQuantity(quantity + 1)}
+                                    onClick={() => {
+                                        const maxQty = Number(product?.stock_quantity) || 999;
+                                        if (quantity < maxQty) setQuantity(quantity + 1);
+                                    }}
+                                    disabled={quantity >= (Number(product?.stock_quantity) || 999)}
                                     aria-label="Increase quantity"
                                 >
                                     <FiPlus />
@@ -573,15 +584,31 @@ function ProductDetail() {
                         </div>
 
                         {/* MAIN ACTION BUTTONS */}
-                        <div className="primary-actions">
-                            <button className="btn-add-cart" onClick={handleAddToCart}>
-                                <FiShoppingBag /> ADD TO CART
-                            </button>
+                        {(() => {
+                            const stock = Number(product?.stock_quantity) || 0;
+                            const isOut = stock <= 0 || product?.status === "Out of Stock";
+                            return (
+                                <div className="primary-actions">
+                                    <button
+                                        className={`btn-add-cart${isOut ? " btn-disabled" : ""}`}
+                                        onClick={isOut ? undefined : handleAddToCart}
+                                        disabled={isOut}
+                                        title={isOut ? "Sản phẩm đã hết hàng" : "Thêm vào giỏ hàng"}
+                                    >
+                                        <FiShoppingBag /> {isOut ? "Hết hàng" : "ADD TO CART"}
+                                    </button>
 
-                            <button className="btn-buy-now" onClick={handleBuyNow}>
-                                BUY NOW
-                            </button>
-                        </div>
+                                    <button
+                                        className={`btn-buy-now${isOut ? " btn-disabled" : ""}`}
+                                        onClick={isOut ? undefined : handleBuyNow}
+                                        disabled={isOut}
+                                        title={isOut ? "Sản phẩm đã hết hàng" : "Mua ngay"}
+                                    >
+                                        {isOut ? "Sản phẩm hết hàng" : "BUY NOW"}
+                                    </button>
+                                </div>
+                            );
+                        })()}
 
                         {/* AI STYLIST BUTTON */}
                         <div className="ai-stylist-banner">

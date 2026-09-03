@@ -85,3 +85,29 @@ export const exportProducts = async () => {
         throw new Error("Export thất bại.");
     }
 };
+
+// ====================================
+// GET INVENTORY (ADMIN)
+// ====================================
+export const getInventory = async () => {
+    try {
+        const response = await API.get("/admin/inventory");
+        return response.data;
+    } catch (err) {
+        throw new Error("Không thể lấy dữ liệu kho hàng.");
+    }
+};
+
+// ====================================
+// UPDATE STOCK QUANTITY (ADMIN)
+// ====================================
+export const updateStock = async (id, stock_quantity) => {
+    try {
+        const response = await API.put(`/admin/inventory/${id}`, {
+            stock_quantity
+        });
+        return response.data;
+    } catch (err) {
+        throw new Error("Cập nhật tồn kho thất bại.");
+    }
+};

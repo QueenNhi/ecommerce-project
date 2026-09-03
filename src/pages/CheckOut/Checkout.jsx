@@ -22,6 +22,7 @@ const Checkout = () => {
     const [appliedCoupon, setAppliedCoupon] = useState(null);
     const [couponError, setCouponError] = useState("");
     const [validatingCoupon, setValidatingCoupon] = useState(false);
+    const [stockError, setStockError] = useState(""); // Lỗi tồn kho
 
     const [form, setForm] = useState({
         fullName: user?.fullname || "",
@@ -135,6 +136,7 @@ const Checkout = () => {
 
         try {
             setSubmitting(true);
+            setStockError(""); // Reset lỗi tồn kho trước khi gửi đơn
 
             const fullAddress = [form.address, form.ward, form.district, form.province]
                 .filter(Boolean)
@@ -192,7 +194,15 @@ const Checkout = () => {
                 alert("🎉 Đặt hàng thành công!");
                 navigate(`/order-success/${orderId}`);
             } else {
-                alert(data.message || "Đặt hàng thất bại. Vui lòng thử lại.");
+                // Kiểm tra lỗi tồn kho trước
+                if (data.out_of_stock && data.out_of_stock.length > 0) {
+                    const lines = data.out_of_stock
+                        .map(item => `• "${item.name}": còn ${item.available} sp, bạn chọn ${item.ordered} sp`)
+                        .join("\n");
+                    setStockError(`Sản phẩm vượt quá số lượng tồn kho. Vui lòng điều chỉnh giỏ hàng:\n${lines}`);
+                } else {
+                    alert(data.message || "Đặt hàng thất bại. Vui lòng thử lại.");
+                }
             }
         } catch (err) {
             console.error("Order submit error:", err);
@@ -463,9 +473,17 @@ const Checkout = () => {
                                         {submitting ? "ĐANG XỬ LÝ..." : (form.payment === "vnpay" ? "THANH TOÁN VNPAY" : "THANH TOÁN")}
                                     </button>
 
+                                    {/* Hiển thị lỗi tồn kho */}
+                                    {stockError && (
+                                        <div className="stock-error-box">
+                                            <strong>⚠️ Lỗi tồn kho</strong>
+                                            <pre>{stockError}</pre>
+                                        </div>
+                                    )}
+
                                     <p className="checkout-note">
                                         Thanh toán bảo mật SSL.<br />
-                                        Miễn phí vận chuyển & Hộp quà Luxury.
+                                        Miễn phí vận chuyển &amp; Hộp quà Luxury.
                                     </p>
                                 </>
                             )}

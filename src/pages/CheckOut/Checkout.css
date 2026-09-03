@@ -522,3 +522,36 @@
         padding: 12px 14px;
     }
 }
+
+/* ===========================
+   LỖI TỒN KHO (STOCK ERROR)
+=========================== */
+.stock-error-box {
+    margin-top: 14px;
+    padding: 14px 18px;
+    background: #fff5f5;
+    border: 1.5px solid #fca5a5;
+    border-radius: 10px;
+    color: #b91c1c;
+    animation: slideIn .25s ease;
+}
+
+.stock-error-box strong {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.stock-error-box pre {
+    font-family: inherit;
+    font-size: 13px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin: 0;
+    line-height: 1.7;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}

@@ -16,7 +16,8 @@ import {
     FiSettings,
     FiLogOut,
     FiPackage,
-    FiBriefcase
+    FiBriefcase,
+    FiArchive
 } from "react-icons/fi";
 
 const AdminSidebar = () => {
@@ -88,6 +89,12 @@ const AdminSidebar = () => {
             to: "/admin/products",
             icon: <FiBox />,
             label: "Products",
+            canAccess: isAdmin || isWarehouseStaff,
+        },
+        {
+            to: "/admin/inventory",
+            icon: <FiArchive />,
+            label: "Inventory",
             canAccess: isAdmin || isWarehouseStaff,
         },
         {

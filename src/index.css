@@ -523,6 +523,63 @@ PRODUCT CARD
     transform:scale(.98);
 }
 
+/* Disabled buy button khi hết hàng */
+.buy-btn--disabled,
+.buy-btn:disabled{
+    background:#94a3b8;
+    cursor:not-allowed;
+    opacity:.7;
+}
+
+.buy-btn--disabled:hover,
+.buy-btn:disabled:hover{
+    background:#94a3b8;
+    box-shadow:none;
+}
+
+/* Stock status text dưới giá */
+.stock-status{
+    margin-top:6px;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.3px;
+}
+.stock-status.ok{ color:#16a34a; }
+.stock-status.low{ color:#d97706; }
+.stock-status.out{ color:#dc2626; }
+
+/* Badge nổi trên ảnh sản phẩm */
+.stock-badge{
+    position:absolute;
+    top:12px;
+    left:12px;
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.8px;
+    text-transform:uppercase;
+    z-index:20;
+    pointer-events:none;
+}
+.stock-badge--out{
+    background:#dc2626;
+    color:#fff;
+}
+.stock-badge--low{
+    background:#f59e0b;
+    color:#fff;
+}
+
+/* Card mờ khi hết hàng */
+.product-card--out-of-stock .product-img{
+    filter:grayscale(45%) opacity(.8);
+}
+.product-card--out-of-stock:hover{
+    transform:translateY(-3px);
+    border-color:#e2e8f0;
+}
+
 /*==========================
 FOOTER
 ==========================*/

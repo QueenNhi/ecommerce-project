@@ -23,6 +23,7 @@ import AdminCustomers from "../pages/Admin/Users";
 import AdminSettings from "../pages/Admin/Settings";
 import Collections from "../pages/Admin/Collections";
 import AdminStaff from "../pages/Admin/Staff/Staff";
+import AdminInventory from "../pages/Admin/Inventory";
 
 // Client Pages
 import Offers from "../pages/Offers/Offers";
@@ -129,6 +130,7 @@ function AppRoutes() {
                     <Route path="/admin/categories" element={<AdminRoute><AdminCategories /></AdminRoute>} />
                     <Route path="/admin/brands" element={<AdminRoute><Brands /></AdminRoute>} />
                     <Route path="/admin/staff" element={<AdminRoute><AdminStaff /></AdminRoute>} />
+                    <Route path="/admin/inventory" element={<AdminRoute><AdminInventory /></AdminRoute>} />
 
                     {/* 404 Not Found */}
                     <Route path="*" element={<NotFound />} />

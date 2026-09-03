@@ -266,6 +266,28 @@
 
 .in-stock-label {
     color: #16a34a;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.in-stock-label.out-of-stock {
+    color: #dc2626;
+    font-weight: 700;
+}
+
+.in-stock-label.low-stock {
+    color: #d97706;
+    font-weight: 700;
+}
+
+/* Disabled action buttons khi hết hàng */
+.btn-add-cart.btn-disabled,
+.btn-buy-now.btn-disabled {
+    background: #94a3b8 !important;
+    cursor: not-allowed !important;
+    opacity: 0.65 !important;
+    box-shadow: none !important;
+    transform: none !important;
 }
 
 .product-title {
