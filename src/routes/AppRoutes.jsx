@@ -36,6 +36,18 @@ import VnPayReturn from "../pages/Payment/VnPayReturn";
 
 
 
+// ProtectedRoute: Bắt buộc người dùng đăng nhập mới truy cập được
+// Nếu chưa đăng nhập → redirect về /login kèm thông báo
+const ProtectedRoute = ({ children }) => {
+    const { user } = useAuth();
+
+    if (!user) {
+        return <Navigate to="/login" state={{ message: "Vui lòng đăng nhập để tiếp tục mua hàng." }} replace />;
+    }
+
+    return children;
+};
+
 const AdminRoute = ({ children }) => {
     const { user } = useAuth();
 
@@ -87,7 +99,7 @@ function AppRoutes() {
                     <Route path="/profile" element={<Account />} />
                     <Route path="/orders" element={<Account />} />
                     <Route path="/account" element={<Account />} />
-                    <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
                     <Route path="/order-success/:id" element={<OrderSuccess />} />
                     <Route path="/payment/vnpay-return" element={<VnPayReturn />} />
                     <Route path="/payment/vnpay_return" element={<VnPayReturn />} />

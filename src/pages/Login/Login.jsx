@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { API_URL } from "../../config/api";
 import "./Login.css";
 
@@ -10,7 +10,12 @@ import { useAuth } from "../../context/AuthContext";
 const Login = () => {
 
     const navigate = useNavigate();
+    const location = useLocation();
     const { login, loginWithGoogle } = useAuth();
+
+    // Đọc thông báo và trang cần quay lại từ state của redirect (ví dụ: từ ProtectedRoute)
+    const redirectMessage = location.state?.message || "";
+    const redirectFrom = location.state?.from || null;
 
     const [form, setForm] = useState({
         email: "",
@@ -127,10 +132,8 @@ const Login = () => {
                 login(userData, tokenData);
 
                 // Phân quyền điều hướng theo role
-                const redirectPath = getRedirectPath(userData);
-
-                // Dùng window.location.href để force reload,
-                // đảm bảo AuthContext đọc lại từ localStorage
+                // Redirect về trang trước (checkout) hoặc phân quyền theo role
+                const redirectPath = redirectFrom || getRedirectPath(userData);
                 window.location.href = redirectPath;
 
             } else {
@@ -225,6 +228,12 @@ const Login = () => {
                         <p className="login-subtitle">
                             Sign in to your account and continue your luxury shopping experience.
                         </p>
+
+                        {redirectMessage && (
+                            <div style={{ padding: "10px 14px", background: "#fef3c7", border: "1px solid #f59e0b", color: "#92400e", borderRadius: "8px", marginBottom: "12px", fontSize: "14px", fontWeight: "600" }}>
+                                🔒 {redirectMessage}
+                            </div>
+                        )}
 
                         {errorMsg && (
                             <div style={{ padding: "10px 14px", background: "#fee2e2", border: "1px solid #f87171", color: "#991b1b", borderRadius: "8px", marginBottom: "16px", fontSize: "14px", fontWeight: "600" }}>

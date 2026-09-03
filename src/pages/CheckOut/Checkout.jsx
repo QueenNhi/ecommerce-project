@@ -9,8 +9,8 @@ import "./Checkout.css";
 
 const Checkout = () => {
     const navigate = useNavigate();
-    const { user } = useAuth();
-    const userId = user?.id || 1;
+    const { user, token } = useAuth();
+    const userId = user?.id;
 
     const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -116,6 +116,13 @@ const Checkout = () => {
     };
 
     const handleOrder = async () => {
+        // ⛔ Kiểm tra đăng nhập trước khi thực hiện thanh toán
+        if (!user || !userId) {
+            alert("Bạn cần đăng nhập để tiếp tục mua hàng.");
+            navigate("/login", { state: { message: "Vui lòng đăng nhập để tiếp tục mua hàng.", from: "/checkout" } });
+            return;
+        }
+
         if (!form.fullName || !form.phone || !form.address) {
             alert("Vui lòng điền đầy đủ Họ tên, Số điện thoại và Địa chỉ giao hàng.");
             return;
@@ -136,7 +143,8 @@ const Checkout = () => {
             const response = await fetch(`${API_URL}/api/orders`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
                 },
                 body: JSON.stringify({
                     user_id: userId,
@@ -162,7 +170,10 @@ const Checkout = () => {
                 if (form.payment === "vnpay") {
                     const vnpRes = await fetch(`${API_URL}/api/payment/vnpay_create_url`, {
                         method: "POST",
-                        headers: { "Content-Type": "application/json" },
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        },
                         body: JSON.stringify({
                             orderId,
                             amount: total
